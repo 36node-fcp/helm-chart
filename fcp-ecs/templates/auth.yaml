@@ -1,0 +1,63 @@
+{{- if .Values.auth.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.auth.name }}
+  labels:
+    {{- include "auth.selectorLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.auth.service.type | default .Values.service.type }}
+  ports:
+    - port: {{ .Values.auth.service.port | default .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "auth.selectorLabels" . | nindent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.auth.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "auth.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.auth.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "auth.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "auth.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.auth.name }}
+          image: "{{ .Values.auth.image.repository }}:{{ .Values.auth.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.auth.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: PORT
+              value: "{{ .Values.auth.env.port }}"
+            - name: BASE
+              value: "{{ .Values.auth.path }}"
+            - name: MONGODB_CONNECTION
+              value: "{{ .Values.auth.env.mongoUri }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.auth.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.auth.resources }}
+            {{- toYaml .Values.auth.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}

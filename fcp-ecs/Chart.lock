@@ -1,0 +1,6 @@
+dependencies:
+- name: offline-map
+  repository: https://36node-fcp.github.io/helm-chart/
+  version: 0.1.0
+digest: sha256:d2f4d0679d87447342d4e58a5a3520b10083f06422ed60fe1855c7d1b90290a5
+generated: "2023-10-22T00:21:39.396585+08:00"

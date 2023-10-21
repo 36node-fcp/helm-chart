@@ -1,0 +1,101 @@
+{{- if .Values.robotXindian2.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.robotXindian2.name }}
+  labels:
+    {{- include "robot-xindian2.selectorLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.robotXindian2.service.type | default .Values.service.type }}
+  ports:
+    - port: {{ .Values.robotXindian2.service.port | default .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "robot-xindian2.selectorLabels" . | nindent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.robotXindian2.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "robot-xindian2.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.robotXindian2.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "robot-xindian2.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "robot-xindian2.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.robotXindian2.name }}
+          image: "{{ .Values.robotXindian2.image.repository }}:{{ .Values.robotXindian2.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.robotXindian2.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: ILLEGAL_RECORD_MONITOR
+              value: "{{ .Values.robotXindian2.env.illegalRecordMonitor }}"
+            - name: ILLEGAL_RECORD_MONITOR_SOURCE
+              value: "{{ .Values.robotXindian2.env.illegalRecordMonitorSource }}"
+            - name: MQTT_CLIENT
+              value: "{{ .Values.robotXindian2.env.mqttClient }}"
+            - name: MQTT_PASSWORD
+              value: "{{ .Values.robotXindian2.env.mqttPassword }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD
+              value: "{{ .Values.robotXindian2.env.mqttTopicIllegalRecord }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD_MONITOR
+              value: "{{ .Values.robotXindian2.env.mqttTopicIllegalRecordMonitor }}"
+            - name: MQTT_URL
+              value: "{{ .Values.robotXindian2.env.mqttUri }}"
+            - name: MQTT_USERNAME
+              value: "{{ .Values.robotXindian2.env.mqttUsername }}"
+            - name: PORT
+              value: "{{ .Values.robotXindian2.env.port }}"
+            - name: RECORD_DEFAULT_JYZT
+              value: "{{ .Values.robotXindian2.env.recordDefaultJyzt }}"
+            - name: RECORD_DEFAULT_SPOTSN
+              value: "{{ .Values.robotXindian2.env.recordDefaultSpotsn }}"
+            - name: RECORD_DEFAULT_UPUSER
+              value: "{{ .Values.robotXindian2.env.recordDefaultUpuser }}"
+            - name: SQL_DATABASE
+              value: "{{ .Values.robotXindian2.env.sqlDatabase }}"
+            - name: SQL_HOST
+              value: "{{ .Values.robotXindian2.env.sqlHost }}"
+            - name: SQL_PASSWORD
+              value: "{{ .Values.robotXindian2.env.sqlPassword }}"
+            - name: SQL_POOL_SIZE
+              value: "{{ .Values.robotXindian2.env.sqlPoolSize }}"
+            - name: SQL_PORT
+              value: "{{ .Values.robotXindian2.env.sqlPort }}"
+            - name: SQL_SEQUENCE_QUERY
+              value: "{{ .Values.robotXindian2.env.sqlSequenceQuery }}"
+            - name: SQL_SYNC
+              value: "{{ .Values.robotXindian2.env.sqlSync }}"
+            - name: SQL_TABLE_NAME
+              value: "{{ .Values.robotXindian2.env.sqlTableName }}"
+            - name: SQL_TYPE
+              value: "{{ .Values.robotXindian2.env.sqlType }}"
+            - name: SQL_USERNAME
+              value: "{{ .Values.robotXindian2.env.sqlUsername }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.robotXindian2.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.robotXindian2.resources }}
+            {{- toYaml .Values.robotXindian2.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}

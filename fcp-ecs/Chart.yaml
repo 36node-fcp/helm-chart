@@ -26,3 +26,4 @@ appVersion: 0.1.0
 dependencies:
   - name: offline-map
     version: "0.1.0"
+    repository: "https://36node-fcp.github.io/helm-chart/"

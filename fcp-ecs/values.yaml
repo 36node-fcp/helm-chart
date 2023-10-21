@@ -1,8 +1,11 @@
 nameOverride: ""
 fullnameOverride: ""
 
-host: "fcp.local"
+host: "fcp-ecs.local"
 pullPolicy: IfNotPresent
+
+ingress: 
+  enabled: true
 
 service:
   type: ClusterIP
@@ -141,7 +144,6 @@ api:
     mqttTopicWarningClose: "$share/default/warning/close"
 
     port: "80"
-    urlPrefix: ""
 
     trackRecordClean: "259200"
     
@@ -170,9 +172,9 @@ auth:
     repository: registry.cn-beijing.aliyuncs.com/36node/stargate-auth
     tag: main
   replicas: 1
+  path: /auth/v1
   env:
     port: "80"
-    path: /auth/v1
     mongoUri: "mongodb://localhost/auth"
   service:
     port:
@@ -301,31 +303,3 @@ mock:
     mockTrackNum: "3"
     mockVideo: ""
     mqttUri: "mqtt://localhost"
-
-ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: traefik
-  hosts:
-    - enabled: true
-      host: 
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          svcName: admin-web
-          svcPort: 80
-    - enabled: true 
-      host: 
-      paths:
-        - path: /ecs-api
-          pathType: ImplementationSpecific
-          svcName: api
-          svcPort: 80
-    - enabled: true 
-      host: 
-      paths:
-        - path: /auth/v1
-          pathType: ImplementationSpecific
-          svcName: auth
-          svcPort: 80
-  tls: []

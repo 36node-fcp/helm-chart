@@ -1,0 +1,57 @@
+{{- if .Values.mock.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mock.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "mock.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.mock.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "mock.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "mock.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.mock.name }}
+          image: "{{ .Values.mock.image.repository }}:{{ .Values.mock.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.mock.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: MOCK_DATA
+              value: "{{ .Values.mock.env.mockData }}"
+            - name: MOCK_ILLEGAL_DELAY
+              value: "{{ .Values.mock.env.mockIllegalDelay }}"
+            - name: MOCK_ILLEGAL_FIRST
+              value: "{{ .Values.mock.env.mockIllegalFirst }}"
+            - name: MOCK_ILLEGAL_NUM
+              value: "{{ .Values.mock.env.mockIllegalNum }}"
+            - name: MOCK_IMAGE
+              value: "{{ .Values.mock.env.mockImage }}"
+            - name: MOCK_TRACK_DELAY
+              value: "{{ .Values.mock.env.mockTrackDelay }}"
+            - name: MOCK_TRACK_NUM
+              value: "{{ .Values.mock.env.mockTrackNum }}"
+            - name: MOCK_VIDEO
+              value: "{{ .Values.mock.env.mockVideo }}"
+            - name: MQTT_URL
+              value: "{{ .Values.mock.env.mqttUri }}"
+          command: ["npm"]
+          args: ["run", "mock"]
+          resources:
+            {{- if .Values.mock.resources }}
+            {{- toYaml .Values.mock.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}
