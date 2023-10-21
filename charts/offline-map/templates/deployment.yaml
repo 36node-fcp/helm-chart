@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "offline-map.fullname" . }}
+  labels:
+    {{- include "offline-map.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "offline-map.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "offline-map.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: PORT
+              value: "{{ .Values.port }}"
+            - name: ROOT_URL
+              value: "{{ .Values.path }}"
+            - name: TILE_DIR
+              value: "{{ .Values.filePath }}/"
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          volumeMounts:
+            - name: map-volume
+              mountPath: "{{ .Values.filePath }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      volumes:
+        - name: map-volume
+          hostPath:
+            path: {{ .Values.dirPath }}
+            type: Directory

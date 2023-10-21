@@ -1,0 +1,607 @@
+{{- if .Values.adminWeb.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.adminWeb.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "admin-web.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "admin-web.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "admin-web.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.adminWeb.name }}
+          image: "{{ .Values.adminWeb.image.repository }}:{{ .Values.adminWeb.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.adminWeb.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: REACT_APP_AUTH_ENDPOINT
+              value: "{{ .Values.adminWeb.env.authEndpoint }}"
+            - name: REACT_APP_BUILD
+              value: "{{ .Values.adminWeb.env.build }}"
+            - name: REACT_APP_COPYRIGHT
+              value: "{{ .Values.adminWeb.env.copyright }}"
+            - name: REACT_APP_ECHO
+              value: "{{ .Values.adminWeb.env.echo }}"
+            - name: REACT_APP_ECS_ENDPOINT
+              value: "{{ .Values.adminWeb.env.ecsEndpoint }}"
+            - name: REACT_APP_GANTRY_ICON_SIZE
+              value: "{{ .Values.adminWeb.env.gantryIconSize }}"
+            - name: REACT_APP_GUANGXIN_ENDPOINT
+              value: "{{ .Values.adminWeb.env.guangxinEndpoint }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_DAHUA_LIMIT
+              value: "{{ .Values.adminWeb.env.illegalMonitorDahuaLimit }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_DAHUA_LIMIT_S
+              value: "{{ .Values.adminWeb.env.illegalMonitorDahuaLimitS }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_DAHUA_LIMIT_S_DESC
+              value: "{{ .Values.adminWeb.env.illegalMonitorDahuaLimitSDesc }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_FLASH_S
+              value: "{{ .Values.adminWeb.env.illegalMonitorFlashS }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_HENGTONG_LIMIT
+              value: "{{ .Values.adminWeb.env.illegalMonitorHengtongLimit }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_HENGTONG_LIMIT_S
+              value: "{{ .Values.adminWeb.env.illegalMonitorHengtongLimitS }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_HENGTONG_LIMIT_S_DESC
+              value: "{{ .Values.adminWeb.env.illegalMonitorHengtongLimitSDesc }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_XINDIAN_LIMIT
+              value: "{{ .Values.adminWeb.env.illegalMonitorXindianLimit }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_XINDIAN_LIMIT_S
+              value: "{{ .Values.adminWeb.env.illegalMonitorXindianLimitS }}"
+            - name: REACT_APP_ILLEGAL_MONITOR_XINDIAN_LIMIT_S_DESC
+              value: "{{ .Values.adminWeb.env.illegalMonitorXindianLimitSDesc }}"
+            - name: REACT_APP_LOGIN_FAIL_LOCK_TIME_M
+              value: "{{ .Values.adminWeb.env.loginFailLockTimeM }}"
+            - name: REACT_APP_MAP_BOUND_LEFT
+              value: "{{ .Values.adminWeb.env.mapBoundLeft }}"
+            - name: REACT_APP_MAP_BOUND_RIGHT
+              value: "{{ .Values.adminWeb.env.mapBoundRight }}"
+            - name: REACT_APP_MAP_CENTER
+              value: "{{ .Values.adminWeb.env.mapCenter }}"
+            - name: REACT_APP_MAP_CURRENT_ZOOM
+              value: "{{ .Values.adminWeb.env.mapCurrentZoom }}"
+            - name: REACT_APP_MAP_ENDPOINT
+              value: "{{ .Values.adminWeb.env.mapEndpoint }}"
+            - name: REACT_APP_MAP_GANTRY_MIN_ZOOM
+              value: "{{ .Values.adminWeb.env.mapGantryMinZoom }}"
+            - name: REACT_APP_MAP_MAX_ZOOM
+              value: "{{ .Values.adminWeb.env.mapMaxZoom }}"
+            - name: REACT_APP_MAP_MIN_ZOOM
+              value: "{{ .Values.adminWeb.env.mapMinZoom }}"
+            - name: REACT_APP_MQTT_HOSTNAME
+              value: "{{ .Values.adminWeb.env.mqttHostname }}"
+            - name: REACT_APP_MQTT_HOSTNAME_EMPTY
+              value: "{{ .Values.adminWeb.env.mqttHostnameEmpty }}"
+            - name: REACT_APP_MQTT_PATH
+              value: "{{ .Values.adminWeb.env.mqttPath }}"
+            - name: REACT_APP_MQTT_PORT
+              value: "{{ .Values.adminWeb.env.mqttPort }}"
+            - name: REACT_APP_MQTT_PROTOCOL
+              value: "{{ .Values.adminWeb.env.mqttProtocol }}"
+            - name: REACT_APP_MQTT_TOPIC_ILLEGAL_MONITOR
+              value: "{{ .Values.adminWeb.env.mqttTopicIllegalMonitor }}"
+            - name: REACT_APP_MQTT_TOPIC_NOTIFY_WARNING
+              value: "{{ .Values.adminWeb.env.mqttTopicNotifyWarning }}"
+            - name: REACT_APP_OSS_ACCESS_KEY_ID
+              value: "{{ .Values.adminWeb.env.ossAccessKeyId }}"
+            - name: REACT_APP_OSS_ACCESS_KEY_SECRET
+              value: "{{ .Values.adminWeb.env.ossAccessKeySecret }}"
+            - name: REACT_APP_OSS_BUCKET
+              value: "{{ .Values.adminWeb.env.ossBucket }}"
+            - name: REACT_APP_OSS_EP_HOSTNAME
+              value: "{{ .Values.adminWeb.env.ossEpHostname }}"
+            - name: REACT_APP_OSS_EP_HOSTNAME_EMPTY
+              value: "{{ .Values.adminWeb.env.ossEpHostnameEmpty }}"
+            - name: REACT_APP_OSS_EP_PORT
+              value: "{{ .Values.adminWeb.env.ossEpPort }}"
+            - name: REACT_APP_OSS_EP_PROTOCOL
+              value: "{{ .Values.adminWeb.env.ossEpProtocol }}"
+            - name: REACT_APP_OSS_FORCE_PATH_STYLE
+              value: "{{ .Values.adminWeb.env.ossForcePathStyle }}"
+            - name: REACT_APP_OSS_REGION
+              value: "{{ .Values.adminWeb.env.ossRegion }}"
+            - name: REACT_APP_PAGE_MAX_WIDTH
+              value: "{{ .Values.adminWeb.env.pageMaxWidth }}"
+            - name: REACT_APP_PROVIDER
+              value: "{{ .Values.adminWeb.env.provider }}"
+            - name: REACT_APP_SCOPE
+              value: "{{ .Values.adminWeb.env.scope }}"
+            - name: REACT_APP_SUB_TITLE
+              value: "{{ .Values.adminWeb.env.subTitle }}"
+            - name: REACT_APP_TITLE
+              value: "{{ .Values.adminWeb.env.title }}"
+            - name: REACT_APP_VERSION
+              value: "{{ .Values.adminWeb.env.version }}"
+            - name: REACT_APP_WARNING_CARD_MAX_SIZE
+              value: "{{ .Values.adminWeb.env.warningCardMaxSize }}"
+            - name: REACT_APP_WARNING_TRACK_FLASH_S
+              value: "{{ .Values.adminWeb.env.warningTrackFlashS }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.adminWeb.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.adminWeb.resources }}
+            {{- toYaml .Values.adminWeb.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}
+---
+{{- if .Values.api.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.api.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "api.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.api.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "api.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.api.name }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.api.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: CACHE_REDIS_DB
+              value: "{{ .Values.api.env.cacheRedisDb }}"
+            - name: CACHE_REDIS_URL
+              value: "{{ .Values.api.env.cacheRedisUri }}"
+            - name: CHECK_TIME
+              value: "{{ .Values.api.env.checkTime }}"
+            - name: ILLEGAL_EXPIRES
+              value: "{{ .Values.api.env.illegalExpires }}"
+            - name: ILLEGAL_EXPIRES_DAYS
+              value: "{{ .Values.api.env.illegalExpiresDays }}"
+            - name: ILLEGAL_IGNORE_UNDERSPEED
+              value: "{{ .Values.api.env.illegalIgnoreUnderspeed }}"
+            - name: ILLEGAL_MONITOR
+              value: "{{ .Values.api.env.illegalMonitor }}"
+            - name: ILLEGAL_OVERSPEED_CODE
+              value: "{{ .Values.api.env.illegalOverspeedCode }}"
+            - name: ILLEGAL_RECORD_CLEAN
+              value: "{{ .Values.api.env.illegalRecordClean }}"
+            - name: ILLEGAL_TO_XINDIAN
+              value: "{{ .Values.api.env.illegalToXindian }}"
+            - name: ILLEGAL_TO_XINDIAN_LIMIT
+              value: "{{ .Values.api.env.illegalToXindianLimit }}"
+            - name: ILLEGAL_UNDERSPEED_CODE
+              value: "{{ .Values.api.env.illegalUnderspeedCode }}"
+            - name: ILLEGAL_UNDERSPEED_LIMIT
+              value: "{{ .Values.api.env.illegalUnderspeedLimit }}"
+            - name: INIT_CACHE
+              value: "{{ .Values.api.env.initCache }}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.api.env.logLevel }}"
+            - name: MICROSERVICE_ENABLE
+              value: "{{ .Values.api.env.microserviceEnable }}"
+            - name: MONGO_URL
+              value: "{{ .Values.api.env.mongoUri }}"
+            - name: MQTT_CLIENT
+              value: "{{ .Values.api.env.mqttClient }}"
+            - name: MQTT_PASSWORD
+              value: "{{ .Values.api.env.mqttPassword }}"
+            - name: MQTT_TOPIC_DEVICE_CREATE
+              value: "{{ .Values.api.env.mqttTopicDeviceCreate }}"
+            - name: MQTT_TOPIC_DEVICE_DELETE
+              value: "{{ .Values.api.env.mqttTopicDeviceDelete }}"
+            - name: MQTT_TOPIC_DEVICE_STATUS
+              value: "{{ .Values.api.env.mqttTopicDeviceStatus }}"
+            - name: MQTT_TOPIC_DEVICE_UPDATE
+              value: "{{ .Values.api.env.mqttTopicDeviceUpdate }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD
+              value: "{{ .Values.api.env.mqttTopicIllegalRecord }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD_DAHUA
+              value: "{{ .Values.api.env.mqttTopicIllegalRecordDahua }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD_MONITOR
+              value: "{{ .Values.api.env.mqttTopicIllegalRecordMonitor }}"
+            - name: MQTT_TOPIC_NOTIFY_ILLEGAL_XINDIAN
+              value: "{{ .Values.api.env.mqttTopicNotifyIllegalXindian }}"
+            - name: MQTT_TOPIC_NOTIFY_WARNING
+              value: "{{ .Values.api.env.mqttTopicNotifyWarning }}"
+            - name: MQTT_TOPIC_NOTIFY_WARNING_JINGWUTONG
+              value: "{{ .Values.api.env.mqttTopicNotifyWarningJingwutong }}"
+            - name: MQTT_TOPIC_TRACK_RECORD
+              value: "{{ .Values.api.env.mqttTopicTrackRecord }}"
+            - name: MQTT_TOPIC_TRACK_RECORD_DAHUA
+              value: "{{ .Values.api.env.mqttTopicTrackRecordDahua }}"
+            - name: MQTT_TOPIC_WARNING_CLOSE
+              value: "{{ .Values.api.env.mqttTopicWarningClose }}"
+            - name: MQTT_URL
+              value: "{{ .Values.api.env.mqttUri }}"
+            - name: MQTT_USERNAME
+              value: "{{ .Values.api.env.mqttUsername }}"
+            - name: PORT
+              value: "{{ .Values.api.env.port }}"
+            - name: TRACK_RECORD_CLEAN
+              value: "{{ .Values.api.env.trackRecordClean }}"
+            - name: URL_PREFIX
+              value: "{{ .Values.api.env.urlPrefix }}"
+            - name: VEHICLE_IMPORT_CLEAN
+              value: "{{ .Values.api.env.vehicleImportClean }}"
+            - name: VEHICLE_IMPORT_DELAY
+              value: "{{ .Values.api.env.vehicleImportDelay }}"
+            - name: VEHICLE_IMPORT_LIMIT
+              value: "{{ .Values.api.env.vehicleImportLimit }}"
+            - name: VEHICLE_IMPORT_PATH
+              value: "{{ .Values.api.env.vehicleImportPath }}"
+            - name: WARNING_CLEAN
+              value: "{{ .Values.api.env.warningClean }}"
+            - name: WARNING_EXPIRES
+              value: "{{ .Values.api.env.warningExpires }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.api.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.api.resources }}
+            {{- toYaml .Values.api.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}
+---
+{{- if .Values.auth.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.auth.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "auth.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.auth.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "auth.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "auth.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.auth.name }}
+          image: "{{ .Values.auth.image.repository }}:{{ .Values.auth.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.auth.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: PORT
+              value: "{{ .Values.auth.env.port }}"
+            - name: BASE
+              value: "{{ .Values.auth.env.path }}"
+            - name: MONGODB_CONNECTION
+              value: "{{ .Values.auth.env.mongoUri }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.auth.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.auth.resources }}
+            {{- toYaml .Values.auth.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}
+---
+{{- if .Values.robotHengtong.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.robotHengtong.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "robot-hengtong.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.robotHengtong.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "robot-hengtong.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "robot-hengtong.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.robotHengtong.name }}
+          image: "{{ .Values.robotHengtong.image.repository }}:{{ .Values.robotHengtong.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.robotHengtong.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: LOG_LEVEL
+              value: "{{ .Values.robotHengtong.env.logLevel }}"
+            - name: MQTT_PASSWORD
+              value: "{{ .Values.robotHengtong.env.mqttPassword }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD
+              value: "{{ .Values.robotHengtong.env.mqttTopicIllegalRecord }}"
+            - name: MQTT_URL
+              value: "{{ .Values.robotHengtong.env.mqttUri }}"
+            - name: MQTT_USERNAME
+              value: "{{ .Values.robotHengtong.env.mqttUsername }}"
+            - name: NODE_ENV
+              value: "{{ .Values.robotHengtong.env.nodeEnv }}"
+            - name: PORT
+              value: "{{ .Values.robotHengtong.env.port }}"
+            - name: URL_PREFIX
+              value: "{{ .Values.robotHengtong.env.urlPrefix }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.robotHengtong.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.robotHengtong.resources }}
+            {{- toYaml .Values.robotHengtong.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}
+---
+{{- if .Values.robotXindian.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.robotXindian.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "robot-xindian.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.robotXindian.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "robot-xindian.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "robot-xindian.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.robotXindian.name }}
+          image: "{{ .Values.robotXindian.image.repository }}:{{ .Values.robotXindian.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.robotXindian.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: ILLEGAL_RECORD_MONITOR
+              value: "{{ .Values.robotXindian.env.illegalRecordMonitor }}"
+            - name: ILLEGAL_RECORD_MONITOR_SOURCE
+              value: "{{ .Values.robotXindian.env.illegalRecordMonitorSource }}"
+            - name: MQTT_CLIENT
+              value: "{{ .Values.robotXindian.env.mqttClient }}"
+            - name: MQTT_PASSWORD
+              value: "{{ .Values.robotXindian.env.mqttPassword }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD
+              value: "{{ .Values.robotXindian.env.mqttTopicIllegalRecord }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD_MONITOR
+              value: "{{ .Values.robotXindian.env.mqttTopicIllegalRecordMonitor }}"
+            - name: MQTT_URL
+              value: "{{ .Values.robotXindian.env.mqttUri }}"
+            - name: MQTT_USERNAME
+              value: "{{ .Values.robotXindian.env.mqttUsername }}"
+            - name: PORT
+              value: "{{ .Values.robotXindian.env.port }}"
+            - name: RECORD_DEFAULT_JYZT
+              value: "{{ .Values.robotXindian.env.recordDefaultJyzt }}"
+            - name: RECORD_DEFAULT_SPOTSN
+              value: "{{ .Values.robotXindian.env.recordDefaultSpotsn }}"
+            - name: RECORD_DEFAULT_UPUSER
+              value: "{{ .Values.robotXindian.env.recordDefaultUpuser }}"
+            - name: SQL_DATABASE
+              value: "{{ .Values.robotXindian.env.sqlDatabase }}"
+            - name: SQL_HOST
+              value: "{{ .Values.robotXindian.env.sqlHost }}"
+            - name: SQL_PASSWORD
+              value: "{{ .Values.robotXindian.env.sqlPassword }}"
+            - name: SQL_POOL_SIZE
+              value: "{{ .Values.robotXindian.env.sqlPoolSize }}"
+            - name: SQL_PORT
+              value: "{{ .Values.robotXindian.env.sqlPort }}"
+            - name: SQL_SEQUENCE_QUERY
+              value: "{{ .Values.robotXindian.env.sqlSequenceQuery }}"
+            - name: SQL_SERVICENAME
+              value: "{{ .Values.robotXindian.env.sqlServicename }}"
+            - name: SQL_SYNC
+              value: "{{ .Values.robotXindian.env.sqlSync }}"
+            - name: SQL_TABLE_NAME
+              value: "{{ .Values.robotXindian.env.sqlTableName }}"
+            - name: SQL_TYPE
+              value: "{{ .Values.robotXindian.env.sqlType }}"
+            - name: SQL_USERNAME
+              value: "{{ .Values.robotXindian.env.sqlUsername }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.robotXindian.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.robotXindian.resources }}
+            {{- toYaml .Values.robotXindian.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}
+---
+{{- if .Values.robotXindian2.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.robotXindian2.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "robot-xindian2.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.robotXindian2.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "robot-xindian2.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "robot-xindian2.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.robotXindian2.name }}
+          image: "{{ .Values.robotXindian2.image.repository }}:{{ .Values.robotXindian2.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.robotXindian2.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: ILLEGAL_RECORD_MONITOR
+              value: "{{ .Values.robotXindian2.env.illegalRecordMonitor }}"
+            - name: ILLEGAL_RECORD_MONITOR_SOURCE
+              value: "{{ .Values.robotXindian2.env.illegalRecordMonitorSource }}"
+            - name: MQTT_CLIENT
+              value: "{{ .Values.robotXindian2.env.mqttClient }}"
+            - name: MQTT_PASSWORD
+              value: "{{ .Values.robotXindian2.env.mqttPassword }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD
+              value: "{{ .Values.robotXindian2.env.mqttTopicIllegalRecord }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD_MONITOR
+              value: "{{ .Values.robotXindian2.env.mqttTopicIllegalRecordMonitor }}"
+            - name: MQTT_URL
+              value: "{{ .Values.robotXindian2.env.mqttUri }}"
+            - name: MQTT_USERNAME
+              value: "{{ .Values.robotXindian2.env.mqttUsername }}"
+            - name: PORT
+              value: "{{ .Values.robotXindian2.env.port }}"
+            - name: RECORD_DEFAULT_JYZT
+              value: "{{ .Values.robotXindian2.env.recordDefaultJyzt }}"
+            - name: RECORD_DEFAULT_SPOTSN
+              value: "{{ .Values.robotXindian2.env.recordDefaultSpotsn }}"
+            - name: RECORD_DEFAULT_UPUSER
+              value: "{{ .Values.robotXindian2.env.recordDefaultUpuser }}"
+            - name: SQL_DATABASE
+              value: "{{ .Values.robotXindian2.env.sqlDatabase }}"
+            - name: SQL_HOST
+              value: "{{ .Values.robotXindian2.env.sqlHost }}"
+            - name: SQL_PASSWORD
+              value: "{{ .Values.robotXindian2.env.sqlPassword }}"
+            - name: SQL_POOL_SIZE
+              value: "{{ .Values.robotXindian2.env.sqlPoolSize }}"
+            - name: SQL_PORT
+              value: "{{ .Values.robotXindian2.env.sqlPort }}"
+            - name: SQL_SEQUENCE_QUERY
+              value: "{{ .Values.robotXindian2.env.sqlSequenceQuery }}"
+            - name: SQL_SYNC
+              value: "{{ .Values.robotXindian2.env.sqlSync }}"
+            - name: SQL_TABLE_NAME
+              value: "{{ .Values.robotXindian2.env.sqlTableName }}"
+            - name: SQL_TYPE
+              value: "{{ .Values.robotXindian2.env.sqlType }}"
+            - name: SQL_USERNAME
+              value: "{{ .Values.robotXindian2.env.sqlUsername }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.robotXindian2.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.robotXindian2.resources }}
+            {{- toYaml .Values.robotXindian2.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}
+---
+{{- if .Values.mock.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mock.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "mock.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.mock.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "mock.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "mock.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.mock.name }}
+          image: "{{ .Values.mock.image.repository }}:{{ .Values.mock.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.mock.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: MOCK_DATA
+              value: "{{ .Values.mock.env.mockData }}"
+            - name: MOCK_ILLEGAL_DELAY
+              value: "{{ .Values.mock.env.mockIllegalDelay }}"
+            - name: MOCK_ILLEGAL_FIRST
+              value: "{{ .Values.mock.env.mockIllegalFirst }}"
+            - name: MOCK_ILLEGAL_NUM
+              value: "{{ .Values.mock.env.mockIllegalNum }}"
+            - name: MOCK_IMAGE
+              value: "{{ .Values.mock.env.mockImage }}"
+            - name: MOCK_TRACK_DELAY
+              value: "{{ .Values.mock.env.mockTrackDelay }}"
+            - name: MOCK_TRACK_NUM
+              value: "{{ .Values.mock.env.mockTrackNum }}"
+            - name: MOCK_VIDEO
+              value: "{{ .Values.mock.env.mockVideo }}"
+            - name: MQTT_URL
+              value: "{{ .Values.mock.env.mqttUri }}"
+          command: ["npm"]
+          args: ["run", "mock"]
+          resources:
+            {{- if .Values.mock.resources }}
+            {{- toYaml .Values.mock.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}

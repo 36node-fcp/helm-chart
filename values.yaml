@@ -1,0 +1,331 @@
+nameOverride: ""
+fullnameOverride: ""
+
+host: "fcp.local"
+pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: "1000m"
+    memory: "1Gi"
+  requests:
+    cpu: "10m"
+    memory: "32Mi"
+
+adminWeb:
+  enabled: true
+  name: admin-web
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-ecs-admin
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: main
+  env:
+    build: "20210712-000000"
+    copyright: "36node 出品"
+    echo: "true"
+
+    authEndpoint: ""
+    ecsEndpoint: ""
+    guangxinEndpoint: ""
+    mapEndpoint: ""
+
+    illegalMonitorDahuaLimit: "3"
+    illegalMonitorDahuaLimitS: "120"
+    illegalMonitorDahuaLimitSDesc: "2分钟"
+    illegalMonitorFlashS: "30"
+    illegalMonitorHengtongLimit: "3"
+    illegalMonitorHengtongLimitS: "3600"
+    illegalMonitorHengtongLimitSDesc: "1小时"
+    illegalMonitorXindianLimit: "5"
+    illegalMonitorXindianLimitS: "120"
+    illegalMonitorXindianLimitSDesc: "2分钟"
+
+    gantryIconSize: "16"
+    loginFailLockTimeM: "5"
+
+    mapBoundLeft: "30.7184163,120.47437365"
+    mapBoundRight: "28.92927024,122.31013782"
+    mapCenter: "29.85645453,121.51695313"
+    mapCurrentZoom: "11"
+
+    mapGantryMinZoom: "12"
+    mapMaxZoom: "17"
+    mapMinZoom: "9"
+
+    mqttHostname: ""
+    mqttHostnameEmpty: "off"
+    mqttPath: "/mqtt"
+    mqttPort: "8083"
+    mqttProtocol: "ws"
+    mqttTopicIllegalMonitor: "record/illegal/monitor"
+    mqttTopicNotifyWarning: "notify/warning"
+
+    ossAccessKeyId: ""
+    ossAccessKeySecret: ""
+    ossBucket: ""
+    ossEpHostname: ""
+    ossEpHostnameEmpty: "off"
+    ossEpPort: ""
+    ossEpProtocol: "https"
+    ossForcePathStyle: "on"
+    ossRegion: "cn"
+
+    pageMaxWidth: "1600"
+
+    provider: ""
+    scope: ""
+
+    subTitle: ""
+    title: ""
+    version: "0.0"
+
+    warningCardMaxSize: "20"
+    warningTrackFlashS: "300"
+ 
+  resources:
+  service:
+    port:
+    type:
+
+api:
+  enabled: true
+  name: api
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-api-gateway
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: main
+  replicas: 1
+  path: /ecs-api
+  env:
+    cacheRedisDb: "0"
+    cacheRedisUri: "redis://localhost:6379"
+    checkTime: "false"
+
+    illegalExpires: "259200000"
+    illegalExpiresDays: "3"
+    illegalIgnoreUnderspeed: "false"
+    illegalMonitor: "true"
+    illegalOverspeedCode: "111111"
+    illegalRecordClean: "31536000"
+    illegalToXindian: "true"
+    illegalToXindianLimit: "100"
+    illegalUnderspeedCode: "430601"
+    illegalUnderspeedLimit: "60"
+
+    initCache: "true"
+    logLevel: "log"
+
+    microserviceEnable: "true"
+    mongoUri: "mongodb://localhost/api"
+
+    mqttClient: "0"
+    mqttUri: "mqtt://localhost:1883"
+    mqttUsername: 
+    mqttPassword: 
+    mqttTopicDeviceCreate: "device/create"
+    mqttTopicDeviceDelete: "device/delete"
+    mqttTopicDeviceStatus: "$share/default/device/status"
+    mqttTopicDeviceUpdate: "device/update"
+    mqttTopicIllegalRecord: "$share/default/record/illegal"
+    mqttTopicIllegalRecordDahua: "$share/default/record/illegal/dahua"
+    mqttTopicIllegalRecordMonitor: "$share/default/record/illegal/monitor"
+    mqttTopicNotifyIllegalXindian: "notify/illegal/xindian"
+    mqttTopicNotifyWarning: "notify/warning"
+    mqttTopicNotifyWarningJingwutong: "notify/warningJingwutong"
+    mqttTopicTrackRecord: "$share/default/record/track"
+    mqttTopicTrackRecordDahua: "$share/default/record/track/dahua"
+    mqttTopicWarningClose: "$share/default/warning/close"
+
+    port: "80"
+    urlPrefix: ""
+
+    trackRecordClean: "259200"
+    
+    vehicleImportClean: "604800"
+    vehicleImportDelay: "1000"
+    vehicleImportLimit: "500"
+    vehicleImportPath: "./uploads"
+
+    warningClean: "31536000"
+    warningExpires: "14400"
+  resources:
+    limits:
+      cpu: "1"
+      memory: "2G"
+    requests:
+      cpu: "500m"
+      memory: "1G"
+  service:
+    port:
+    type:
+
+auth:
+  enabled: true
+  name: auth
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/stargate-auth
+    tag: main
+  replicas: 1
+  env:
+    port: "80"
+    path: /auth/v1
+    mongoUri: "mongodb://localhost/auth"
+  service:
+    port:
+    type:
+
+robotHengtong:
+  enabled: false
+  name: robot-hengtong
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-ecs-robot-hengtong
+    tag: main
+  replicas: 1
+  env:
+    logLevel: "info"
+    mqttPassword: 
+    mqttTopicIllegalRecord: "record/illegal"
+    mqttUri: "mqtt://localhost"
+    mqttUsername: 
+    nodeEnv: "development"
+    port: "9527"
+    urlPrefix: "/v0"
+  resources:
+  service:
+    port:
+    type:
+
+robotXindian:
+  enabled: false
+  name: robot-xindian
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-xindian
+    tag: main
+  replicas: 1
+  env:
+    illegalRecordMonitor: "true"
+    illegalRecordMonitorSource: "XINDIAN"
+
+    mqttClient: "0"
+    mqttUsername: ""
+    mqttPassword: ""
+    mqttTopicIllegalRecord: "xindian/record"
+    mqttTopicIllegalRecordMonitor: "record/illegal/monitor"
+    mqttUri: "mqtt://localhost:1883"
+    
+    port: "9527"
+    recordDefaultJyzt: "0"
+    recordDefaultSpotsn: ""
+    recordDefaultUpuser: ""
+    sqlDatabase: ""
+    sqlHost: ""
+    sqlUsername: ""
+    sqlPassword: ""
+    sqlPoolSize: "20"
+    sqlPort: "1521"
+    sqlSequenceQuery: ""
+    sqlServicename: "orcl"
+    sqlSync: "false"
+    sqlTableName: ""
+    sqlType: "oracle"
+  resources:
+    limits:
+      cpu: "1"
+      memory: "2G"
+    requests:
+      cpu: "500m"
+      memory: "1G"
+  service:
+    port:
+    type:
+
+robotXindian2:
+  enabled: false
+  name: robot-xindian2
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-xindian2
+    tag: main
+  replicas: 1
+  env:
+    illegalRecordMonitor: "true"
+    illegalRecordMonitorSource: "XINDIAN"
+    mqttClient: "0"
+    mqttUsername: ""
+    mqttPassword: ""
+    mqttTopicIllegalRecord: "notify/illegal/xindian"
+    mqttTopicIllegalRecordMonitor: "record/illegal/monitor"
+    mqttUri: "mqtt://localhost:1883"
+    port: "9527"
+    recordDefaultJyzt: "0"
+    recordDefaultSpotsn: ""
+    recordDefaultUpuser: ""
+    sqlDatabase: ""
+    sqlHost: "localhost"
+    sqlUsername: ""
+    sqlPassword: ""
+    sqlPoolSize: "20"
+    sqlPort: "3306"
+    sqlSequenceQuery: ""
+    sqlSync: "false"
+    sqlTableName: ""
+    sqlType: "mysql"
+  resources:
+    limits:
+      cpu: "4"
+      memory: "8G"
+    requests:
+      cpu: "500m"
+      memory: "1G"
+  service:
+    port:
+    type:
+
+mock:
+  enabled: false
+  name: mock
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-ecs-api
+    tag: main
+  replicas: 1
+  env:
+    mockData: "true"
+    mockIllegalDelay: "259200"
+    mockIllegalFirst: "false"
+    mockIllegalNum: "1"
+    mockImage: ""
+    mockTrackDelay: "60"
+    mockTrackNum: "3"
+    mockVideo: ""
+    mqttUri: "mqtt://localhost"
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  hosts:
+    - enabled: true
+      host: 
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          svcName: admin-web
+          svcPort: 80
+    - enabled: true 
+      host: 
+      paths:
+        - path: /ecs-api
+          pathType: ImplementationSpecific
+          svcName: api
+          svcPort: 80
+    - enabled: true 
+      host: 
+      paths:
+        - path: /auth/v1
+          pathType: ImplementationSpecific
+          svcName: auth
+          svcPort: 80
+  tls: []
