@@ -1,19 +1,28 @@
 # helm-chart
 
-### chart 介绍
-包括 fcp-ecs 应用 chart 和 offline-map 离线地图 chart，使用 github page 进行发布，可参考[链接](https://blog.csdn.net/u013360850/article/details/103440483)
+- fcp 应用 chart
+- offline-map 离线地图 chart
 
-##### offline-map
+offline-map
+
 离线地图服务，地图下载方式，参考[链接](https://github.com/36node-fcp/roadmap/blob/main/v1/install-project.md#%E5%AE%89%E8%A3%85fcp)，采用挂载本地目录的方式加载地图，因此需要指定 pod 所在机器，默认本地地图放在`/opt/files`目录下。
 
-##### fcp-ecs
+fcp-ecs
+
 包含 `web`、`api`、`auth`、`robot-hengtong`、`robot-xindian`、`robot-xindian2` 共 6 个应用，同时已将 `offline-map` 加入依赖项。
 
-### 安装方法
+## development
+
+
+
+参考[链接](https://blog.csdn.net/u013360850/article/details/103440483)
+
+## 安装方法
 
 `fcp-ecs` chart 已包含 `offline-map` chart，无需单独安装
 
-##### 命令行安装
+### 命令行安装
+
 ```shell
 # 更新 repo
 helm repo add 36node-fcp https://36node-fcp.github.io/helm-chart/
@@ -24,7 +33,8 @@ helm search repo 36node-fcp
 helm install fcp-ecs 36node-fcp/fcp-ecs -f values.yaml -n fcp-ecs
 ```
 
-##### ansible 安装
+### ansible 安装
+
 ```
 tasks:
   - name: Add fcp chart repo
@@ -43,7 +53,8 @@ tasks:
         xxx: xxx
 ```
 
-##### values 示例
+## values 示例
+
 ```
 values:
   host: fcp-ecs.local

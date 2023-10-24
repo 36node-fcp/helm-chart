@@ -98,7 +98,7 @@ api:
   enabled: true
   name: api
   image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-api-gateway
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-core-api
     # Overrides the image tag whose default is the chart appVersion.
     tag: main
   replicas: 1
