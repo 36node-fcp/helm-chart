@@ -30,6 +30,7 @@ helm package chart1
 helm dependency update
 
 # 索引，helm-chart 目录下，将打包的文件都放入 docs 目录下
+# docs 目录下执行
 helm repo index .
 ```
 

@@ -3,7 +3,7 @@ entries:
   fcp-ecs:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2023-10-24T20:51:12.042586+08:00"
+    created: "2023-10-24T21:02:34.791959+08:00"
     dependencies:
     - name: offline-map
       repository: https://36node-fcp.github.io/helm-chart/
@@ -17,7 +17,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2023-10-24T20:51:12.04395+08:00"
+    created: "2023-10-24T21:02:34.791166+08:00"
     dependencies:
     - name: offline-map
       repository: https://36node-fcp.github.io/helm-chart/
@@ -27,12 +27,12 @@ entries:
     name: fcp-ecs
     type: application
     urls:
-    - docs/fcp-ecs-0.1.0.tgz
+    - fcp-ecs-0.1.0.tgz
     version: 0.1.0
   offline-map:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2023-10-24T20:51:12.042854+08:00"
+    created: "2023-10-24T21:02:34.792131+08:00"
     description: A Helm chart for Kubernetes
     digest: 79e2c60b90931386c57bd7a596b22dcc12aa061ba872639ecee54e064aebe5a2
     name: offline-map
@@ -40,14 +40,4 @@ entries:
     urls:
     - offline-map-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 0.1.0
-    created: "2023-10-24T20:51:12.044186+08:00"
-    description: A Helm chart for Kubernetes
-    digest: 708b9844cbc6f5a33ce727d036cc924196c8a9bbac0a09b146b001efa53b2628
-    name: offline-map
-    type: application
-    urls:
-    - docs/offline-map-0.1.0.tgz
-    version: 0.1.0
-generated: "2023-10-24T20:51:12.040556+08:00"
+generated: "2023-10-24T21:02:34.789358+08:00"
