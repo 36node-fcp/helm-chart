@@ -13,7 +13,25 @@ fcp-ecs
 
 ## development
 
+```shell
+# 创建，helm-chart 目录下
+helm create chart1
 
+# 调试，helm-chart 目录下
+helm template --release-name chart1 --debug chart1
+
+# 校验，chart1 目录下
+helm lint
+
+# 打包，helm-chart 目录下
+helm package chart1
+
+# 当需要依赖其他 chart 时，chart1 目录下，且需要注意移除 chart1 目录下的 .helmignore 文件中的 charts/，在提交代码前还原
+helm dependency update
+
+# 索引，helm-chart 目录下，将打包的文件都放入 docs 目录下
+helm repo index .
+```
 
 参考[链接](https://blog.csdn.net/u013360850/article/details/103440483)
 
