@@ -130,6 +130,8 @@ spec:
               value: "{{ .Values.api.env.warningClean }}"
             - name: WARNING_EXPIRES
               value: "{{ .Values.api.env.warningExpires }}"
+            - name: CACHE_MEMCACHED_URL
+              value: "{{ .Values.api.env.memcachedUri }}"
           ports:
             - name: http
               containerPort: {{ .Values.api.service.port | default .Values.service.port }}

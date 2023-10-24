@@ -122,6 +122,7 @@ api:
     initCache: "true"
     logLevel: "log"
 
+    memcachedUri: "memcached://localhost:11211"
     microserviceEnable: "true"
     mongoUri: "mongodb://localhost/api"
 
