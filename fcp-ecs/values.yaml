@@ -287,20 +287,43 @@ robotXindian2:
     port:
     type:
 
-mock:
+# mock:
+#   enabled: false
+#   name: mock
+#   image:
+#     repository: registry.cn-beijing.aliyuncs.com/36node/fcp-ecs-api
+#     tag: main
+#   replicas: 1
+#   env:
+#     mockData: "true"
+#     mockIllegalDelay: "259200"
+#     mockIllegalFirst: "false"
+#     mockIllegalNum: "1"
+#     mockImage: ""
+#     mockTrackDelay: "60"
+#     mockTrackNum: "3"
+#     mockVideo: ""
+#     mqttUri: "mqtt://localhost"
+
+robotMock:
   enabled: false
-  name: mock
+  name: robot-mock
   image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-ecs-api
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-mock-robot
     tag: main
   replicas: 1
   env:
-    mockData: "true"
-    mockIllegalDelay: "259200"
-    mockIllegalFirst: "false"
-    mockIllegalNum: "1"
-    mockImage: ""
-    mockTrackDelay: "60"
-    mockTrackNum: "3"
-    mockVideo: ""
+    logLevel: "info"
+    mqttPassword: 
+    mqttTopicIllegalRecord: "record/illegal"
+    mqttTopicTrackRecord: "record/track"
     mqttUri: "mqtt://localhost"
+    mqttUsername: 
+    nodeEnv: "development"
+    port: "9527"
+    urlPrefix: "/v0"
+    apiService: http://api/ecs-api
+  resources:
+  service:
+    port:
+    type:

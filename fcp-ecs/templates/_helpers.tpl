@@ -78,7 +78,7 @@ app.kubernetes.io/name: {{ .Values.robotXindian.name }}
 app.kubernetes.io/name: {{ .Values.robotXindian2.name }}
 {{- end }}
 
-{{- define "mock.selectorLabels" -}}
+{{- define "robot-mock.selectorLabels" -}}
 {{- include "fcp-ecs.selectorLabels" . }}
-app.kubernetes.io/name: {{ .Values.mock.name }}
+app.kubernetes.io/name: {{ .Values.robotMock.name }}
 {{- end }}
