@@ -35,11 +35,13 @@ spec:
             - name: PORT
               value: "{{ .Values.robotDahua.env.port }}"
             - name: URL_PREFIX
-              value: "{{ .Values.robotDahua.env.path }}"
+              value: "{{ .Values.robotDahua.path }}"
             - name: FCP_ENDPOINT
               value: "{{ .Values.robotDahua.env.fcpEndpoint }}"
             - name: CACHE_REDIS_URL
               value: "{{ .Values.robotDahua.env.redisUri }}"
+            - name: REDIS_GLOBAL_PREFIX
+              value: "{{ .Values.robotDahua.env.redisGlobalPrefix }}"
             - name: MQTT_URL
               value: "{{ .Values.robotDahua.env.mqttUri }}"
             - name: MQTT_USERNAME
@@ -56,12 +58,12 @@ spec:
               value: "{{ .Values.robotDahua.env.mqttTopicIllegalRecordDahua }}"
             - name: MQTT_TOPIC_TRACK_RECORD_DAHUA
               value: "{{ .Values.robotDahua.env.mqttTopicTrackRecordDahua }}"
-            - name: MQTT_GANTRY_DEVICE_EXCHANGE
+            - name: MQTT_TOPIC_GANTRY_DEVICE
               value: "{{ .Values.robotDahua.env.mqttGantryDeviceExchange }}"
-            - name: MQTT_GANTRY_EXCHANGE
-              value: "{{ .Values.robotDahua.env.mqttGantryExchange }}"
-            - name: MQTT_ILLEGAL_TYPE_EXCHANGE
-              value: "{{ .Values.robotDahua.env.mqttIllegalTypeExchange }}"
+            - name: MQTT_TOPIC_GANTRY
+              value: "{{ .Values.robotDahua.env.mqttTopicGantry }}"
+            - name: MQTT_TOPIC_ILLEGAL_TYPE
+              value: "{{ .Values.robotDahua.env.mqttTopicIllegalType }}"
           command: ["pnpm", "mock:prod"]
           ports:
             - name: http

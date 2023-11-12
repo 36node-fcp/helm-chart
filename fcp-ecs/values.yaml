@@ -106,20 +106,11 @@ api:
   env:
     cacheRedisDb: "0"
     cacheRedisUri: "redis://localhost:6379"
-    checkTime: "false"
 
     illegalExpires: "259200000"
     illegalExpiresDays: "3"
-    illegalIgnoreUnderspeed: "false"
-    illegalMonitor: "true"
-    illegalOverspeedCode: "111111"
     illegalRecordClean: "31536000"
-    illegalToXindian: "true"
-    illegalToXindianLimit: "100"
-    illegalUnderspeedCode: "430601"
     illegalUnderspeedLimit: "60"
-
-    initCache: "true"
     logLevel: "log"
 
     memcachedUri: "memcached://localhost:11211"
@@ -130,19 +121,15 @@ api:
     mqttUri: "mqtt://localhost:1883"
     mqttUsername: 
     mqttPassword: 
-    mqttTopicDeviceCreate: "device/create"
-    mqttTopicDeviceDelete: "device/delete"
-    mqttTopicDeviceStatus: "$share/default/device/status"
-    mqttTopicDeviceUpdate: "device/update"
-    mqttTopicIllegalRecord: "$share/default/fcp/illegal"
-    mqttTopicIllegalRecordDahua: "$share/default/record/illegal/dahua"
-    mqttTopicIllegalRecordMonitor: "$share/default/record/illegal/monitor"
-    mqttTopicNotifyIllegalXindian: "notify/illegal/xindian"
+    mqttTopicGantryDeviceStatus: "fcp/gantry-device/status"
+    mqttTopicIllegalRecord: "fcp/illegal"
+    mqttTopicTrackRecord: "fcp/track"
+    mqttTopicWarningClose: "fcp/warning/close"
+    mqttTopicGantryDevice: "notify/gantry-device"
+    mqttTopicGantry: "notify/gantry"
+    mqttTopicIllegalType: notify/illegal-type
     mqttTopicNotifyWarning: "notify/warning"
-    mqttTopicNotifyWarningJingwutong: "notify/warningJingwutong"
-    mqttTopicTrackRecord: "$share/default/fcp/track"
-    mqttTopicTrackRecordDahua: "$share/default/record/track/dahua"
-    mqttTopicWarningClose: "$share/default/warning/close"
+    mqttTopicNotifyIllegalRecord: "notify/illegal-record"
 
     port: "80"
 
@@ -199,6 +186,7 @@ robotDahua:
     port: 80
     fcpEndpoint: http://fcp-ecs-uat.36node.com/ecs-api
     redisUri: redis://localhost:6379
+    redisGlobalPrefix: DAHUA-ROBOT-
     mqttUri: mqtt://localhost
     mqttUsername: 
     mqttPassword: 
@@ -206,9 +194,9 @@ robotDahua:
     mqttTopicTrackRecord: fcp/track
     mqttTopicIllegalRecordDahua: record/illegal/dahua
     mqttTopicTrackRecordDahua: record/track/dahua
-    mqttGantryDeviceExchange: notify/gantry-device/#
-    mqttGantryExchange: notify/gantry/#
-    mqttIllegalTypeExchange: notify/illegal-type/#
+    mqttTopicGantryDevice: notify/gantry-device/#
+    mqttTopicGantry: notify/gantry/#
+    mqttTopicIllegalType: notify/illegal-type/#
   resources:
   service:
     port: 80

@@ -48,66 +48,40 @@ spec:
               value: "{{ .Values.api.env.cacheRedisDb }}"
             - name: CACHE_REDIS_URL
               value: "{{ .Values.api.env.cacheRedisUri }}"
-            - name: CHECK_TIME
-              value: "{{ .Values.api.env.checkTime }}"
             - name: ILLEGAL_EXPIRES
               value: "{{ .Values.api.env.illegalExpires }}"
             - name: ILLEGAL_EXPIRES_DAYS
               value: "{{ .Values.api.env.illegalExpiresDays }}"
-            - name: ILLEGAL_IGNORE_UNDERSPEED
-              value: "{{ .Values.api.env.illegalIgnoreUnderspeed }}"
-            - name: ILLEGAL_MONITOR
-              value: "{{ .Values.api.env.illegalMonitor }}"
-            - name: ILLEGAL_OVERSPEED_CODE
-              value: "{{ .Values.api.env.illegalOverspeedCode }}"
             - name: ILLEGAL_RECORD_CLEAN
               value: "{{ .Values.api.env.illegalRecordClean }}"
-            - name: ILLEGAL_TO_XINDIAN
-              value: "{{ .Values.api.env.illegalToXindian }}"
-            - name: ILLEGAL_TO_XINDIAN_LIMIT
-              value: "{{ .Values.api.env.illegalToXindianLimit }}"
-            - name: ILLEGAL_UNDERSPEED_CODE
-              value: "{{ .Values.api.env.illegalUnderspeedCode }}"
             - name: ILLEGAL_UNDERSPEED_LIMIT
               value: "{{ .Values.api.env.illegalUnderspeedLimit }}"
-            - name: INIT_CACHE
-              value: "{{ .Values.api.env.initCache }}"
             - name: LOG_LEVEL
               value: "{{ .Values.api.env.logLevel }}"
             - name: MICROSERVICE_ENABLE
               value: "{{ .Values.api.env.microserviceEnable }}"
             - name: MONGO_URL
               value: "{{ .Values.api.env.mongoUri }}"
-            - name: MQTT_CLIENT
-              value: "{{ .Values.api.env.mqttClient }}"
             - name: MQTT_PASSWORD
               value: "{{ .Values.api.env.mqttPassword }}"
-            - name: MQTT_TOPIC_DEVICE_CREATE
-              value: "{{ .Values.api.env.mqttTopicDeviceCreate }}"
-            - name: MQTT_TOPIC_DEVICE_DELETE
-              value: "{{ .Values.api.env.mqttTopicDeviceDelete }}"
-            - name: MQTT_TOPIC_DEVICE_STATUS
-              value: "{{ .Values.api.env.mqttTopicDeviceStatus }}"
-            - name: MQTT_TOPIC_DEVICE_UPDATE
-              value: "{{ .Values.api.env.mqttTopicDeviceUpdate }}"
+            - name: MQTT_TOPIC_GANTRY_DEVICE_STATUS
+              value: "{{ .Values.api.env.mqttTopicGantryDeviceStatus }}"
+            - name: MQTT_TOPIC_GANTRY_DEVICE
+              value: "{{ .Values.api.env.mqttTopicGantryDevice }}"
+            - name: MQTT_TOPIC_GANTRY
+              value: "{{ .Values.api.env.mqttTopicGantry }}"
+            - name: MQTT_TOPIC_ILLEGAL_TYPE
+              value: "{{ .Values.api.env.mqttTopicIllegalType }}"
             - name: MQTT_TOPIC_ILLEGAL_RECORD
               value: "{{ .Values.api.env.mqttTopicIllegalRecord }}"
-            - name: MQTT_TOPIC_ILLEGAL_RECORD_DAHUA
-              value: "{{ .Values.api.env.mqttTopicIllegalRecordDahua }}"
-            - name: MQTT_TOPIC_ILLEGAL_RECORD_MONITOR
-              value: "{{ .Values.api.env.mqttTopicIllegalRecordMonitor }}"
-            - name: MQTT_TOPIC_NOTIFY_ILLEGAL_XINDIAN
-              value: "{{ .Values.api.env.mqttTopicNotifyIllegalXindian }}"
             - name: MQTT_TOPIC_NOTIFY_WARNING
               value: "{{ .Values.api.env.mqttTopicNotifyWarning }}"
-            - name: MQTT_TOPIC_NOTIFY_WARNING_JINGWUTONG
-              value: "{{ .Values.api.env.mqttTopicNotifyWarningJingwutong }}"
             - name: MQTT_TOPIC_TRACK_RECORD
               value: "{{ .Values.api.env.mqttTopicTrackRecord }}"
-            - name: MQTT_TOPIC_TRACK_RECORD_DAHUA
-              value: "{{ .Values.api.env.mqttTopicTrackRecordDahua }}"
             - name: MQTT_TOPIC_WARNING_CLOSE
               value: "{{ .Values.api.env.mqttTopicWarningClose }}"
+            - name: MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD
+              value: "{{ .Values.api.env.mqttTopicNotifyIllegalRecord }}"
             - name: MQTT_URL
               value: "{{ .Values.api.env.mqttUri }}"
             - name: MQTT_USERNAME
