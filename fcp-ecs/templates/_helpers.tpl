@@ -63,6 +63,16 @@ app.kubernetes.io/name: {{ .Values.api.name }}
 app.kubernetes.io/name: {{ .Values.auth.name }}
 {{- end }}
 
+{{- define "robot-dahua.selectorLabels" -}}
+{{- include "fcp-ecs.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.robotDahua.name }}
+{{- end }}
+
+{{- define "robot-dahua-mock.selectorLabels" -}}
+{{- include "fcp-ecs.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.robotDahua.mock.name }}
+{{- end }}
+
 {{- define "robot-hengtong.selectorLabels" -}}
 {{- include "fcp-ecs.selectorLabels" . }}
 app.kubernetes.io/name: {{ .Values.robotHengtong.name }}

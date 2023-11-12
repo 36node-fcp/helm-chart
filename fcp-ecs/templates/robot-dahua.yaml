@@ -1,0 +1,91 @@
+{{ if .Values.robotDahua.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.robotDahua.name }}
+  labels:
+    {{- include "robot-dahua.selectorLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.robotDahua.service.type | default .Values.service.type }}
+  ports:
+    - port: {{ .Values.robotDahua.service.port | default .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "robot-dahua.selectorLabels" . | nindent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.robotDahua.name }}
+  labels:
+    {{- include "fcp-ecs.labels" . | nindent 4 }}
+    {{- include "robot-dahua.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.robotDahua.replicas }}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "robot-dahua.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "robot-dahua.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.robotDahua.name }}
+          image: "{{ .Values.robotDahua.image.repository }}:{{ .Values.robotDahua.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.robotDahua.image.pullPolicy | default .Values.pullPolicy }}
+          env:
+            - name: LOG_LEVEL
+              value: "{{ .Values.robotDahua.env.logLevel }}"
+            - name: NAME
+              value: "{{ .Values.robotDahua.env.name }}"
+            - name: PORT
+              value: "{{ .Values.robotDahua.env.port }}"
+            - name: URL_PREFIX
+              value: "{{ .Values.robotDahua.path }}"
+            - name: FCP_ENDPOINT
+              value: "{{ .Values.robotDahua.env.fcpEndpoint }}"
+            - name: CACHE_REDIS_URL
+              value: "{{ .Values.robotDahua.env.redisUri }}"
+            - name: MQTT_URL
+              value: "{{ .Values.robotDahua.env.mqttUri }}"
+            - name: MQTT_USERNAME
+              value: "{{ .Values.robotDahua.env.mqttUsername }}"
+            - name: MQTT_PASSWORD
+              value: "{{ .Values.robotDahua.env.mqttPassword }}"
+            - name: NODE_ENV
+              value: "{{ .Values.robotDahua.env.nodeEnv }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD
+              value: "{{ .Values.robotDahua.env.mqttTopicIllegalRecord }}"
+            - name: MQTT_TOPIC_TRACK_RECORD
+              value: "{{ .Values.robotDahua.env.mqttTopicTrackRecord }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD_DAHUA
+              value: "{{ .Values.robotDahua.env.mqttTopicIllegalRecordDahua }}"
+            - name: MQTT_TOPIC_TRACK_RECORD_DAHUA
+              value: "{{ .Values.robotDahua.env.mqttTopicTrackRecordDahua }}"
+            - name: MQTT_GANTRY_DEVICE_EXCHANGE
+              value: "{{ .Values.robotDahua.env.mqttGantryDeviceExchange }}"
+            - name: MQTT_GANTRY_EXCHANGE
+              value: "{{ .Values.robotDahua.env.mqttGantryExchange }}"
+            - name: MQTT_ILLEGAL_TYPE_EXCHANGE
+              value: "{{ .Values.robotDahua.env.mqttIllegalTypeExchange }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.robotDahua.service.port | default .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- if .Values.robotDahua.resources }}
+            {{- toYaml .Values.robotDahua.resources | nindent 12 }}
+            {{- else }}
+            {{- toYaml .Values.resources | nindent 12 }}
+            {{- end }}
+{{- end }}

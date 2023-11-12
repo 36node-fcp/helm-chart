@@ -52,4 +52,18 @@ spec:
       host: {{ .Values.host | quote}}
       {{- end }}
     {{- end }}
+    {{- if .Values.robotDahua.enabled }}
+    - http:
+        paths:
+          - path: {{ .Values.robotDahua.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.robotDahua.name }}
+                port:
+                  number: 80
+      {{- if .Values.host }}
+      host: {{ .Values.host | quote}}
+      {{- end }}
+    {{- end }}
 {{- end }}

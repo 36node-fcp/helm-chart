@@ -134,13 +134,13 @@ api:
     mqttTopicDeviceDelete: "device/delete"
     mqttTopicDeviceStatus: "$share/default/device/status"
     mqttTopicDeviceUpdate: "device/update"
-    mqttTopicIllegalRecord: "$share/default/record/illegal"
+    mqttTopicIllegalRecord: "$share/default/fcp/illegal"
     mqttTopicIllegalRecordDahua: "$share/default/record/illegal/dahua"
     mqttTopicIllegalRecordMonitor: "$share/default/record/illegal/monitor"
     mqttTopicNotifyIllegalXindian: "notify/illegal/xindian"
     mqttTopicNotifyWarning: "notify/warning"
     mqttTopicNotifyWarningJingwutong: "notify/warningJingwutong"
-    mqttTopicTrackRecord: "$share/default/record/track"
+    mqttTopicTrackRecord: "$share/default/fcp/track"
     mqttTopicTrackRecordDahua: "$share/default/record/track/dahua"
     mqttTopicWarningClose: "$share/default/warning/close"
 
@@ -181,6 +181,39 @@ auth:
     port:
     type:
 
+robotDahua:
+  enabled: false
+  name: robot-dahua
+  path: /dahua-mqtt-robot
+  mock:
+    name: robot-dahua-mock
+    enabled: false
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-dahua-mqtt-robot
+    tag: main
+  replicas: 1
+  env:
+    nodeEnv: development
+    logLevel: "info"
+    name: 大华
+    port: 80
+    fcpEndpoint: http://fcp-ecs-uat.36node.com/ecs-api
+    redisUri: redis://localhost:6379
+    mqttUri: mqtt://localhost
+    mqttUsername: 
+    mqttPassword: 
+    mqttTopicIllegalRecord: fcp/illegal
+    mqttTopicTrackRecord: fcp/track
+    mqttTopicIllegalRecordDahua: record/illegal/dahua
+    mqttTopicTrackRecordDahua: record/track/dahua
+    mqttGantryDeviceExchange: notify/gantry-device/#
+    mqttGantryExchange: notify/gantry/#
+    mqttIllegalTypeExchange: notify/illegal-type/#
+  resources:
+  service:
+    port: 80
+    type:
+
 robotHengtong:
   enabled: false
   name: robot-hengtong
@@ -195,11 +228,11 @@ robotHengtong:
     mqttUri: "mqtt://localhost"
     mqttUsername: 
     nodeEnv: "development"
-    port: "9527"
+    port: 80
     urlPrefix: "/v0"
   resources:
   service:
-    port:
+    port: 80
     type:
 
 robotXindian:
@@ -220,7 +253,7 @@ robotXindian:
     mqttTopicIllegalRecordMonitor: "record/illegal/monitor"
     mqttUri: "mqtt://localhost:1883"
     
-    port: "9527"
+    port: 80
     recordDefaultJyzt: "0"
     recordDefaultSpotsn: ""
     recordDefaultUpuser: ""
@@ -243,7 +276,7 @@ robotXindian:
       cpu: "500m"
       memory: "1G"
   service:
-    port:
+    port: 80
     type:
 
 robotXindian2:
@@ -262,7 +295,7 @@ robotXindian2:
     mqttTopicIllegalRecord: "notify/illegal/xindian"
     mqttTopicIllegalRecordMonitor: "record/illegal/monitor"
     mqttUri: "mqtt://localhost:1883"
-    port: "9527"
+    port: 80
     recordDefaultJyzt: "0"
     recordDefaultSpotsn: ""
     recordDefaultUpuser: ""
@@ -315,12 +348,12 @@ robotMock:
   env:
     logLevel: "info"
     mqttPassword: 
-    mqttTopicIllegalRecord: "record/illegal"
-    mqttTopicTrackRecord: "record/track"
-    mqttUri: "mqtt://localhost"
+    mqttTopicIllegalRecord: fcp/illegal
+    mqttTopicTrackRecord: fcp/track
+    mqttUri: mqtt://localhost
     mqttUsername: 
     nodeEnv: "development"
-    port: "9527"
+    port: 80
     urlPrefix: "/v0"
     apiService: http://api/ecs-api
   resources:
