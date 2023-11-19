@@ -75,7 +75,7 @@ spec:
             - name: MQTT_TOPIC_TRACK_RECORD_DAHUA
               value: "{{ .Values.robotDahua.env.mqttTopicTrackRecordDahua }}"
             - name: MQTT_TOPIC_GANTRY_DEVICE
-              value: "{{ .Values.robotDahua.env.mqttGantryDeviceExchange }}"
+              value: "{{ .Values.robotDahua.env.mqttTopicGantryDevice }}"
             - name: MQTT_TOPIC_GANTRY
               value: "{{ .Values.robotDahua.env.mqttTopicGantry }}"
             - name: MQTT_TOPIC_ILLEGAL_TYPE
