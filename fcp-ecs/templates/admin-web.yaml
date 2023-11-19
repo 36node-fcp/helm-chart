@@ -46,14 +46,16 @@ spec:
           env:
             - name: REACT_APP_AUTH_ENDPOINT
               value: "{{ .Values.adminWeb.env.authEndpoint }}"
+            - name: REACT_APP_FCP_ENDPOINT
+              value: "{{ .Values.adminWeb.env.fcpEndpoint }}"
+            - name: REACT_APP_DAHUA_MQTT_ROBOT_ENDPOINT
+              value: "{{ .Values.adminWeb.env.dahuaMqttRobotEndpoint }}"
             - name: REACT_APP_BUILD
               value: "{{ .Values.adminWeb.env.build }}"
             - name: REACT_APP_COPYRIGHT
               value: "{{ .Values.adminWeb.env.copyright }}"
             - name: REACT_APP_ECHO
               value: "{{ .Values.adminWeb.env.echo }}"
-            - name: REACT_APP_ECS_ENDPOINT
-              value: "{{ .Values.adminWeb.env.ecsEndpoint }}"
             - name: REACT_APP_GANTRY_ICON_SIZE
               value: "{{ .Values.adminWeb.env.gantryIconSize }}"
             - name: REACT_APP_GUANGXIN_ENDPOINT
@@ -80,10 +82,10 @@ spec:
               value: "{{ .Values.adminWeb.env.illegalMonitorXindianLimitSDesc }}"
             - name: REACT_APP_LOGIN_FAIL_LOCK_TIME_M
               value: "{{ .Values.adminWeb.env.loginFailLockTimeM }}"
-            - name: REACT_APP_MAP_BOUND_LEFT
-              value: "{{ .Values.adminWeb.env.mapBoundLeft }}"
-            - name: REACT_APP_MAP_BOUND_RIGHT
-              value: "{{ .Values.adminWeb.env.mapBoundRight }}"
+            - name: REACT_APP_MAP_BOUND_NORTH_EAST
+              value: "{{ .Values.adminWeb.env.mapBoundNorthEast }}"
+            - name: REACT_APP_MAP_BOUND_SOUTH_WEST
+              value: "{{ .Values.adminWeb.env.mapBoundSouthWest }}"
             - name: REACT_APP_MAP_CENTER
               value: "{{ .Values.adminWeb.env.mapCenter }}"
             - name: REACT_APP_MAP_CURRENT_ZOOM
@@ -130,9 +132,11 @@ spec:
               value: "{{ .Values.adminWeb.env.ossRegion }}"
             - name: REACT_APP_PAGE_MAX_WIDTH
               value: "{{ .Values.adminWeb.env.pageMaxWidth }}"
-            - name: REACT_APP_PROVIDER
+            - name: REACT_APP_AUTH_PROVIDER
               value: "{{ .Values.adminWeb.env.provider }}"
-            - name: REACT_APP_SCOPE
+            - name: REACT_APP_AUTH_SCOPE
+              value: "{{ .Values.adminWeb.env.scope }}"
+            - name: REACT_APP_ROOT_NS
               value: "{{ .Values.adminWeb.env.scope }}"
             - name: REACT_APP_SUB_TITLE
               value: "{{ .Values.adminWeb.env.subTitle }}"

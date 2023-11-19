@@ -4,6 +4,9 @@ fullnameOverride: ""
 host: "fcp-ecs.local"
 pullPolicy: IfNotPresent
 
+offlineMap:
+  enabled: true
+
 ingress: 
   enabled: true
 
@@ -32,9 +35,10 @@ adminWeb:
     echo: "true"
 
     authEndpoint: ""
-    ecsEndpoint: ""
+    fcpEndpoint: ""
     guangxinEndpoint: ""
     mapEndpoint: ""
+    dahuaMqttRobotEndpoint: ""
 
     illegalMonitorDahuaLimit: "3"
     illegalMonitorDahuaLimitS: "120"
@@ -50,14 +54,14 @@ adminWeb:
     gantryIconSize: "16"
     loginFailLockTimeM: "5"
 
-    mapBoundLeft: "30.7184163,120.47437365"
-    mapBoundRight: "28.92927024,122.31013782"
+    mapBoundNorthEast: "30.7184163,120.47437365"
+    mapBoundSouthWest: "28.92927024,122.31013782"
     mapCenter: "29.85645453,121.51695313"
     mapCurrentZoom: "11"
 
-    mapGantryMinZoom: "12"
+    mapGantryMinZoom: "11"
     mapMaxZoom: "17"
-    mapMinZoom: "9"
+    mapMinZoom: "11"
 
     mqttHostname: ""
     mqttHostnameEmpty: "off"
@@ -184,7 +188,7 @@ robotDahua:
     logLevel: "info"
     name: 大华
     port: 80
-    fcpEndpoint: http://fcp-ecs-uat.36node.com/ecs-api
+    fcpEndpoint: http://fcp-uat.36node.com/ecs-api
     redisUri: redis://localhost:6379
     redisGlobalPrefix: DAHUA-ROBOT-
     mqttUri: mqtt://localhost
