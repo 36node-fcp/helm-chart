@@ -36,6 +36,8 @@ spec:
               value: "{{ .Values.robotDahua.env.port }}"
             - name: URL_PREFIX
               value: "{{ .Values.robotDahua.path }}"
+            - name: ROBOT_ENDPOINT
+              value: "{{ .Values.robotDahua.env.robotEndpoint }}"
             - name: FCP_ENDPOINT
               value: "{{ .Values.robotDahua.env.fcpEndpoint }}"
             - name: CACHE_REDIS_URL

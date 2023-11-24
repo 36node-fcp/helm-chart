@@ -189,6 +189,7 @@ robotDahua:
     name: 大华
     port: 80
     fcpEndpoint: http://fcp-uat.36node.com/ecs-api
+    robotEndpoint: http://fcp-uat.36node.com/dahua-mqtt-robot
     redisUri: redis://localhost:6379
     redisGlobalPrefix: DAHUA-ROBOT-
     mqttUri: mqtt://localhost
