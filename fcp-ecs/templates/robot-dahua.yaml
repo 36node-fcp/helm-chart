@@ -48,6 +48,8 @@ spec:
               value: "{{ .Values.robotDahua.env.logLevel }}"
             - name: NAME
               value: "{{ .Values.robotDahua.env.name }}"
+            - name: SOURCE_NAME
+              value: "{{ .Values.robotDahua.env.sourceName }}"
             - name: PORT
               value: "{{ .Values.robotDahua.env.port }}"
             - name: URL_PREFIX
