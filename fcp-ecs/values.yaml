@@ -98,6 +98,18 @@ adminWeb:
     port:
     type:
 
+roadmap:
+  enabled: true
+  name: roadmap
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-roadmap
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: main
+  resources:
+  service:
+    port:
+    type:
+
 api:
   enabled: true
   name: api

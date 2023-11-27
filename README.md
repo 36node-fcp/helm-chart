@@ -84,3 +84,8 @@ values:
   adminWeb:
     enabled: true
 ```
+
+## roadmap 账号
+
+- fcp-developer: 36node@Fcp
+- fcp-xwb: xwb@Fcp34

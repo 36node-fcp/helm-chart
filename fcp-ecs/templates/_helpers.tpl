@@ -53,6 +53,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/name: {{ .Values.adminWeb.name }}
 {{- end }}
 
+{{- define "roadmap.selectorLabels" -}}
+{{- include "fcp-ecs.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.roadmap.name }}
+{{- end }}
+
 {{- define "api.selectorLabels" -}}
 {{- include "fcp-ecs.selectorLabels" . }}
 app.kubernetes.io/name: {{ .Values.api.name }}
