@@ -67,7 +67,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /roadmap
             pathType: ImplementationSpecific
             backend:
               service:
