@@ -228,7 +228,7 @@ robotHengtong:
     name: robot-hengtong-mock
     enabled: false
   image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-hengtong
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-hengtong-robot
     tag: main
   replicas: 1
   env:
@@ -263,7 +263,7 @@ robotFace:
     name: robot-face-mock
     enabled: false
   image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-face
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-face-robot
     tag: main
   replicas: 1
   env:
@@ -301,7 +301,7 @@ robotXindian:
   name: robot-xindian
   path: /xindian-robot
   image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-xindian
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-xindian-robot
     tag: main
   replicas: 1
   env:
