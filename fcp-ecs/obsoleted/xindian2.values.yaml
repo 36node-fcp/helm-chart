@@ -1,0 +1,40 @@
+robotXindian2:
+  enabled: false
+  name: robot-xindian2
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-xindian2
+    tag: main
+  replicas: 1
+  env:
+    illegalRecordMonitor: "true"
+    illegalRecordMonitorSource: "XINDIAN"
+    mqttClient: "0"
+    mqttUsername: ""
+    mqttPassword: ""
+    mqttTopicIllegalRecord: "notify/illegal/xindian"
+    mqttTopicIllegalRecordMonitor: "record/illegal/monitor"
+    mqttUri: "mqtt://localhost:1883"
+    port: 80
+    recordDefaultJyzt: "0"
+    recordDefaultSpotsn: ""
+    recordDefaultUpuser: ""
+    sqlDatabase: ""
+    sqlHost: "localhost"
+    sqlUsername: ""
+    sqlPassword: ""
+    sqlPoolSize: "20"
+    sqlPort: "3306"
+    sqlSequenceQuery: ""
+    sqlSync: "false"
+    sqlTableName: ""
+    sqlType: "mysql"
+  resources:
+    limits:
+      cpu: "4"
+      memory: "8G"
+    requests:
+      cpu: "500m"
+      memory: "1G"
+  service:
+    port:
+    type:

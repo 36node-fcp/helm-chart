@@ -75,7 +75,7 @@ spec:
                 port:
                   number: 80
       {{- if .Values.host }}
-      host: roadmap.{{ .Values.host }}
+      host: {{ .Values.host }}
       {{- end }}
 
   {{- end }}
