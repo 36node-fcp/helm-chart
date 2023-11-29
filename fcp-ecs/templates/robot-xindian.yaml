@@ -44,24 +44,29 @@ spec:
           image: "{{ .Values.robotXindian.image.repository }}:{{ .Values.robotXindian.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.robotXindian.image.pullPolicy | default .Values.pullPolicy }}
           env:
-            - name: ILLEGAL_RECORD_MONITOR
-              value: "{{ .Values.robotXindian.env.illegalRecordMonitor }}"
-            - name: ILLEGAL_RECORD_MONITOR_SOURCE
-              value: "{{ .Values.robotXindian.env.illegalRecordMonitorSource }}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.robotXindian.env.logLevel }}"
+            - name: NAME
+              value: "{{ .Values.robotXindian.env.name }}"
+            - name: PORT
+              value: "{{ .Values.robotXindian.env.port }}"
+            - name: URL_PREFIX
+              value: "{{ .Values.robotXindian.path }}"
+            - name: ROBOT_ENDPOINT
+              value: "{{ .Values.robotXindian.env.robotEndpoint }}"
+            - name: FCP_ENDPOINT
+              value: "{{ .Values.robotXindian.env.fcpEndpoint }}"
+          
             - name: MQTT_CLIENT
               value: "{{ .Values.robotXindian.env.mqttClient }}"
             - name: MQTT_PASSWORD
               value: "{{ .Values.robotXindian.env.mqttPassword }}"
             - name: MQTT_TOPIC_ILLEGAL_RECORD
               value: "{{ .Values.robotXindian.env.mqttTopicIllegalRecord }}"
-            - name: MQTT_TOPIC_ILLEGAL_RECORD_MONITOR
-              value: "{{ .Values.robotXindian.env.mqttTopicIllegalRecordMonitor }}"
             - name: MQTT_URL
               value: "{{ .Values.robotXindian.env.mqttUri }}"
             - name: MQTT_USERNAME
               value: "{{ .Values.robotXindian.env.mqttUsername }}"
-            - name: PORT
-              value: "{{ .Values.robotXindian.env.port }}"
             - name: RECORD_DEFAULT_JYZT
               value: "{{ .Values.robotXindian.env.recordDefaultJyzt }}"
             - name: RECORD_DEFAULT_SPOTSN

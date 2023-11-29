@@ -26,7 +26,7 @@ adminWeb:
   enabled: true
   name: admin-web
   image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-ecs-admin
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-admin-web
     # Overrides the image tag whose default is the chart appVersion.
     tag: main
   env:
@@ -223,19 +223,74 @@ robotDahua:
 robotHengtong:
   enabled: false
   name: robot-hengtong
+  path: /hengtong-illegal-robot
+  mock:
+    name: robot-hengtong-mock
+    enabled: false
   image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-ecs-robot-hengtong
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-hengtong
     tag: main
   replicas: 1
   env:
     logLevel: "info"
+    sourceName: 恒通
+    name: 恒通违法变道
     mqttPassword: 
-    mqttTopicIllegalRecord: "record/illegal"
     mqttUri: "mqtt://localhost"
     mqttUsername: 
+    mqttTopicIllegalRecord: "fcp/illegal"
+    mqttTopicIllegalRecord: "fcp/draft"
+    mqttTopicIllegalRecordHengtong: "record/illegal/hengtong"
+    mqttTopicGantryDevice: notify/gantry-device/#
+    mqttTopicGantry: notify/gantry/#
+    mqttTopicIllegalType: notify/illegal-type/#
+    redisGlobalPrefix: HENGTONG-ROBOT-
+    redisUri: redis://localhost:6379
+    robotEndpoint: http://fcp-uat.36node.com/hengtong-illegal-robot
+    fcpEndpoint: http://fcp-uat.36node.com/ecs-api
     nodeEnv: "development"
     port: 80
-    urlPrefix: "/v0"
+  resources:
+  service:
+    port: 80
+    type:
+
+robotFace:
+  enabled: false
+  name: robot-face
+  path: /face-robot
+  mock:
+    name: robot-face-mock
+    enabled: false
+  image:
+    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-face
+    tag: main
+  replicas: 1
+  env:
+    logLevel: "info"
+    sourceName: 恒通
+    name: 恒通人脸比对
+    mqttPassword: 
+    mqttUri: "mqtt://localhost"
+    mqttUsername: 
+    mqttTopicGantryDevice: notify/gantry-device/#
+    mqttTopicGantry: notify/gantry/#
+    mqttTopicIllegalRecordPersonCreate: notify/illegal-record/PERSON/create
+    mqttTopicIllegalRecordNonmotorCreate: notify/illegal-record/NONMOTOR/create
+    mqttTopicIllegalRecordPersonUpdate: notify/illegal-record/PERSON/update
+    mqttTopicIllegalRecordNonmotorUpdate: notify/illegal-record/NONMOTOR/update
+    mqttTopicIllegalRecordPersonDelete: notify/illegal-record/PERSON/delete
+    mqttTopicIllegalRecordNonmotorDelete: notify/illegal-record/NONMOTOR/delete
+    mqttTopicIllegalRecordPersonClose: notify/illegal-record/PERSON/close
+    mqttTopicIllegalRecordNonmotorClose: notify/illegal-record/NONMOTOR/close
+    mqttNotifyPerson: record/person/face
+    mqttTopicWarning: record/warning/face
+    redisGlobalPrefix: FACE-ROBOT-
+    redisUri: redis://localhost:6379
+    robotEndpoint: http://fcp-uat.36node.com/face-robot
+    fcpEndpoint: http://fcp-uat.36node.com/ecs-api
+    nodeEnv: "development"
+    port: 80
   resources:
   service:
     port: 80
@@ -244,35 +299,36 @@ robotHengtong:
 robotXindian:
   enabled: false
   name: robot-xindian
+  path: /xindian-robot
   image:
     repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-xindian
     tag: main
   replicas: 1
   env:
-    illegalRecordMonitor: "true"
-    illegalRecordMonitorSource: "XINDIAN"
-
     mqttClient: "0"
     mqttUsername: ""
     mqttPassword: ""
-    mqttTopicIllegalRecord: "xindian/record"
-    mqttTopicIllegalRecordMonitor: "record/illegal/monitor"
+    mqttTopicIllegalRecord: "notify/illegal-record/VEHICLE/create"
     mqttUri: "mqtt://localhost:1883"
     
     port: 80
+    logLevel: "info"
+    name: 信电
+    robotEndpoint: http://fcp-uat.36node.com/hengtong-illegal-robot
+    fcpEndpoint: http://fcp-uat.36node.com/ecs-api
     recordDefaultJyzt: "0"
     recordDefaultSpotsn: ""
     recordDefaultUpuser: ""
-    sqlDatabase: ""
-    sqlHost: ""
-    sqlUsername: ""
-    sqlPassword: ""
+    sqlDatabase: "ZJVIO_NB"
+    sqlHost: "192.168.101.11"
+    sqlUsername: "ZJVIO_NB"
+    sqlPassword: "ZJVIO_NB@2022"
     sqlPoolSize: "20"
     sqlPort: "1521"
-    sqlSequenceQuery: ""
-    sqlServicename: "orcl"
+    sqlSequenceQuery: "SELECT VIO_TEMP_SEQ.NEXTVAL FROM DUAL"
+    sqlServicename: "EE.oracle.docker"
     sqlSync: "false"
-    sqlTableName: ""
+    sqlTableName: "VIO_TEMP_SURVEIL_FTP"
     sqlType: "oracle"
   resources:
     limits:
@@ -283,47 +339,6 @@ robotXindian:
       memory: "1G"
   service:
     port: 80
-    type:
-
-robotXindian2:
-  enabled: false
-  name: robot-xindian2
-  image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-robot-xindian2
-    tag: main
-  replicas: 1
-  env:
-    illegalRecordMonitor: "true"
-    illegalRecordMonitorSource: "XINDIAN"
-    mqttClient: "0"
-    mqttUsername: ""
-    mqttPassword: ""
-    mqttTopicIllegalRecord: "notify/illegal/xindian"
-    mqttTopicIllegalRecordMonitor: "record/illegal/monitor"
-    mqttUri: "mqtt://localhost:1883"
-    port: 80
-    recordDefaultJyzt: "0"
-    recordDefaultSpotsn: ""
-    recordDefaultUpuser: ""
-    sqlDatabase: ""
-    sqlHost: "localhost"
-    sqlUsername: ""
-    sqlPassword: ""
-    sqlPoolSize: "20"
-    sqlPort: "3306"
-    sqlSequenceQuery: ""
-    sqlSync: "false"
-    sqlTableName: ""
-    sqlType: "mysql"
-  resources:
-    limits:
-      cpu: "4"
-      memory: "8G"
-    requests:
-      cpu: "500m"
-      memory: "1G"
-  service:
-    port:
     type:
 
 # mock:

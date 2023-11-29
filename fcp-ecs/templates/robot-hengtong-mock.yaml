@@ -1,29 +1,13 @@
-{{ if .Values.robotHengtong.enabled }}
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.robotHengtong.name }}
-  labels:
-    {{- include "robot-hengtong.selectorLabels" . | nindent 4 }}
-spec:
-  type: {{ .Values.robotHengtong.service.type | default .Values.service.type }}
-  ports:
-    - port: {{ .Values.robotHengtong.service.port | default .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "robot-hengtong.selectorLabels" . | nindent 4 }}
----
+{{ if .Values.robotHengtong.mock.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.robotHengtong.name }}
+  name: {{ .Values.robotHengtong.mock.name }}
   labels:
     {{- include "fcp-ecs.labels" . | nindent 4 }}
-    {{- include "robot-hengtong.selectorLabels" . | nindent 4 }}
+    {{- include "robot-hengtong-mock.selectorLabels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.robotHengtong.replicas }}
+  replicas: 1
   minReadySeconds: 10
   strategy:
     type: RollingUpdate
@@ -32,15 +16,15 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      {{- include "robot-hengtong.selectorLabels" . | nindent 6 }}
+      {{- include "robot-hengtong-mock.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "robot-hengtong.selectorLabels" . | nindent 8 }}
+        {{- include "robot-hengtong-mock.selectorLabels" . | nindent 8 }}
     spec:
       restartPolicy: Always
       containers:
-        - name: {{ .Values.robotHengtong.name }}
+        - name: {{ .Values.robotHengtong.mock.name }}
           image: "{{ .Values.robotHengtong.image.repository }}:{{ .Values.robotHengtong.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.robotHengtong.image.pullPolicy | default .Values.pullPolicy }}
           env:
@@ -82,6 +66,7 @@ spec:
               value: "{{ .Values.robotHengtong.env.port }}"
             - name: URL_PREFIX
               value: "{{ .Values.robotHengtong.path }}"
+          command: ["pnpm", "mock:prod"]
           ports:
             - name: http
               containerPort: {{ .Values.robotHengtong.service.port | default .Values.service.port }}
