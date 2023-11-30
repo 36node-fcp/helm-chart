@@ -56,7 +56,10 @@ spec:
               value: "{{ .Values.robotXindian.env.robotEndpoint }}"
             - name: FCP_ENDPOINT
               value: "{{ .Values.robotXindian.env.fcpEndpoint }}"
-          
+            - name: CACHE_REDIS_URL
+              value: "{{ .Values.robotDahua.env.redisUri }}"
+            - name: REDIS_GLOBAL_PREFIX
+              value: "{{ .Values.robotDahua.env.redisGlobalPrefix }}"
             - name: MQTT_CLIENT
               value: "{{ .Values.robotXindian.env.mqttClient }}"
             - name: MQTT_PASSWORD

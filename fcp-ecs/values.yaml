@@ -310,7 +310,8 @@ robotXindian:
     mqttPassword: ""
     mqttTopicIllegalRecord: "notify/illegal-record/VEHICLE/create"
     mqttUri: "mqtt://localhost:1883"
-    
+    redisUri: redis://localhost:6379
+    redisGlobalPrefix: XINDIAN-ROBOT-
     port: 80
     logLevel: "info"
     name: 信电
