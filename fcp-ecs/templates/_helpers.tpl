@@ -83,14 +83,24 @@ app.kubernetes.io/name: {{ .Values.robotDahua.mock.name }}
 app.kubernetes.io/name: {{ .Values.robotHengtong.name }}
 {{- end }}
 
+{{- define "robot-hengtong-mock.selectorLabels" -}}
+{{- include "fcp-ecs.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.robotHengtong.mock.name }}
+{{- end }}
+
+{{- define "robot-face.selectorLabels" -}}
+{{- include "fcp-ecs.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.robotFace.name }}
+{{- end }}
+
+{{- define "robot-face-mock.selectorLabels" -}}
+{{- include "fcp-ecs.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.robotFace.mock.name }}
+{{- end }}
+
 {{- define "robot-xindian.selectorLabels" -}}
 {{- include "fcp-ecs.selectorLabels" . }}
 app.kubernetes.io/name: {{ .Values.robotXindian.name }}
-{{- end }}
-
-{{- define "robot-xindian2.selectorLabels" -}}
-{{- include "fcp-ecs.selectorLabels" . }}
-app.kubernetes.io/name: {{ .Values.robotXindian2.name }}
 {{- end }}
 
 {{- define "robot-mock.selectorLabels" -}}

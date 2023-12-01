@@ -66,4 +66,46 @@ spec:
       host: {{ .Values.host | quote}}
       {{- end }}
     {{- end }}
+    {{- if .Values.robotHengtong.enabled }}
+    - http:
+        paths:
+          - path: {{ .Values.robotHengtong.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.robotHengtong.name }}
+                port:
+                  number: 80
+      {{- if .Values.host }}
+      host: {{ .Values.host | quote}}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.robotFace.enabled }}
+    - http:
+        paths:
+          - path: {{ .Values.robotFace.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.robotFace.name }}
+                port:
+                  number: 80
+      {{- if .Values.host }}
+      host: {{ .Values.host | quote}}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.robotXindian.enabled }}
+    - http:
+        paths:
+          - path: {{ .Values.robotXindian.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.robotXindian.name }}
+                port:
+                  number: 80
+      {{- if .Values.host }}
+      host: {{ .Values.host | quote}}
+      {{- end }}
+    {{- end }}
 {{- end }}

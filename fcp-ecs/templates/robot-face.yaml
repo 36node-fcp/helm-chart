@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ .Values.robotFace.name }}
   labels:
-    {{- include "robot-hengtong.selectorLabels" . | nindent 4 }}
+    {{- include "robot-face.selectorLabels" . | nindent 4 }}
 spec:
   type: {{ .Values.robotFace.service.type | default .Values.service.type }}
   ports:
@@ -13,7 +13,7 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "robot-hengtong.selectorLabels" . | nindent 4 }}
+    {{- include "robot-face.selectorLabels" . | nindent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -21,7 +21,7 @@ metadata:
   name: {{ .Values.robotFace.name }}
   labels:
     {{- include "fcp-ecs.labels" . | nindent 4 }}
-    {{- include "robot-hengtong.selectorLabels" . | nindent 4 }}
+    {{- include "robot-face.selectorLabels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.robotFace.replicas }}
   minReadySeconds: 10
@@ -32,11 +32,11 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      {{- include "robot-hengtong.selectorLabels" . | nindent 6 }}
+      {{- include "robot-face.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "robot-hengtong.selectorLabels" . | nindent 8 }}
+        {{- include "robot-face.selectorLabels" . | nindent 8 }}
     spec:
       restartPolicy: Always
       containers:
