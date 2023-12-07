@@ -315,7 +315,7 @@ robotXindian:
     port: 80
     logLevel: "info"
     name: 信电
-    robotEndpoint: http://fcp-uat.36node.com/hengtong-illegal-robot
+    robotEndpoint: http://fcp-uat.36node.com/xindian-illegal-robot
     fcpEndpoint: http://fcp-uat.36node.com/ecs-api
     recordDefaultJyzt: "0"
     recordDefaultSpotsn: ""
