@@ -11,7 +11,7 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-host: map.local
+host:
 port: 80
 path: /ecs-map
 filePath: /opt/map
@@ -37,7 +37,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: traefik
   hosts:
-    - host: 
+    - host:
       paths:
         - path: /ecs-map
           pathType: ImplementationSpecific

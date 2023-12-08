@@ -1,7 +1,7 @@
 nameOverride: ""
 fullnameOverride: ""
 
-host: "fcp-ecs.local"
+host:
 pullPolicy: IfNotPresent
 
 offlineMap:
@@ -63,23 +63,14 @@ adminWeb:
     mapMaxZoom: "17"
     mapMinZoom: "11"
 
-    mqttHostname: ""
-    mqttHostnameEmpty: "off"
-    mqttPath: "/mqtt"
-    mqttPort: "8083"
-    mqttProtocol: "ws"
-    mqttTopicIllegalMonitor: "record/illegal/monitor"
-    mqttTopicNotifyWarning: "notify/warning"
+    mqttUrl:
+    mqttTopicNotifyWarning:
 
-    ossAccessKeyId: ""
-    ossAccessKeySecret: ""
-    ossBucket: ""
-    ossEpHostname: ""
-    ossEpHostnameEmpty: "off"
-    ossEpPort: ""
-    ossEpProtocol: "https"
-    ossForcePathStyle: "on"
-    ossRegion: "cn"
+    ossAccessKeyId:
+    ossAccessKeySecret:
+    ossBucket:
+    ossEndpoint:
+    ossDomain:
 
     pageMaxWidth: "1600"
 
@@ -99,7 +90,7 @@ adminWeb:
     type:
 
 roadmap:
-  enabled: true
+  enabled: false
   name: roadmap
   image:
     repository: registry.cn-beijing.aliyuncs.com/36node/fcp-roadmap

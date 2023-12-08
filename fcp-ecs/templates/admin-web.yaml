@@ -48,8 +48,6 @@ spec:
               value: "{{ .Values.adminWeb.env.authEndpoint }}"
             - name: REACT_APP_FCP_ENDPOINT
               value: "{{ .Values.adminWeb.env.fcpEndpoint }}"
-            - name: REACT_APP_DAHUA_MQTT_ROBOT_ENDPOINT
-              value: "{{ .Values.adminWeb.env.dahuaMqttRobotEndpoint }}"
             - name: REACT_APP_BUILD
               value: "{{ .Values.adminWeb.env.build }}"
             - name: REACT_APP_COPYRIGHT
@@ -98,38 +96,20 @@ spec:
               value: "{{ .Values.adminWeb.env.mapMaxZoom }}"
             - name: REACT_APP_MAP_MIN_ZOOM
               value: "{{ .Values.adminWeb.env.mapMinZoom }}"
-            - name: REACT_APP_MQTT_HOSTNAME
-              value: "{{ .Values.adminWeb.env.mqttHostname }}"
-            - name: REACT_APP_MQTT_HOSTNAME_EMPTY
-              value: "{{ .Values.adminWeb.env.mqttHostnameEmpty }}"
-            - name: REACT_APP_MQTT_PATH
-              value: "{{ .Values.adminWeb.env.mqttPath }}"
-            - name: REACT_APP_MQTT_PORT
-              value: "{{ .Values.adminWeb.env.mqttPort }}"
-            - name: REACT_APP_MQTT_PROTOCOL
-              value: "{{ .Values.adminWeb.env.mqttProtocol }}"
-            - name: REACT_APP_MQTT_TOPIC_ILLEGAL_MONITOR
-              value: "{{ .Values.adminWeb.env.mqttTopicIllegalMonitor }}"
+            - name: REACT_APP_MQTT_URL
+              value: "{{ .Values.adminWeb.env.mqttUrl }}"
             - name: REACT_APP_MQTT_TOPIC_NOTIFY_WARNING
               value: "{{ .Values.adminWeb.env.mqttTopicNotifyWarning }}"
-            - name: REACT_APP_OSS_ACCESS_KEY_ID
+            - name: REACT_APP_ACCESS_KEY_ID
               value: "{{ .Values.adminWeb.env.ossAccessKeyId }}"
-            - name: REACT_APP_OSS_ACCESS_KEY_SECRET
+            - name: REACT_APP_ACCESS_KEY_SECRET
               value: "{{ .Values.adminWeb.env.ossAccessKeySecret }}"
-            - name: REACT_APP_OSS_BUCKET
+            - name: REACT_APP_FILE_BUCKET
               value: "{{ .Values.adminWeb.env.ossBucket }}"
-            - name: REACT_APP_OSS_EP_HOSTNAME
-              value: "{{ .Values.adminWeb.env.ossEpHostname }}"
-            - name: REACT_APP_OSS_EP_HOSTNAME_EMPTY
-              value: "{{ .Values.adminWeb.env.ossEpHostnameEmpty }}"
-            - name: REACT_APP_OSS_EP_PORT
-              value: "{{ .Values.adminWeb.env.ossEpPort }}"
-            - name: REACT_APP_OSS_EP_PROTOCOL
-              value: "{{ .Values.adminWeb.env.ossEpProtocol }}"
-            - name: REACT_APP_OSS_FORCE_PATH_STYLE
-              value: "{{ .Values.adminWeb.env.ossForcePathStyle }}"
-            - name: REACT_APP_OSS_REGION
-              value: "{{ .Values.adminWeb.env.ossRegion }}"
+            - name: REACT_APP_OSS_ENDPOINT
+              value: "{{ .Values.adminWeb.env.ossEndpoint }}"
+            - name: REACT_APP_OSS_DOMAIN
+              value: "{{ .Values.adminWeb.env.ossDomain }}"
             - name: REACT_APP_PAGE_MAX_WIDTH
               value: "{{ .Values.adminWeb.env.pageMaxWidth }}"
             - name: REACT_APP_AUTH_PROVIDER
