@@ -193,7 +193,7 @@ robotDahua:
     nodeEnv: development
     logLevel: "info"
     sourceName: 大华
-    name: 大华数据源
+    name: 大华MQTT数据源
     port: 80
     fcpEndpoint: http://fcp-uat.36node.com/ecs-api
     robotEndpoint: http://fcp-uat.36node.com/dahua-mqtt-robot
