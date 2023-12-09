@@ -46,6 +46,8 @@ spec:
               value: "{{ .Values.robotDahua.env.redisUri }}"
             - name: REDIS_GLOBAL_PREFIX
               value: "{{ .Values.robotDahua.env.redisGlobalPrefix }}"
+            - name: DRAFT_EXPIRE_DAYS
+              value: "{{ .Values.robotDahua.env.draftExpireDays }}"
             - name: MQTT_URL
               value: "{{ .Values.robotDahua.env.mqttUri }}"
             - name: MQTT_USERNAME

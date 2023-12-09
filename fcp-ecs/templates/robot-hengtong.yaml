@@ -60,6 +60,8 @@ spec:
               value: "{{ .Values.robotHengtong.env.mqttPassword }}"
             - name: REDIS_GLOBAL_PREFIX
               value: "{{ .Values.robotHengtong.env.redisGlobalPrefix }}"
+            - name: DRAFT_EXPIRE_DAYS
+              value: "{{ .Values.robotHengtong.env.draftExpireDays }}"
             - name: MQTT_TOPIC_ILLEGAL_RECORD
               value: "{{ .Values.robotHengtong.env.mqttTopicIllegalRecord }}"
             - name: MQTT_TOPIC_ILLEGAL_DRAFT

@@ -48,6 +48,10 @@ spec:
               value: "{{ .Values.adminWeb.env.authEndpoint }}"
             - name: REACT_APP_FCP_ENDPOINT
               value: "{{ .Values.adminWeb.env.fcpEndpoint }}"
+            - name: ILLEGAL_EXPIRED_DAYS
+              value: "{{ .Values.adminWeb.env.illegalExpiredDays }}"
+            - name: DRAFT_EXPIRED_DAYS
+              value: "{{ .Values.adminWeb.env.draftExpiredDays }}"
             - name: REACT_APP_BUILD
               value: "{{ .Values.adminWeb.env.build }}"
             - name: REACT_APP_COPYRIGHT

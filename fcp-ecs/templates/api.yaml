@@ -48,10 +48,10 @@ spec:
               value: "{{ .Values.api.env.cacheRedisDb }}"
             - name: CACHE_REDIS_URL
               value: "{{ .Values.api.env.cacheRedisUri }}"
-            - name: ILLEGAL_EXPIRES
-              value: "{{ .Values.api.env.illegalExpires }}"
             - name: ILLEGAL_EXPIRES_DAYS
               value: "{{ .Values.api.env.illegalExpiresDays }}"
+            - name: DRAFT_EXPIRES_DAYS
+              value: "{{ .Values.api.env.draftExpiresDays }}"
             - name: ILLEGAL_RECORD_CLEAN
               value: "{{ .Values.api.env.illegalRecordClean }}"
             - name: ILLEGAL_UNDERSPEED_LIMIT

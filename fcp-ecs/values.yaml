@@ -39,6 +39,8 @@ adminWeb:
     guangxinEndpoint: ""
     mapEndpoint: ""
     dahuaMqttRobotEndpoint: ""
+    illegalExpiresDays: "3"
+    draftExpiresDays: "2"
 
     illegalMonitorDahuaLimit: "3"
     illegalMonitorDahuaLimitS: "120"
@@ -116,6 +118,7 @@ api:
 
     illegalExpires: "259200000"
     illegalExpiresDays: "3"
+    draftExpiresDays: "2"
     illegalRecordClean: "31536000"
     illegalUnderspeedLimit: "60"
     logLevel: "log"
@@ -196,6 +199,7 @@ robotDahua:
     robotEndpoint: http://fcp-uat.36node.com/dahua-mqtt-robot
     redisUri: redis://localhost:6379
     redisGlobalPrefix: DAHUA-ROBOT-
+    draftExpireDays: "2"
     mqttUri: mqtt://localhost
     mqttUsername: 
     mqttPassword: 
@@ -226,6 +230,7 @@ robotHengtong:
     logLevel: "info"
     sourceName: 恒通
     name: 恒通违法变道
+    draftExpireDays: "2"
     mqttPassword: 
     mqttUri: "mqtt://localhost"
     mqttUsername: 
