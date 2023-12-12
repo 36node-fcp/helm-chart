@@ -236,7 +236,6 @@ robotHengtong:
     mqttUsername: 
     mqttTopicIllegalRecord: "fcp/illegal"
     mqttTopicIllegalRecord: "fcp/draft"
-    mqttTopicIllegalRecordHengtong: "record/illegal/hengtong"
     mqttTopicGantryDevice: notify/gantry-device/#
     mqttTopicGantry: notify/gantry/#
     mqttTopicIllegalType: notify/illegal-type/#

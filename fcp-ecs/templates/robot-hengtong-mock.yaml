@@ -50,8 +50,6 @@ spec:
               value: "{{ .Values.robotHengtong.env.mqttTopicIllegalRecord }}"
             - name: MQTT_TOPIC_ILLEGAL_DRAFT
               value: "{{ .Values.robotHengtong.env.mqttTopicIllegalDraft }}"
-            - name: MQTT_TOPIC_ILLEGAL_RECORD_HENGTONG
-              value: "{{ .Values.robotHengtong.env.mqttTopicIllegalRecordHengtong }}"
             - name: MQTT_TOPIC_GANTRY_DEVICE
               value: "{{ .Values.robotHengtong.env.mqttTopicGantryDevice}}"
             - name: MQTT_TOPIC_GANTRY
