@@ -39,7 +39,7 @@ adminWeb:
     guangxinEndpoint: ""
     mapEndpoint: ""
     dahuaMqttRobotEndpoint: ""
-    illegalExpiresDays: "3"
+    illegalExpiresDays: "5"
     draftExpiresDays: "2"
 
     illegalMonitorDahuaLimit: "3"
@@ -117,7 +117,7 @@ api:
     cacheRedisUri: "redis://localhost:6379"
 
     illegalExpires: "259200000"
-    illegalExpiresDays: "3"
+    illegalExpiresDays: "5"
     draftExpiresDays: "2"
     illegalRecordClean: "31536000"
     illegalUnderspeedLimit: "60"
