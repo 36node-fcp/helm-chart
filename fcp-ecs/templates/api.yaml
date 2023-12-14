@@ -94,6 +94,10 @@ spec:
               value: "{{ .Values.api.path }}"
             - name: VEHICLE_IMPORT_CLEAN
               value: "{{ .Values.api.env.vehicleImportClean }}"
+            - name: ILLEGAL_DRAFT_CLEAN
+              value: "{{ .Values.api.env.illegalDraftClean }}"
+            - name: HEALTH_STAT_CLEAN
+              value: "{{ .Values.api.env.healthStatClean }}"
             - name: VEHICLE_IMPORT_DELAY
               value: "{{ .Values.api.env.vehicleImportDelay }}"
             - name: VEHICLE_IMPORT_LIMIT

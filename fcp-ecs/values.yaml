@@ -120,6 +120,8 @@ api:
     illegalExpiresDays: "5"
     draftExpiresDays: "2"
     illegalRecordClean: "31536000"
+    illegalDraftClean: "2592000"
+    healthStatClean: "604800"
     illegalUnderspeedLimit: "60"
     logLevel: "log"
 
