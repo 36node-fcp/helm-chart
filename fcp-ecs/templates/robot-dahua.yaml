@@ -76,6 +76,8 @@ spec:
               value: "{{ .Values.robotDahua.env.mqttTopicIllegalRecord }}"
             - name: MQTT_TOPIC_TRACK_RECORD
               value: "{{ .Values.robotDahua.env.mqttTopicTrackRecord }}"
+            - name: MQTT_TOPIC_ILLEGAL_DRAFT
+              value: "{{ .Values.robotDahua.env.mqttTopicIllegalDraft }}"
             - name: MQTT_TOPIC_ILLEGAL_RECORD_DAHUA
               value: "{{ .Values.robotDahua.env.mqttTopicIllegalRecordDahua }}"
             - name: MQTT_TOPIC_TRACK_RECORD_DAHUA

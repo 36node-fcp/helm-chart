@@ -60,8 +60,6 @@ spec:
               value: "{{ .Values.robotDahua.env.redisUri }}"
             - name: REDIS_GLOBAL_PREFIX
               value: "{{ .Values.robotDahua.env.redisGlobalPrefix }}"
-            - name: MQTT_CLIENT
-              value: "{{ .Values.robotXindian.env.mqttClient }}"
             - name: MQTT_PASSWORD
               value: "{{ .Values.robotXindian.env.mqttPassword }}"
             - name: MQTT_TOPIC_ILLEGAL_RECORD

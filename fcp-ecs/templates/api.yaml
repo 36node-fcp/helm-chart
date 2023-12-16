@@ -44,70 +44,64 @@ spec:
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.api.image.pullPolicy | default .Values.pullPolicy }}
           env:
-            - name: CACHE_REDIS_DB
-              value: "{{ .Values.api.env.cacheRedisDb }}"
+            - name: PORT
+              value: "{{ .Values.api.env.port }}"
+            - name: URL_PREFIX
+              value: "{{ .Values.api.path }}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.api.env.logLevel }}"
+            - name: MONGO_URL
+              value: "{{ .Values.api.env.mongoUri }}"
             - name: CACHE_REDIS_URL
               value: "{{ .Values.api.env.cacheRedisUri }}"
+            - name: MICROSERVICE_ENABLE
+              value: "{{ .Values.api.env.microserviceEnable }}"
+            - name: ILLEGAL_UNDERSPEED_LIMIT
+              value: "{{ .Values.api.env.illegalUnderspeedLimit }}"
             - name: ILLEGAL_EXPIRES_DAYS
               value: "{{ .Values.api.env.illegalExpiresDays }}"
             - name: DRAFT_EXPIRES_DAYS
               value: "{{ .Values.api.env.draftExpiresDays }}"
+            - name: VEHICLE_IMPORT_LIMIT
+              value: "{{ .Values.api.env.vehicleImportLimit }}"
+            - name: VEHICLE_IMPORT_DELAY
+              value: "{{ .Values.api.env.vehicleImportDelay }}"
             - name: ILLEGAL_RECORD_CLEAN
               value: "{{ .Values.api.env.illegalRecordClean }}"
-            - name: ILLEGAL_UNDERSPEED_LIMIT
-              value: "{{ .Values.api.env.illegalUnderspeedLimit }}"
-            - name: LOG_LEVEL
-              value: "{{ .Values.api.env.logLevel }}"
-            - name: MICROSERVICE_ENABLE
-              value: "{{ .Values.api.env.microserviceEnable }}"
-            - name: MONGO_URL
-              value: "{{ .Values.api.env.mongoUri }}"
+            - name: VEHICLE_IMPORT_CLEAN
+              value: "{{ .Values.api.env.vehicleImportClean }}"
+            - name: TRACK_RECORD_CLEAN
+              value: "{{ .Values.api.env.trackRecordClean }}"
+            - name: ILLEGAL_DRAFT_CLEAN
+              value: "{{ .Values.api.env.illegalDraftClean }}"
+            - name: HEALTH_STAT_CLEAN
+              value: "{{ .Values.api.env.healthStatClean }}"
+            - name: WARNING_CLEAN
+              value: "{{ .Values.api.env.warningClean }}"
+            - name: VEHICLE_IMPORT_PATH
+              value: "{{ .Values.api.env.vehicleImportPath }}"
+            - name: MQTT_URL
+              value: "{{ .Values.api.env.mqttUri }}"
+            - name: MQTT_USERNAME
+              value: "{{ .Values.api.env.mqttUsername }}"
             - name: MQTT_PASSWORD
               value: "{{ .Values.api.env.mqttPassword }}"
-            - name: MQTT_TOPIC_GANTRY_DEVICE_STATUS
-              value: "{{ .Values.api.env.mqttTopicGantryDeviceStatus }}"
+            - name: MQTT_TOPIC_ILLEGAL_DRAFT
+              value: "{{ .Values.api.env.mqttTopicIllegalDraft }}"
+            - name: MQTT_TOPIC_ILLEGAL_RECORD
+              value: "{{ .Values.api.env.mqttTopicIllegalRecord }}"
+            - name: MQTT_TOPIC_TRACK_RECORD
+              value: "{{ .Values.api.env.mqttTopicTrackRecord }}"
+            - name: MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD
+              value: "{{ .Values.api.env.mqttTopicNotifyIllegalRecord }}"
+            - name: MQTT_TOPIC_NOTIFY_WARNING
+              value: "{{ .Values.api.env.mqttTopicNotifyWarning }}"
             - name: MQTT_TOPIC_GANTRY_DEVICE
               value: "{{ .Values.api.env.mqttTopicGantryDevice }}"
             - name: MQTT_TOPIC_GANTRY
               value: "{{ .Values.api.env.mqttTopicGantry }}"
             - name: MQTT_TOPIC_ILLEGAL_TYPE
               value: "{{ .Values.api.env.mqttTopicIllegalType }}"
-            - name: MQTT_TOPIC_ILLEGAL_RECORD
-              value: "{{ .Values.api.env.mqttTopicIllegalRecord }}"
-            - name: MQTT_TOPIC_NOTIFY_WARNING
-              value: "{{ .Values.api.env.mqttTopicNotifyWarning }}"
-            - name: MQTT_TOPIC_TRACK_RECORD
-              value: "{{ .Values.api.env.mqttTopicTrackRecord }}"
-            - name: MQTT_TOPIC_WARNING_CLOSE
-              value: "{{ .Values.api.env.mqttTopicWarningClose }}"
-            - name: MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD
-              value: "{{ .Values.api.env.mqttTopicNotifyIllegalRecord }}"
-            - name: MQTT_URL
-              value: "{{ .Values.api.env.mqttUri }}"
-            - name: MQTT_USERNAME
-              value: "{{ .Values.api.env.mqttUsername }}"
-            - name: PORT
-              value: "{{ .Values.api.env.port }}"
-            - name: TRACK_RECORD_CLEAN
-              value: "{{ .Values.api.env.trackRecordClean }}"
-            - name: URL_PREFIX
-              value: "{{ .Values.api.path }}"
-            - name: VEHICLE_IMPORT_CLEAN
-              value: "{{ .Values.api.env.vehicleImportClean }}"
-            - name: ILLEGAL_DRAFT_CLEAN
-              value: "{{ .Values.api.env.illegalDraftClean }}"
-            - name: HEALTH_STAT_CLEAN
-              value: "{{ .Values.api.env.healthStatClean }}"
-            - name: VEHICLE_IMPORT_DELAY
-              value: "{{ .Values.api.env.vehicleImportDelay }}"
-            - name: VEHICLE_IMPORT_LIMIT
-              value: "{{ .Values.api.env.vehicleImportLimit }}"
-            - name: VEHICLE_IMPORT_PATH
-              value: "{{ .Values.api.env.vehicleImportPath }}"
-            - name: WARNING_CLEAN
-              value: "{{ .Values.api.env.warningClean }}"
-            - name: WARNING_EXPIRES
-              value: "{{ .Values.api.env.warningExpires }}"
             - name: CACHE_MEMCACHED_URL
               value: "{{ .Values.api.env.memcachedUri }}"
           ports:

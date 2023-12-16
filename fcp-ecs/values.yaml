@@ -32,29 +32,14 @@ adminWeb:
   env:
     build: "20210712-000000"
     copyright: "36node 出品"
-    echo: "true"
+    loginFailLockSeconds: "300"
 
     authEndpoint: ""
     fcpEndpoint: ""
-    guangxinEndpoint: ""
     mapEndpoint: ""
     dahuaMqttRobotEndpoint: ""
     illegalExpiresDays: "5"
     draftExpiresDays: "2"
-
-    illegalMonitorDahuaLimit: "3"
-    illegalMonitorDahuaLimitS: "120"
-    illegalMonitorDahuaLimitSDesc: "2分钟"
-    illegalMonitorFlashS: "30"
-    illegalMonitorHengtongLimit: "3"
-    illegalMonitorHengtongLimitS: "3600"
-    illegalMonitorHengtongLimitSDesc: "1小时"
-    illegalMonitorXindianLimit: "5"
-    illegalMonitorXindianLimitS: "120"
-    illegalMonitorXindianLimitSDesc: "2分钟"
-
-    gantryIconSize: "16"
-    loginFailLockTimeM: "5"
 
     mapBoundNorthEast: "30.7184163,120.47437365"
     mapBoundSouthWest: "28.92927024,122.31013782"
@@ -73,18 +58,14 @@ adminWeb:
     ossBucket:
     ossEndpoint:
     ossDomain:
-
-    pageMaxWidth: "1600"
+    ossForcePathStyle:
+    ossRegion:
 
     provider: ""
     scope: ""
 
-    subTitle: ""
     title: ""
     version: "0.0"
-
-    warningCardMaxSize: "20"
-    warningTrackFlashS: "300"
  
   resources:
   service:
@@ -114,7 +95,6 @@ api:
   replicas: 1
   path: /ecs-api
   env:
-    cacheRedisDb: "0"
     cacheRedisUri: "redis://localhost:6379"
 
     illegalExpires: "259200000"
@@ -129,15 +109,12 @@ api:
     memcachedUri: "memcached://localhost:11211"
     microserviceEnable: "true"
     mongoUri: "mongodb://localhost/api"
-
-    mqttClient: "0"
     mqttUri: "mqtt://localhost:1883"
     mqttUsername: 
-    mqttPassword: 
-    mqttTopicGantryDeviceStatus: "fcp/gantry-device/status"
+    mqttPassword:
     mqttTopicIllegalRecord: "fcp/illegal"
+    mqttTopicIllegalDraft: "fcp/draft"
     mqttTopicTrackRecord: "fcp/track"
-    mqttTopicWarningClose: "fcp/warning/close"
     mqttTopicGantryDevice: "notify/gantry-device"
     mqttTopicGantry: "notify/gantry"
     mqttTopicIllegalType: notify/illegal-type
@@ -154,7 +131,6 @@ api:
     vehicleImportPath: "./uploads"
 
     warningClean: "31536000"
-    warningExpires: "14400"
   resources:
     limits:
       cpu: "1"
@@ -208,6 +184,7 @@ robotDahua:
     mqttPassword: 
     mqttTopicIllegalRecord: fcp/illegal
     mqttTopicTrackRecord: fcp/track
+    mqttTopicIllegalDraft: fcp/draft
     mqttTopicIllegalRecordDahua: record/illegal/dahua
     mqttTopicTrackRecordDahua: record/track/dahua
     mqttTopicGantryDevice: notify/gantry-device/#
@@ -238,7 +215,7 @@ robotHengtong:
     mqttUri: "mqtt://localhost"
     mqttUsername: 
     mqttTopicIllegalRecord: "fcp/illegal"
-    mqttTopicIllegalRecord: "fcp/draft"
+    mqttTopicIllegalDraft: "fcp/draft"
     mqttTopicGantryDevice: notify/gantry-device/#
     mqttTopicGantry: notify/gantry/#
     mqttTopicIllegalType: notify/illegal-type/#
@@ -303,7 +280,6 @@ robotXindian:
     tag: main
   replicas: 1
   env:
-    mqttClient: "0"
     mqttUsername: ""
     mqttPassword: ""
     mqttTopicIllegalRecord: "notify/illegal-record/VEHICLE/create"
