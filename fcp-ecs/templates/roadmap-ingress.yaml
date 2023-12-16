@@ -34,55 +34,6 @@ spec:
 
 ---
 
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: roadmap
-spec:
-  entryPoints:
-    - web 
-  routes:
-    - kind: Rule
-      {{- if .Values.host }}
-      match: Host(`roadmap.{{ .Values.host }}`)
-      {{- end }}
-      services:
-        - name: api@internal
-          kind: TraefikService
-      middlewares:
-        - name: roadmap-basic-auth
-
----
-
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: strip-path
-spec:
-  stripPrefix:
-    prefixes:
-      - /roadmap
-
----
-
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: roadmap-strip-path
-spec:
-  entryPoints:
-    - web
-  routes:
-    - kind: Rule
-      match: PathPrefix(`/roadmap`)
-      middlewares:
-        - name: strip-path
-      services:
-        - name: roadmap
-          port: 80
-
----
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -96,15 +47,15 @@ spec:
   rules:
     - http:
         paths:
-          - path: /roadmap
+          - path: /
             pathType: ImplementationSpecific
             backend:
               service:
                 name: roadmap
                 port:
                   number: 80
-      {{- if .Values.host }}
-      host: {{ .Values.host }}
+      {{- if .Values.roadmap.host }}
+      host: {{ .Values.roadmap.host }}
       {{- end }}
 
   {{- end }}

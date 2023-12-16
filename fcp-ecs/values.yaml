@@ -94,6 +94,7 @@ adminWeb:
 roadmap:
   enabled: false
   name: roadmap
+  host:
   image:
     repository: registry.cn-beijing.aliyuncs.com/36node/fcp-roadmap
     # Overrides the image tag whose default is the chart appVersion.
