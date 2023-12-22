@@ -129,7 +129,7 @@ api:
     vehicleImportDelay: "1000"
     vehicleImportLimit: "500"
     vehicleImportPath: "./uploads"
-
+    illegalWarningLimit: "60"
     warningClean: "31536000"
   resources:
     limits:

@@ -66,6 +66,8 @@ spec:
               value: "{{ .Values.api.env.vehicleImportLimit }}"
             - name: VEHICLE_IMPORT_DELAY
               value: "{{ .Values.api.env.vehicleImportDelay }}"
+            - name: ILLEGAL_WARNING_LIMIT
+              value: "{{ .Values.api.env.illegalWarningLimit }}"
             - name: ILLEGAL_RECORD_CLEAN
               value: "{{ .Values.api.env.illegalRecordClean }}"
             - name: VEHICLE_IMPORT_CLEAN
