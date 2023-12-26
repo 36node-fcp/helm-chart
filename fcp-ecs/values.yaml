@@ -119,7 +119,7 @@ api:
     mqttTopicGantry: "notify/gantry"
     mqttTopicIllegalType: notify/illegal-type
     mqttTopicNotifyWarning: "notify/warning"
-    mqttTopicNotifyIllegalRecord: "notify/illegal-record"
+    mqttTopicNotifyIllegalRecord: "notify/illegal"
 
     port: "80"
 
@@ -250,14 +250,14 @@ robotFace:
     mqttUsername: 
     mqttTopicGantryDevice: notify/gantry-device/#
     mqttTopicGantry: notify/gantry/#
-    mqttTopicIllegalRecordPersonCreate: notify/illegal-record/PERSON/create
-    mqttTopicIllegalRecordNonmotorCreate: notify/illegal-record/NONMOTOR/create
-    mqttTopicIllegalRecordPersonUpdate: notify/illegal-record/PERSON/update
-    mqttTopicIllegalRecordNonmotorUpdate: notify/illegal-record/NONMOTOR/update
-    mqttTopicIllegalRecordPersonDelete: notify/illegal-record/PERSON/delete
-    mqttTopicIllegalRecordNonmotorDelete: notify/illegal-record/NONMOTOR/delete
-    mqttTopicIllegalRecordPersonClose: notify/illegal-record/PERSON/close
-    mqttTopicIllegalRecordNonmotorClose: notify/illegal-record/NONMOTOR/close
+    mqttTopicIllegalRecordPersonCreate: notify/illegal/PERSON/create
+    mqttTopicIllegalRecordNonmotorCreate: notify/illegal/NONMOTOR/create
+    mqttTopicIllegalRecordPersonUpdate: notify/illegal/PERSON/update
+    mqttTopicIllegalRecordNonmotorUpdate: notify/illegal/NONMOTOR/update
+    mqttTopicIllegalRecordPersonDelete: notify/illegal/PERSON/delete
+    mqttTopicIllegalRecordNonmotorDelete: notify/illegal/NONMOTOR/delete
+    mqttTopicIllegalRecordPersonClose: notify/illegal/PERSON/close
+    mqttTopicIllegalRecordNonmotorClose: notify/illegal/NONMOTOR/close
     mqttNotifyPerson: record/person/face
     mqttTopicWarning: record/warning/face
     redisGlobalPrefix: FACE-ROBOT-
@@ -282,7 +282,7 @@ robotXindian:
   env:
     mqttUsername: ""
     mqttPassword: ""
-    mqttTopicIllegalRecord: "notify/illegal-record/VEHICLE/create"
+    mqttTopicIllegalRecord: "notify/illegal/VEHICLE/create"
     mqttUri: "mqtt://localhost:1883"
     redisUri: redis://localhost:6379
     redisGlobalPrefix: XINDIAN-ROBOT-
