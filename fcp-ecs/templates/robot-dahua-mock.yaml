@@ -72,6 +72,8 @@ spec:
               value: "{{ .Values.robotDahua.env.mqttTopicGantry }}"
             - name: MQTT_TOPIC_ILLEGAL_TYPE
               value: "{{ .Values.robotDahua.env.mqttTopicIllegalType }}"
+            - name: MOCK_TRACK_TIME_INTERVAL
+              value: "{{ .Values.robotDahua.env.mockTrackTimeInterval }}"
           command: ["pnpm", "mock:prod"]
           ports:
             - name: http
