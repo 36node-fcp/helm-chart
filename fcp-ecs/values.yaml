@@ -190,7 +190,7 @@ robotDahua:
     mqttTopicGantryDevice: notify/gantry-device/#
     mqttTopicGantry: notify/gantry/#
     mqttTopicIllegalType: notify/illegal-type/#
-    mockTrackTimeInterval: "1"
+    mockTrackTimeInterval: "10"
   resources:
   service:
     port: 80
