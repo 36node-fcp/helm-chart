@@ -4,9 +4,6 @@ fullnameOverride: ""
 host:
 pullPolicy: IfNotPresent
 
-offlineMap:
-  enabled: true
-
 ingress: 
   enabled: true
 
@@ -67,19 +64,6 @@ adminWeb:
     title: ""
     version: "0.0"
  
-  resources:
-  service:
-    port:
-    type:
-
-roadmap:
-  enabled: false
-  name: roadmap
-  host:
-  image:
-    repository: registry.cn-beijing.aliyuncs.com/36node/fcp-roadmap
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: main
   resources:
   service:
     port:
