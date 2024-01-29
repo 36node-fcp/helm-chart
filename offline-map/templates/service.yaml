@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "offline-map.fullname" . }}
+  name: {{ include "offline-map.name" . }}
   labels:
     {{- include "offline-map.labels" . | nindent 4 }}
+    app.kubernetes.io/component: offline-map
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -11,5 +12,6 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-  selector:
+  selector: 
     {{- include "offline-map.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: offline-map

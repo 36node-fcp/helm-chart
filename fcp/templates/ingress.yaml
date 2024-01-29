@@ -1,0 +1,289 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "fcp.fullname" . -}}
+{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+  {{- end }}
+{{- end }}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+  {{- if or .Values.ingress.className .Values.ingress.certIssuer .Values.ingress.annotations }}  
+  annotations:
+    {{- if .Values.ingress.className }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.className | quote }}
+    {{- end }}
+    {{- if .Values.ingress.certIssuer }}
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.certIssuer | quote }}
+    {{- end }}
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- if .Values.core.hostname }}
+    - secretName: {{ .Values.core.hostname | quote }}
+      hosts:
+        - {{ .Values.core.hostname | quote }}
+    {{- end }}
+    {{- if .Values.adminWeb.hostname }}
+    - secretName: {{ .Values.adminWeb.hostname | quote }}
+      hosts:
+        - {{ .Values.adminWeb.hostname | quote }}
+    {{- end }}
+    {{- if .Values.auth.hostname }}
+    - secretName: {{ .Values.auth.hostname | quote }}
+      hosts:
+        - {{ .Values.auth.hostname | quote }}
+    {{- end }}
+    {{- if .Values.pal.hostname }}
+    - secretName: {{ .Values.pal.hostname | quote }}
+      hosts:
+        - {{ .Values.pal.hostname | quote }}
+    {{- end }}
+    {{- if .Values.dahuaMqttRobot.hostname }}
+    - secretName: {{ .Values.dahuaMqttRobot.hostname | quote }}
+      hosts:
+        - {{ .Values.dahuaMqttRobot.hostname | quote }}
+    {{- end }}
+    {{- if .Values.etcRobot.hostname }}
+    - secretName: {{ .Values.etcRobot.hostname | quote }}
+      hosts:
+        - {{ .Values.etcRobot.hostname | quote }}
+    {{- end }}
+    {{- if .Values.faceRobot.hostname }}
+    - secretName: {{ .Values.faceRobot.hostname | quote }}
+      hosts:
+        - {{ .Values.faceRobot.hostname | quote }}
+    {{- end }}
+    {{- if .Values.hengtongRobot.hostname }}
+    - secretName: {{ .Values.hengtongRobot.hostname | quote }}
+      hosts:
+        - {{ .Values.hengtongRobot.hostname | quote }}
+    {{- end }}
+    {{- if .Values.messageRobot.hostname }}
+    - secretName: {{ .Values.messageRobot.hostname | quote }}
+      hosts:
+        - {{ .Values.messageRobot.hostname | quote }}
+    {{- end }}
+    {{- if .Values.trackAnalysisRobot.hostname }}
+    - secretName: {{ .Values.trackAnalysisRobot.hostname | quote }}
+      hosts:
+        - {{ .Values.trackAnalysisRobot.hostname | quote }}
+    {{- end }}
+    {{- if .Values.xindianRobot.hostname }}
+    - secretName: {{ .Values.xindianRobot.hostname | quote }}
+      hosts:
+        - {{ .Values.xindianRobot.hostname | quote }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- if .Values.ingress.matchAll }}
+    - http:
+        paths:
+          - path: {{ .Values.adminWeb.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.adminWeb.name }}
+                port:
+                  number: {{ .Values.adminWeb.service.port | default .Values.service.port }}
+          - path: {{ .Values.auth.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.auth.name }}
+                port:
+                  number: {{ .Values.auth.service.port | default .Values.service.port }}
+          - path: {{ .Values.core.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.core.name }}
+                port:
+                  number: {{ .Values.core.service.port | default .Values.service.port }}
+          - path: {{ .Values.dahuaMqttRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.dahuaMqttRobot.name }}
+                port:
+                  number: {{ .Values.dahuaMqttRobot.service.port | default .Values.service.port }}
+          - path: {{ .Values.etcRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.etcRobot.name }}
+                port:
+                  number: {{ .Values.etcRobot.service.port | default .Values.service.port }}
+          - path: {{ .Values.faceRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.faceRobot.name }}
+                port:
+                  number: {{ .Values.faceRobot.service.port | default .Values.service.port }}
+          - path: {{ .Values.hengtongRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.hengtongRobot.name }}
+                port:
+                  number: {{ .Values.hengtongRobot.service.port | default .Values.service.port }}
+          - path: {{ .Values.messageRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.messageRobot.name }}
+                port:
+                  number: {{ .Values.messageRobot.service.port | default .Values.service.port }}
+          - path: {{ .Values.trackAnalysisRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.trackAnalysisRobot.name }}
+                port:
+                  number: {{ .Values.trackAnalysisRobot.service.port | default .Values.service.port }}
+          - path: {{ .Values.xindianRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.xindianRobot.name }}
+                port:
+                  number: {{ .Values.xindianRobot.service.port | default .Values.service.port }}
+    {{- end }}
+    {{- if .Values.adminWeb.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.adminWeb.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.adminWeb.name }}
+                port:
+                  number: {{ .Values.adminWeb.service.port | default .Values.service.port }}
+      host: {{ .Values.adminWeb.hostname }}
+    {{- end }}
+    {{- if .Values.auth.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.auth.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.auth.name }}
+                port:
+                  number: {{ .Values.auth.service.port | default .Values.service.port }}
+      host: {{ .Values.auth.hostname }}
+    {{- end }}
+    {{- if .Values.core.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.core.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.core.name }}
+                port:
+                  number: {{ .Values.core.service.port | default .Values.service.port }}
+      host: {{ .Values.core.hostname }}
+    {{- end }}
+    {{- if .Values.dahuaMqttRobot.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.dahuaMqttRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.dahuaMqttRobot.name }}
+                port:
+                  number: {{ .Values.dahuaMqttRobot.service.port | default .Values.service.port }}
+      host: {{ .Values.dahuaMqttRobot.hostname }}
+    {{- end }}
+    {{- if .Values.etcRobot.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.etcRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.etcRobot.name }}
+                port:
+                  number: {{ .Values.etcRobot.service.port | default .Values.service.port }}
+      host: {{ .Values.etcRobot.hostname }}
+    {{- end }}
+    {{- if .Values.faceRobot.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.faceRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.faceRobot.name }}
+                port:
+                  number: {{ .Values.faceRobot.service.port | default .Values.service.port }}
+      host: {{ .Values.faceRobot.hostname }}
+    {{- end }}
+    {{- if .Values.hengtongRobot.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.hengtongRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.hengtongRobot.name }}
+                port:
+                  number: {{ .Values.hengtongRobot.service.port | default .Values.service.port }}
+      host: {{ .Values.hengtongRobot.hostname }}
+    {{- end }}
+    {{- if .Values.messageRobot.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.messageRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.messageRobot.name }}
+                port:
+                  number: {{ .Values.messageRobot.service.port | default .Values.service.port }}
+      host: {{ .Values.messageRobot.hostname }}
+    {{- end }}
+    {{- if .Values.trackAnalysisRobot.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.trackAnalysisRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.trackAnalysisRobot.name }}
+                port:
+                  number: {{ .Values.trackAnalysisRobot.service.port | default .Values.service.port }}
+      host: {{ .Values.trackAnalysisRobot.hostname }}
+    {{- end }}
+    {{- if .Values.xindianRobot.hostname }}
+    - http:
+        paths:
+          - path: {{ .Values.xindianRobot.path }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.xindianRobot.name }}
+                port:
+                  number: {{ .Values.trackAnalysisRobot.service.port | default .Values.service.port }}
+      host: {{ .Values.xindianRobot.hostname }}
+    {{- end }}
+{{- end }}

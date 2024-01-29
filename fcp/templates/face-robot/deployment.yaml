@@ -1,0 +1,60 @@
+{{- if .Values.faceRobot.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.faceRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: face-robot
+spec:
+  replicas: {{ .Values.faceRobot.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "fcp.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: face-robot
+  template:
+    metadata:
+      {{- with .Values.faceRobot.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fcp.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: face-robot
+    spec:
+      {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.faceRobot.image) "global" .Values.global) | nindent 6 }}
+      containers:
+        - name: face-robot
+          image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.faceRobot.image "global" .Values.global ) }}
+          imagePullPolicy: {{ .Values.faceRobot.image.pullPolicy | default .Values.global.imagePullPolicy }}
+          env:
+            - name: URL_PREFIX
+              value: {{ .Values.faceRobot.path }}
+            {{- range $key, $value := .Values.faceRobot.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 9527
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.faceRobot.resources | nindent 12 }}
+      {{- with .Values.faceRobot.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.faceRobot.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.faceRobot.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

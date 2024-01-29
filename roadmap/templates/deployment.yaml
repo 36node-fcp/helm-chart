@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "offline-map.name" . }}
+  name: {{ include "roadmap.name" . }}
   labels:
-    {{- include "offline-map.labels" . | nindent 4 }}
-    app.kubernetes.io/component: offline-map
+    {{- include "roadmap.labels" . | nindent 4 }}
+    app.kubernetes.io/component: roadmap
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
@@ -14,8 +14,8 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      {{- include "offline-map.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: offline-map
+      {{- include "roadmap.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: roadmap
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -23,29 +23,31 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "offline-map.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: offline-map
+        {{- include "roadmap.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: roadmap
     spec:
-      {{- include "offline-map.images.pullSecrets" (dict "images" (list .Values.image) "global" .Values.global) | nindent 6 }}
+      {{- include "roadmap.images.pullSecrets" (dict "images" (list .Values.image) "global" .Values.global) | nindent 6 }}
       containers:
-        - name: offline-map
-          image: {{ include "offline-map.images.image" ( dict "imageRoot" .Values.image "global" .Values.global ) }}
+        - name: roadmap
+          image: {{ include "roadmap.images.image" ( dict "imageRoot" .Values.image "global" .Values.global ) }}
           imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.global.imagePullPolicy }}
           env:
-            - name: ROOT_URL
-              value: "{{ .Values.path }}"
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
-              value: "{{ $value }}"
+              value: {{ $value }}
             {{- end }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -58,9 +60,5 @@ spec:
       {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}

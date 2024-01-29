@@ -1,0 +1,59 @@
+{{- if .Values.hengtongRobotMock.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.hengtongRobotMock.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: hengtong-robot-mock
+spec:
+  replicas: {{ .Values.hengtongRobotMock.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "fcp.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: hengtong-robot-mock
+  template:
+    metadata:
+      {{- with .Values.hengtongRobotMock.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fcp.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: hengtong-robot-mock
+    spec:
+      {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.hengtongRobotMock.image) "global" .Values.global) | nindent 6 }}
+      containers:
+        - name: hengtong-robot-mock
+          image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.hengtongRobotMock.image "global" .Values.global ) }}
+          imagePullPolicy: {{ .Values.hengtongRobotMock.image.pullPolicy | default .Values.global.imagePullPolicy }}
+          env:
+            {{- range $key, $value := .Values.hengtongRobotMock.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          command: ["pnpm", "mock:prod"]
+          ports:
+            - name: http
+              containerPort: 9527
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.hengtongRobotMock.resources | nindent 12 }}
+      {{- with .Values.hengtongRobotMock.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.hengtongRobotMock.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.hengtongRobotMock.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

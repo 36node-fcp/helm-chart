@@ -1,0 +1,58 @@
+{{- if .Values.mockRobot.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mockRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: mock-robot
+spec:
+  replicas: {{ .Values.mockRobot.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "fcp.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: mock-robot
+  template:
+    metadata:
+      {{- with .Values.mockRobot.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fcp.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: mock-robot
+    spec:
+      {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.mockRobot.image) "global" .Values.global) | nindent 6 }}
+      containers:
+        - name: mock-robot
+          image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.mockRobot.image "global" .Values.global ) }}
+          imagePullPolicy: {{ .Values.mockRobot.image.pullPolicy | default .Values.global.imagePullPolicy }}
+          env:
+            {{- range $key, $value := .Values.mockRobot.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 9527
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.mockRobot.resources | nindent 12 }}
+      {{- with .Values.mockRobot.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mockRobot.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mockRobot.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

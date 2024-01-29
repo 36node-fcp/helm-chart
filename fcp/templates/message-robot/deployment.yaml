@@ -1,0 +1,60 @@
+{{- if .Values.messageRobot.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.messageRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: message-robot
+spec:
+  replicas: {{ .Values.messageRobot.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "fcp.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: message-robot
+  template:
+    metadata:
+      {{- with .Values.messageRobot.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fcp.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: message-robot
+    spec:
+      {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.messageRobot.image) "global" .Values.global) | nindent 6 }}
+      containers:
+        - name: message-robot
+          image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.messageRobot.image "global" .Values.global ) }}
+          imagePullPolicy: {{ .Values.messageRobot.image.pullPolicy | default .Values.global.imagePullPolicy }}
+          env:
+            - name: URL_PREFIX
+              value: {{ .Values.messageRobot.path }}
+            {{- range $key, $value := .Values.messageRobot.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 9527
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.messageRobot.resources | nindent 12 }}
+      {{- with .Values.messageRobot.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.messageRobot.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.messageRobot.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

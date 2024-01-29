@@ -1,0 +1,60 @@
+{{- if .Values.trackAnalysisRobot.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.trackAnalysisRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: track-analysis-robot
+spec:
+  replicas: {{ .Values.trackAnalysisRobot.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "fcp.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: track-analysis-robot
+  template:
+    metadata:
+      {{- with .Values.trackAnalysisRobot.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fcp.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: track-analysis-robot
+    spec:
+      {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.trackAnalysisRobot.image) "global" .Values.global) | nindent 6 }}
+      containers:
+        - name: track-analysis-robot
+          image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.trackAnalysisRobot.image "global" .Values.global ) }}
+          imagePullPolicy: {{ .Values.trackAnalysisRobot.image.pullPolicy | default .Values.global.imagePullPolicy }}
+          env:
+            - name: URL_PREFIX
+              value: {{ .Values.trackAnalysisRobot.path }}
+            {{- range $key, $value := .Values.trackAnalysisRobot.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 9527
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.trackAnalysisRobot.resources | nindent 12 }}
+      {{- with .Values.trackAnalysisRobot.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.trackAnalysisRobot.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.trackAnalysisRobot.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

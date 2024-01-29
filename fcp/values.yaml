@@ -1,0 +1,1238 @@
+## @section Global parameters
+## Global Docker image parameters
+## Please, note that this will override the image parameters, including dependencies, configured to use the global value
+## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+##
+
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+## @param global.storageClass Global StorageClass for Persistent Volume(s)
+##
+global:
+  imageRegistry: registry.cn-beijing.aliyuncs.com
+  imagePullPolicy: IfNotPresent
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common Parameters
+##
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  certIssuer: ""
+  tls: false
+  annotations: {}
+  ## matchAll 是指开一个 ingress 不匹配域名，所有的请求都会被转发到这个 ingress
+  matchAll: false
+
+## @param adminPassword The initial password of Harbor admin. Change it from portal after launching Harbor
+##
+adminPassword: ""
+
+## @section admin-web
+##
+adminWeb:
+  name: admin-web
+  enabled: true
+
+  ## ingress
+  hostname:
+  path: /
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## ACCESS_KEY_ID:
+    ## ACCESS_KEY_SECRET:
+    ## AUTH_ENDPOINT:
+    ## AUTH_PROVIDER:
+    ## DRAFT_EXPIRED_DAYS:
+    ## FCP_ENDPOINT:
+    ## FILE_BUCKET:
+    ## ILLEGAL_EXPIRED_DAYS:
+    ## LOGIN_FAIL_LOCK_SECONDS:
+    ## MAP_BOUND_NORTH_EAST:
+    ## MAP_BOUND_SOUTH_WEST:
+    ## MAP_CENTER:
+    ## MAP_CURRENT_ZOOM:
+    ## MAP_ENDPOINT:
+    ## MAP_GANTRY_MIN_ZOOM:
+    ## MAP_MAX_ZOOM:
+    ## MAP_MIN_ZOOM:
+    ## MQTT_TOPIC_NOTIFY_WARNING:
+    ## MQTT_URL:
+    ## OSS_DOMAIN:
+    ## OSS_ENDPOINT:
+    ## OSS_FORCE_PATH_STYLE:
+    ## OSS_REGION:
+    ## ROOT_NS:
+    ## TITLE:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-admin-web
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section core
+##
+core:
+  name: core
+  enabled: true
+
+  ## ingress
+  hostname:
+  path: /core
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_MEMCACHED_URL:
+    ## CACHE_REDIS_URL:
+    ## DRAFT_EXPIRES_DAYS:
+    ## HEALTH_STAT_CLEAN:
+    ## ILLEGAL_DRAFT_CLEAN:
+    ## ILLEGAL_EXPIRES_DAYS:
+    ## ILLEGAL_RECORD_CLEAN:
+    ## ILLEGAL_UNDERSPEED_LIMIT:
+    ## ILLEGAL_WARNING_LIMIT:
+    ## LOG_LEVEL:
+    ## MICROSERVICE_ENABLE:
+    ## MONGO_URL:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_GANTRY:
+    ## MQTT_TOPIC_GANTRY_DEVICE:
+    ## MQTT_TOPIC_ILLEGAL_DRAFT:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_TOPIC_ILLEGAL_TYPE:
+    ## MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD:
+    ## MQTT_TOPIC_NOTIFY_WARNING:
+    ## MQTT_TOPIC_TRACK_RECORD:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## PORT:
+    ## TRACK_RECORD_CLEAN:
+    ## URL_PREFIX:
+    ## VEHICLE_IMPORT_CLEAN:
+    ## VEHICLE_IMPORT_DELAY:
+    ## VEHICLE_IMPORT_LIMIT:
+    ## VEHICLE_IMPORT_PATH:
+    ## WARNING_CLEAN:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-core
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section auth
+##
+auth:
+  name: auth
+  enabled: true
+
+  ## ingress
+  hostname:
+  path: /auth/v1
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## MONGODB_CONNECTION:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/stargate-auth
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section dahuaMqttRobot
+##
+dahuaMqttRobot:
+  name: dahua-mqtt-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /dahua-mqtt-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## DRAFT_EXPIRE_DAYS:
+    ## FCP_ENDPOINT:
+    ## LOG_LEVEL:
+    ## MICROSERVICE_ENABLE:
+    ## MOCK_TRACK_TIME_INTERVAL:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_ANALYSIS_DAHUA:
+    ## MQTT_TOPIC_GANTRY:
+    ## MQTT_TOPIC_GANTRY_DEVICE:
+    ## MQTT_TOPIC_ILLEGAL_DRAFT:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
+    ## MQTT_TOPIC_ILLEGAL_TYPE:
+    ## MQTT_TOPIC_TRACK_RECORD:
+    ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## NAME:
+    ## PORT:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-dahua-mqtt-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section dahuaMqttRobotMock
+##
+dahuaMqttRobotMock:
+  name: dahua-mqtt-robot-mock
+  enabled: false
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## DRAFT_EXPIRE_DAYS:
+    ## FCP_ENDPOINT:
+    ## LOG_LEVEL:
+    ## MICROSERVICE_ENABLE:
+    ## MOCK_TRACK_TIME_INTERVAL:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_ANALYSIS_DAHUA:
+    ## MQTT_TOPIC_GANTRY:
+    ## MQTT_TOPIC_GANTRY_DEVICE:
+    ## MQTT_TOPIC_ILLEGAL_DRAFT:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
+    ## MQTT_TOPIC_ILLEGAL_TYPE:
+    ## MQTT_TOPIC_TRACK_RECORD:
+    ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## NAME:
+    ## PORT:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-dahua-mqtt-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section etcRobot
+##
+etcRobot:
+  name: etc-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /etc-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## FCP_ENDPOINT:
+    ## KAFKA_BROKERS:
+    ## LOG_LEVEL:
+    ## MICROSERVICE_ENABLE:
+    ## NAME:
+    ## PORT:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-etc-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section faceRobot
+##
+faceRobot:
+  name: face-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /face-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## FCP_ENDPOINT:
+    ## LOG_LEVEL:
+    ## MICROSERVICE_ENABLE:
+    ## MQTT_NOTIFY_PERSON:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_GANTRY:
+    ## MQTT_TOPIC_GANTRY_DEVICE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
+    ## MQTT_TOPIC_WARNING:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## NAME:
+    ## PORT:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-face-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section faceRobotMock
+##
+faceRobotMock:
+  name: face-robot-mock
+  enabled: false
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## FCP_ENDPOINT:
+    ## LOG_LEVEL:
+    ## MICROSERVICE_ENABLE:
+    ## MQTT_NOTIFY_PERSON:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_GANTRY:
+    ## MQTT_TOPIC_GANTRY_DEVICE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
+    ## MQTT_TOPIC_WARNING:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## NAME:
+    ## PORT:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-face-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section hengtongRobot
+##
+hengtongRobot:
+  name: hengtong-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /hengtong-illegal-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-hengtong-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section hengtongRobotMock
+##
+hengtongRobotMock:
+  name: hengtong-robot-mock
+  enabled: false
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-hengtong-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section messageRobot
+##
+messageRobot:
+  name: message-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /message-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## DRAFT_EXPIRE_DAYS:
+    ## FCP_ENDPOINT:
+    ## MICROSERVICE_ENABLE:
+    ## MOCK_TRACK_TIME_INTERVAL:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_ANALYSIS_DAHUA:
+    ## MQTT_TOPIC_GANTRY:
+    ## MQTT_TOPIC_GANTRY_DEVICE:
+    ## MQTT_TOPIC_ILLEGAL_DRAFT:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
+    ## MQTT_TOPIC_ILLEGAL_TYPE:
+    ## MQTT_TOPIC_TRACK_RECORD:
+    ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## NAME:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-message-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section mockRobot
+##
+mockRobot:
+  name: mock-robot
+  enabled: false
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## API_SERVICE:
+    ## MICROSERVICE_ENABLE:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_TOPIC_TRACK_RECORD:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-mock-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section trackAnalysisRobot
+##
+trackAnalysisRobot:
+  name: track-analysis-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /track-analysis-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## DRAFT_EXPIRE_DAYS:
+    ## FCP_ENDPOINT:
+    ## MICROSERVICE_ENABLE:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_TRACK_RECORD:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## NAME:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-track-analysis-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section xindianRobot
+##
+xindianRobot:
+  name: xindian-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /xindian-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## CACHE_REDIS_URL:
+    ## FCP_ENDPOINT:
+    ## MQTT_PASSWORD:
+    ## MQTT_TOPIC_ILLEGAL_RECORD:
+    ## MQTT_URL:
+    ## MQTT_USERNAME:
+    ## NAME:
+    ## RECORD_DEFAULT_JYZT:
+    ## RECORD_DEFAULT_SPOTSN:
+    ## RECORD_DEFAULT_UPUSER:
+    ## REDIS_GLOBAL_PREFIX:
+    ## ROBOT_ENDPOINT:
+    ## SQL_DATABASE:
+    ## SQL_HOST:
+    ## SQL_PASSWORD:
+    ## SQL_POOL_SIZE:
+    ## SQL_PORT:
+    ## SQL_SEQUENCE_QUERY:
+    ## SQL_SERVICENAME:
+    ## SQL_SYNC:
+    ## SQL_TABLE_NAME:
+    ## SQL_TYPE:
+    ## SQL_USERNAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-xindian-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}

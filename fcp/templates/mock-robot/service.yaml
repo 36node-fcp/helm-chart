@@ -1,0 +1,19 @@
+{{- if .Values.mockRobot.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mockRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: mock-robot
+spec:
+  type: {{ .Values.mockRobot.service.type | default .Values.service.type }}
+  ports:
+    - port: {{ .Values.mockRobot.service.port | default .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "fcp.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: mock-robot
+{{- end }}

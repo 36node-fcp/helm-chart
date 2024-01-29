@@ -1,0 +1,60 @@
+{{- if .Values.adminWeb.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.adminWeb.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: admin-web
+spec:
+  replicas: {{ .Values.adminWeb.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "fcp.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: admin-web
+  template:
+    metadata:
+      {{- with .Values.adminWeb.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fcp.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: admin-web
+    spec:
+      {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.adminWeb.image) "global" .Values.global) | nindent 6 }}
+      containers:
+        - name: {{ .Values.adminWeb.name }}
+          image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.adminWeb.image "global" .Values.global ) }}
+          imagePullPolicy: {{ .Values.adminWeb.image.pullPolicy | default .Values.global.imagePullPolicy }}
+          env:
+            - name: REACT_APP_PREFIX
+              value: "{{ .Values.adminWeb.path }}"
+            {{- range $key, $value := .Values.adminWeb.env }}
+            - name: REACT_APP_{{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.adminWeb.resources | nindent 12 }}
+      {{- with .Values.adminWeb.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminWeb.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminWeb.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
