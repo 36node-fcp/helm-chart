@@ -16,13 +16,13 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  storageClass: ""
+  storageClass: ''
 
 ## @section Common Parameters
 ##
 
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: ''
+fullnameOverride: ''
 
 service:
   type: ClusterIP
@@ -30,16 +30,38 @@ service:
 
 ingress:
   enabled: false
-  className: ""
-  certIssuer: ""
+  className: ''
+  certIssuer: ''
   tls: false
   annotations: {}
   ## matchAll 是指开一个 ingress 不匹配域名，所有的请求都会被转发到这个 ingress
   matchAll: false
+  tlsItems:
+    - core
+    - adminWeb
+    - auth
+    - dahuaMqttRobot
+    - etcRobot
+    - faceRobot
+    - hengtongRobot
+    - messageRobot
+    - trackAnalysisRobot
+    - xindianRobot
+  pathItems:
+    - core
+    - adminWeb
+    - auth
+    - dahuaMqttRobot
+    - etcRobot
+    - faceRobot
+    - hengtongRobot
+    - messageRobot
+    - trackAnalysisRobot
+    - xindianRobot
 
 ## @param adminPassword The initial password of Harbor admin. Change it from portal after launching Harbor
 ##
-adminPassword: ""
+adminPassword: ''
 
 ## @section admin-web
 ##
@@ -83,15 +105,15 @@ adminWeb:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-admin-web
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -184,15 +206,15 @@ core:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-core
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -255,15 +277,15 @@ auth:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/stargate-auth
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -348,15 +370,15 @@ dahuaMqttRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-dahua-mqtt-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -437,15 +459,15 @@ dahuaMqttRobotMock:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-dahua-mqtt-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -517,15 +539,15 @@ etcRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-etc-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -611,15 +633,15 @@ faceRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-face-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -701,15 +723,15 @@ faceRobotMock:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-face-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -775,15 +797,15 @@ hengtongRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-hengtong-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -845,15 +867,15 @@ hengtongRobotMock:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-hengtong-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -936,15 +958,15 @@ messageRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-message-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -1009,15 +1031,15 @@ mockRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-mock-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -1091,15 +1113,15 @@ trackAnalysisRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-track-analysis-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -1184,15 +1206,15 @@ xindianRobot:
 
   replicaCount: 1
   image:
-    registry: ""
+    registry: ''
     repository: 36node/fcp-xindian-robot
     tag: main
-    digest: ""
+    digest: ''
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ""
+    pullPolicy: ''
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/

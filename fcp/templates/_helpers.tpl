@@ -123,3 +123,13 @@ imagePullSecrets:
     {{- end }}
   {{- end }}
 {{- end -}}
+
+{{- define "fcp.ingress.path" -}}
+- path: {{ .path }}
+  pathType: ImplementationSpecific
+  backend:
+    service:
+      name: {{ .name }}
+      port:
+        number: {{ .port }}
+{{- end -}}
