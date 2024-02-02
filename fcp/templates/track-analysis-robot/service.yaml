@@ -1,0 +1,19 @@
+{{- if .Values.trackAnalysisRobot.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.trackAnalysisRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: track-analysis-robot
+spec:
+  type: {{ .Values.trackAnalysisRobot.service.type | default .Values.service.type }}
+  ports:
+    - port: {{ .Values.trackAnalysisRobot.service.port | default .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "fcp.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: track-analysis-robot
+{{- end }}

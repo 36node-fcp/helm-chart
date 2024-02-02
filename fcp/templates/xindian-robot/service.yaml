@@ -1,0 +1,19 @@
+{{- if .Values.xindianRobot.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.xindianRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: xindian-robot
+spec:
+  type: {{ .Values.xindianRobot.service.type | default .Values.service.type }}
+  ports:
+    - port: {{ .Values.xindianRobot.service.port | default .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "fcp.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: xindian-robot
+{{- end }}

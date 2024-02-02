@@ -3,7 +3,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "offline-map.name" -}}
+{{- define "roadmap.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -12,7 +12,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "offline-map.fullname" -}}
+{{- define "roadmap.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -28,16 +28,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "offline-map.chart" -}}
+{{- define "roadmap.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "offline-map.labels" -}}
-helm.sh/chart: {{ include "offline-map.chart" . }}
-{{ include "offline-map.selectorLabels" . }}
+{{- define "roadmap.labels" -}}
+helm.sh/chart: {{ include "roadmap.chart" . }}
+{{ include "roadmap.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -47,17 +47,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "offline-map.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "offline-map.name" . }}
+{{- define "roadmap.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "roadmap.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "offline-map.serviceAccountName" -}}
+{{- define "roadmap.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "offline-map.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "roadmap.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -66,9 +66,9 @@ Create the name of the service account to use
 
 {{/*
 Return the proper image name
-{{ include "offline-map.images.image" ( dict "imageRoot" .Values.path.to.the.image "global" .Values.global ) }}
+{{ include "roadmap.images.image" ( dict "imageRoot" .Values.path.to.the.image "global" .Values.global ) }}
 */}}
-{{- define "offline-map.images.image" -}}
+{{- define "roadmap.images.image" -}}
 {{- $registryName := .imageRoot.registry -}}
 {{- $repositoryName := .imageRoot.repository -}}
 {{- $separator := ":" -}}
@@ -90,10 +90,10 @@ Return the proper image name
 {{- end -}}
 
 {{/*
-Return the proper Docker Image Registry Secret Names (deprecated: use offline-map.images.renderPullSecrets instead)
-{{ include "offline-map.images.pullSecrets" ( dict "images" (list .Values.path.to.the.image1, .Values.path.to.the.image2) "global" .Values.global) }}
+Return the proper Docker Image Registry Secret Names (deprecated: use roadmap.images.renderPullSecrets instead)
+{{ include "roadmap.images.pullSecrets" ( dict "images" (list .Values.path.to.the.image1, .Values.path.to.the.image2) "global" .Values.global) }}
 */}}
-{{- define "offline-map.images.pullSecrets" -}}
+{{- define "roadmap.images.pullSecrets" -}}
   {{- $pullSecrets := list }}
 
   {{- if .global }}

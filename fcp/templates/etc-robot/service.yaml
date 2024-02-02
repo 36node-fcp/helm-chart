@@ -1,0 +1,19 @@
+{{- if .Values.etcRobot.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.etcRobot.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: etc-robot
+spec:
+  type: {{ .Values.etcRobot.service.type | default .Values.service.type }}
+  ports:
+    - port: {{ .Values.etcRobot.service.port | default .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "fcp.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: etc-robot
+{{- end }}
