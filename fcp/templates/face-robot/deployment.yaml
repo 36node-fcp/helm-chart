@@ -1,4 +1,5 @@
 {{- if .Values.faceRobot.enabled }}
+{{- $endpoint := include "fcp.endpoint" .Values.faceRobot -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,7 +8,7 @@ metadata:
     {{- include "fcp.labels" . | nindent 4 }}
     app.kubernetes.io/component: face-robot
 spec:
-  replicas: {{ .Values.faceRobot.replicas }}
+  replicas: {{ .Values.faceRobot.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -28,6 +29,10 @@ spec:
         app.kubernetes.io/component: face-robot
     spec:
       {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.faceRobot.image) "global" .Values.global) | nindent 6 }}
+      initContainers:
+        - name: wait-for-core
+          image: busybox
+          command: ['sh', '-c', 'until nslookup {{ .Values.core.name }}; do echo waiting for core service ready; sleep 2; done;']
       containers:
         - name: face-robot
           image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.faceRobot.image "global" .Values.global ) }}
@@ -35,13 +40,17 @@ spec:
           env:
             - name: URL_PREFIX
               value: {{ .Values.faceRobot.path }}
+            - name: ROBOT_ENDPOINT
+              value: {{ $endpoint }}
+            - name: FCP_ENDPOINT
+              value: http://{{ .Values.core.name }}{{ .Values.core.path }}
             {{- range $key, $value := .Values.faceRobot.env }}
             - name: {{ $key }}
               value: "{{ $value }}"
             {{- end }}
           ports:
             - name: http
-              containerPort: 9527
+              containerPort: 3000
               protocol: TCP
           resources:
             {{- toYaml .Values.faceRobot.resources | nindent 12 }}

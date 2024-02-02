@@ -7,7 +7,7 @@ metadata:
     {{- include "fcp.labels" . | nindent 4 }}
     app.kubernetes.io/component: core
 spec:
-  replicas: {{ .Values.core.replicas }}
+  replicas: {{ .Values.core.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -43,6 +43,15 @@ spec:
             - name: http
               containerPort: 9527
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.core.path }}/hello
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: {{ .Values.core.path }}/hello
+              port: http
           resources:
             {{- toYaml .Values.core.resources | nindent 12 }}
       {{- with .Values.core.nodeSelector }}

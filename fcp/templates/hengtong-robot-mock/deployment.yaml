@@ -7,7 +7,7 @@ metadata:
     {{- include "fcp.labels" . | nindent 4 }}
     app.kubernetes.io/component: hengtong-robot-mock
 spec:
-  replicas: {{ .Values.hengtongRobotMock.replicas }}
+  replicas: {{ .Values.hengtongRobotMock.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -28,11 +28,17 @@ spec:
         app.kubernetes.io/component: hengtong-robot-mock
     spec:
       {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.hengtongRobotMock.image) "global" .Values.global) | nindent 6 }}
+      initContainers:
+        - name: wait-for-core
+          image: busybox
+          command: ['sh', '-c', 'until nslookup {{ .Values.core.name }}; do echo waiting for core service ready; sleep 2; done;']
       containers:
         - name: hengtong-robot-mock
           image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.hengtongRobotMock.image "global" .Values.global ) }}
           imagePullPolicy: {{ .Values.hengtongRobotMock.image.pullPolicy | default .Values.global.imagePullPolicy }}
           env:
+            - name: FCP_ENDPOINT
+              value: http://{{ .Values.core.name }}{{ .Values.core.path }}
             {{- range $key, $value := .Values.hengtongRobotMock.env }}
             - name: {{ $key }}
               value: "{{ $value }}"
@@ -40,7 +46,7 @@ spec:
           command: ["pnpm", "mock:prod"]
           ports:
             - name: http
-              containerPort: 9527
+              containerPort: 3000
               protocol: TCP
           resources:
             {{- toYaml .Values.hengtongRobotMock.resources | nindent 12 }}

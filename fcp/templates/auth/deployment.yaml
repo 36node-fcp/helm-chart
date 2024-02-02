@@ -7,7 +7,7 @@ metadata:
     {{- include "fcp.labels" . | nindent 4 }}
     app.kubernetes.io/component: auth
 spec:
-  replicas: {{ .Values.auth.replicas }}
+  replicas: {{ .Values.auth.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:

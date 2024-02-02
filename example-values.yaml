@@ -1,0 +1,115 @@
+global:
+  imagePullPolicy: Always
+ingress:
+  enabled: true
+  tls: true
+  className: traefik
+  certIssuer: alidns
+core:
+  hostname: fcp-uat.36node.com
+  image:
+    tag: main
+  replicaCount: 3
+  env:
+    MONGO_URL: mongodb://localhost/fcp-api?authSource=admin
+    CACHE_REDIS_URL: redis://localhost:6379/0
+    ILLEGAL_EXPIRES_DAYS: "5"
+    MQTT_URL: mqtt://emqx.z-ctyun-stage.36node.com:1883
+    CACHE_MEMCACHED_URL: memcached://localhost:11211
+adminWeb:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  image:
+    tag: main
+  env:
+    AUTH_ENDPOINT: /auth
+    FCP_ENDPOINT: /core
+    MAP_ENDPOINT: /map
+    MAP_GANTRY_MIN_ZOOM: 11
+    MQTT_URL: wss://emqx.z-ctyun-stage.36node.com:8084/mqtt
+    OSS_ENDPOINT: https://minio-api.z-ctyun-stage.36node.com
+    OSS_DOMAIN: https://minio-api.z-ctyun-stage.36node.com/fcp-uat
+auth:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  image:
+    tag: 1.37.0
+  env:
+    MONGODB_CONNECTION: mongodb://localhost/fcp-auth?authSource=admin
+dahuaMqttRobot:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  env:
+    LOG_LEVEL: info
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+dahuaMqttRobotMock:
+  enabled: true
+  env:
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+    MOCK_TRACK_TIME_INTERVAL: 300
+etcRobot:
+  enabled: true
+  hostname: fcp-aa.36node.com
+  env:
+    LOG_LEVEL: info
+    CACHE_REDIS_URL: redis://localhost
+faceRobot:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  env:
+    LOG_LEVEL: info
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+faceRobotMock:
+  enabled: true
+  env:
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+hengtongRobot:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  env:
+    LOG_LEVEL: info
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+hengtongRobotMock:
+  enabled: true
+  env:
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+messageRobot:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  env:
+    LOG_LEVEL: info
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+mockRobot:
+  enabled: false
+  env:
+    LOG_LEVEL: info
+    API_SERVICE: "http://core/core"
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+trackAnalysisRobot:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  env:
+    LOG_LEVEL: info
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+xindianRobot:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  env:
+    LOG_LEVEL: info
+    CACHE_REDIS_URL: redis://localhost
+    MQTT_URL: mqtt://localhost
+    RECORD_DEFAULT_SPOTSN:
+    RECORD_DEFAULT_UPUSER:
+    SQL_HOST: 192.168.101.11
+    SQL_PASSWORD: ZJVIO_NB@2022
+    SQL_PORT: 1521
+    SQL_SERVICENAME: EE.oracle.docker

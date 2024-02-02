@@ -29,35 +29,13 @@ service:
   port: 80
 
 ingress:
-  enabled: false
+  enabled: true
+  tls: false
+  ## 根据 path 规则，匹配没有配置 hostname 的映射
+  matchNoHost: false
   className: ''
   certIssuer: ''
-  tls: false
   annotations: {}
-  ## matchAll 是指开一个 ingress 不匹配域名，所有的请求都会被转发到这个 ingress
-  matchAll: false
-  tlsItems:
-    - core
-    - adminWeb
-    - auth
-    - dahuaMqttRobot
-    - etcRobot
-    - faceRobot
-    - hengtongRobot
-    - messageRobot
-    - trackAnalysisRobot
-    - xindianRobot
-  pathItems:
-    - core
-    - adminWeb
-    - auth
-    - dahuaMqttRobot
-    - etcRobot
-    - faceRobot
-    - hengtongRobot
-    - messageRobot
-    - trackAnalysisRobot
-    - xindianRobot
 
 ## @param adminPassword The initial password of Harbor admin. Change it from portal after launching Harbor
 ##
@@ -166,7 +144,7 @@ core:
 
   ## ingress
   hostname:
-  path: /core
+  path: /api
 
   ## env
   env:

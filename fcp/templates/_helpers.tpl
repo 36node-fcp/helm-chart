@@ -124,12 +124,58 @@ imagePullSecrets:
   {{- end }}
 {{- end -}}
 
+{{/*
+Return ingress rule path item
+{{- if include "fcp.ingress.path" (list .Values.some-module .Values.service) -}}
+*/}}
 {{- define "fcp.ingress.path" -}}
-- path: {{ .path }}
+{{- $module := index . 0 -}}
+{{- $service := index . 1 -}}
+  path: {{ $module.path }}
   pathType: ImplementationSpecific
   backend:
     service:
-      name: {{ .name }}
+      name: {{ $module.name }}
       port:
-        number: {{ .port }}
+        number: {{ default $service.port $module.port }}
+{{- end -}}
+
+{{/*
+Define a helper to check if any item in a list has a non-empty hostname.
+{{- if include "fcp.ingress.hasHostname" $items -}}
+*/}}
+{{- define "fcp.ingress.hasHostname" -}}
+{{- $hasHostname := false -}}
+{{- range . -}}
+  {{- if .hostname -}}
+    {{- $hasHostname = true -}}
+  {{- end -}}
+{{- end -}}
+{{- $hasHostname -}}
+{{- end -}}
+
+{{/*
+Define a helper to check if any item in a list has an empty hostname but has path.
+{{- if include "fcp.ingress.hasHostLessPath" $items -}}
+*/}}
+{{- define "fcp.ingress.hasHostLessPath" -}}
+{{- $hasHostLessPath := false -}}
+{{- range . -}}
+  {{- if and (not .hostname) .path -}}
+    {{- $hasHostLessPath = true -}}
+  {{- end -}}
+{{- end -}}
+{{- $hasHostLessPath -}}
+{{- end -}}
+
+{{/*
+Return full url of module endpoint
+{{ include "fcp.endpoint" .Values.module }}
+*/}}
+{{- define "fcp.endpoint" -}}
+{{- if .hostname }}
+    {{- printf "//%s%s"  .hostname .path -}}
+{{- else -}}
+    {{- printf "%s"  .path -}}
+{{- end -}}
 {{- end -}}

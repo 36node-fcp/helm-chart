@@ -1,5 +1,7 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "fcp.fullname" . -}}
+{{- $service := .Values.service -}}
+{{- $mods := list .Values.adminWeb .Values.auth .Values.core .Values.dahuaMqttRobot .Values.etcRobot .Values.faceRobot .Values.hengtongRobot .Values.messageRobot .Values.trackAnalysisRobot .Values.xindianRobot }}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
@@ -34,31 +36,40 @@ spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
   {{- if .Values.ingress.tls }}
+  {{- if include "fcp.ingress.hasHostname" $mods }}
   tls:
-    {{- range $item := .Values.ingress.tlsItems }}
-    {{- if (index $.Values $item).hostname }}
-    - secretName: {{ (index $.Values $item).hostname | quote }}
+    - secretName: {{ $fullName | quote }}
       hosts:
-        - {{ (index $.Values $item).hostname | quote }}
-    {{- end }}
-    {{- end }}
+      {{- $unique := dict -}}
+      {{- range $mods -}}
+      {{- $hostname := .hostname -}}
+      {{- if .hostname }}
+      {{- if not (hasKey $unique $hostname) -}}
+        {{- $_ := set $unique $hostname true}}
+        - {{ $hostname }}
+      {{- end -}}
+      {{- end -}}
+      {{- end -}}
+  {{- end }}
   {{- end }}
   rules:
-    {{- if .Values.ingress.matchAll }}
+    {{- if .Values.ingress.matchNoHost }}
+    {{- if include "fcp.ingress.hasHostLessPath" $mods }}
     - http:
         paths:
-          {{- range $item := .Values.ingress.pathItems }}
-          {{- $input := (index $.Values $item) -}}
-          {{- include "fcp.ingress.path" ( dict "name" $input.name "path" $input.path "port" ($input.service.port | default $.Values.service.port) ) | nindent 10 }}
+          {{- range $item := $mods }}
+          {{- if and (not .hostname) .path }}
+          - {{ include "fcp.ingress.path" (list . $service) | nindent 10 | trim }}
+          {{- end }}
           {{- end }}
     {{- end }}
-    {{- range $item := .Values.ingress.pathItems }}
-    {{- $input := (index $.Values $item) -}}
-    {{- if $input.hostname }}
+    {{- end }}
+    {{- range $item := $mods }}
+    {{- if .hostname }}
     - http:
         paths:
-          {{- include "fcp.ingress.path" ( dict "name" $input.name "path" $input.path "port" ($input.service.port | default $.Values.service.port) ) | nindent 10 }}
-      host: {{ $input.hostname }}
+          - {{ include "fcp.ingress.path" (list . $service) | nindent 10 | trim }}
+      host: {{ .hostname }}
     {{- end }}
     {{- end }}
 {{- end }}
