@@ -174,7 +174,7 @@ Return full url of module endpoint
 */}}
 {{- define "fcp.endpoint" -}}
 {{- if .hostname }}
-    {{- printf "//%s%s"  .hostname .path -}}
+    {{- printf "https://%s%s"  .hostname .path -}}
 {{- else -}}
     {{- printf "%s"  .path -}}
 {{- end -}}
