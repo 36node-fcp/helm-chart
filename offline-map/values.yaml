@@ -53,7 +53,6 @@ env:
   ## PORT:
   ## ROOT_URL:
   ## TILE_DIR:
-  ## FILE_PATH:
 
 replicaCount: 1
 
@@ -102,3 +101,35 @@ affinity: {}
 
 ## Configure pod annotations
 podAnnotations: {}
+
+## Enable persistence using Persistent Volume Claims
+## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+##
+persistence:
+  ## @param persistence.enabled Enable MinIO&reg; data persistence using PVC. If false, use emptyDir
+  ##
+  enabled: true
+  ## @param persistence.storageClass PVC Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  storageClass: ""
+  ## @param persistence.mountPath Data volume mount path
+  ##
+  mountPath: /opt/map
+  ## @param persistence.accessModes PVC Access Modes
+  ##
+  accessModes:
+    - ReadWriteOnce
+  ## @param persistence.size
+  ##
+  size: 20Gi
+  ## @param persistence.annotations Annotations for the PVC
+  ##
+  annotations: {}
+  ## @param persistence.existingClaim Name of an existing PVC to use
+  ##
+  existingClaim: ""

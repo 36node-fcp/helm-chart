@@ -123,3 +123,37 @@ imagePullSecrets:
     {{- end }}
   {{- end }}
 {{- end -}}
+
+{{/*
+Return the PVC name
+*/}}
+{{- define "offline-map.claimName" -}}
+{{- if and .Values.persistence.existingClaim }}
+    {{- printf "%s" (tpl .Values.persistence.existingClaim $) -}}
+{{- else -}}
+    {{- printf "%s" (include "offline-map.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return  the proper Storage Class
+{{ include "offline-map.storage.class" ( dict "persistence" .Values.path.to.the.persistence "global" $) }}
+*/}}
+{{- define "offline-map.storage.class" -}}
+
+{{- $storageClass := .persistence.storageClass -}}
+{{- if .global -}}
+    {{- if .global.storageClass -}}
+        {{- $storageClass = .global.storageClass -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if $storageClass -}}
+  {{- if (eq "-" $storageClass) -}}
+      {{- printf "storageClassName: \"\"" -}}
+  {{- else }}
+      {{- printf "storageClassName: %s" $storageClass -}}
+  {{- end -}}
+{{- end -}}
+
+{{- end -}}

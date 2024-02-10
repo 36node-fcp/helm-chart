@@ -42,10 +42,9 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            - name: data
+              mountPath: {{ .Values.persistence.mountPath }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -60,7 +59,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "offline-map.claimName" . }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
