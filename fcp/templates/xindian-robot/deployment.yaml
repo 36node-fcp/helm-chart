@@ -6,7 +6,7 @@ metadata:
   name: {{ .Values.xindianRobot.name }}
   labels:
     {{- include "fcp.labels" . | nindent 4 }}
-    app.kubernetes.io/component: robot-xindian
+    app.kubernetes.io/component: xindian-robot
 spec:
   replicas: {{ .Values.xindianRobot.replicaCount }}
   strategy:
@@ -17,7 +17,7 @@ spec:
   selector:
     matchLabels:
       {{- include "fcp.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: robot-xindian
+      app.kubernetes.io/component: xindian-robot
   template:
     metadata:
       {{- with .Values.xindianRobot.podAnnotations }}
@@ -26,7 +26,7 @@ spec:
       {{- end }}
       labels:
         {{- include "fcp.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: robot-xindian
+        app.kubernetes.io/component: xindian-robot
     spec:
       {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.xindianRobot.image) "global" .Values.global) | nindent 6 }}
       initContainers:
@@ -34,7 +34,7 @@ spec:
           image: busybox
           command: ['sh', '-c', 'until nslookup {{ .Values.core.name }}; do echo waiting for core service ready; sleep 2; done;']     
       containers:
-        - name: robot-xindian
+        - name: xindian-robot
           image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.xindianRobot.image "global" .Values.global ) }}
           imagePullPolicy: {{ .Values.xindianRobot.image.pullPolicy | default .Values.global.imagePullPolicy }}
           env:
