@@ -111,3 +111,7 @@ adminWeb:
 
 - fcp-developer: 36node@Fcp
 - fcp-xwb: xwb@Fcp34
+
+## 相关资料
+
+- busybox 的 nslookup 会有bug，要用 1.28 版本 https://kb.novaordis.com/index.php/Kubernetes_Init_Containers

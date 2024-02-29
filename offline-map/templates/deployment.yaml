@@ -27,6 +27,13 @@ spec:
         app.kubernetes.io/component: offline-map
     spec:
       {{- include "offline-map.images.pullSecrets" (dict "images" (list .Values.image) "global" .Values.global) | nindent 6 }}
+      initContainers:
+        - name: init-download
+          image: {{ include "offline-map.images.image" ( dict "imageRoot" .Values.image "global" .Values.global ) }}
+          command: ['sh', '-c', 'if [ ! -f /opt/map/local.mbtiles ]; then wget -O /opt/map/local.mbtiles https://minio-api.z-ctyun-prod.36node.com/36node-dev/map/{{ .Values.mbtiles }}; fi']
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.mountPath }}
       containers:
         - name: offline-map
           image: {{ include "offline-map.images.image" ( dict "imageRoot" .Values.image "global" .Values.global ) }}

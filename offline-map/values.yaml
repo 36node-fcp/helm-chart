@@ -39,6 +39,9 @@ ingress:
 ##
 adminPassword: ""
 
+## 地图文件
+mbtiles: ningbo.mbtiles
+
 name: offline-map
 enabled: true
 

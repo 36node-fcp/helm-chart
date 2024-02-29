@@ -30,7 +30,7 @@ spec:
       {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.hengtongRobotMock.image) "global" .Values.global) | nindent 6 }}
       initContainers:
         - name: wait-for-core
-          image: busybox
+          image: busybox:1.28
           command: ['sh', '-c', 'until nslookup {{ .Values.core.name }}; do echo waiting for core service ready; sleep 2; done;']
       containers:
         - name: hengtong-robot-mock

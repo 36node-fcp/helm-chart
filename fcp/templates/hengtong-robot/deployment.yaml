@@ -31,8 +31,8 @@ spec:
       {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.hengtongRobot.image) "global" .Values.global) | nindent 6 }}
       initContainers:
         - name: wait-for-core
-          image: busybox
-          command: ['sh', '-c', 'until nslookup {{ .Values.core.name }}; do echo waiting for core service ready; sleep 2; done;']
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nslookup {{ .Values.core.name }}; do echo waiting for core service ready; sleep 10; done;']
       containers:
         - name: hengtong-robot
           image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.hengtongRobot.image "global" .Values.global ) }}

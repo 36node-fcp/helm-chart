@@ -29,9 +29,9 @@ spec:
     spec:
       {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.faceRobotMock.image) "global" .Values.global) | nindent 6 }}
       initContainers:
-        - name: wait-for-core
-          image: busybox
-          command: ['sh', '-c', 'until nslookup {{ .Values.core.name }}; do echo waiting for core service ready; sleep 2; done;']
+        - name: wait-for-face-robot
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nslookup {{ .Values.faceRobot.name }}; do echo waiting for face robot ready; sleep 10; done;']
       containers:
         - name: face-robot-mock
           image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.faceRobotMock.image "global" .Values.global ) }}
