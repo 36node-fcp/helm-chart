@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "offline-map.name" . }}
+  name: {{ .Values.name }}
   labels:
     {{- include "offline-map.labels" . | nindent 4 }}
     app.kubernetes.io/component: offline-map
