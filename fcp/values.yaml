@@ -16,13 +16,13 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  storageClass: ''
+  storageClass: ""
 
 ## @section Common Parameters
 ##
 
-nameOverride: ''
-fullnameOverride: ''
+nameOverride: ""
+fullnameOverride: ""
 
 service:
   type: ClusterIP
@@ -33,13 +33,13 @@ ingress:
   tls: false
   ## 根据 path 规则，匹配没有配置 hostname 的映射
   matchNoHost: false
-  className: ''
-  certIssuer: ''
+  className: ""
+  certIssuer: ""
   annotations: {}
 
 ## @param adminPassword The initial password of Harbor admin. Change it from portal after launching Harbor
 ##
-adminPassword: ''
+adminPassword: ""
 
 ## @section admin-web
 ##
@@ -59,10 +59,12 @@ adminWeb:
     ## ACCESS_KEY_SECRET:
     ## AUTH_ENDPOINT:
     ## AUTH_PROVIDER:
+    ## APP_DOWNLOAD_URL:
     ## DRAFT_EXPIRED_DAYS:
     ## FCP_ENDPOINT:
     ## FILE_BUCKET:
     ## ILLEGAL_EXPIRED_DAYS:
+    ## IMAGE_COMPRESS_THRESHOLD_SIZE:
     ## LOGIN_FAIL_LOCK_SECONDS:
     ## MAP_BOUND_NORTH_EAST:
     ## MAP_BOUND_SOUTH_WEST:
@@ -78,20 +80,23 @@ adminWeb:
     ## OSS_ENDPOINT:
     ## OSS_FORCE_PATH_STYLE:
     ## OSS_REGION:
+    ## PASSWORD_EXPIRED_ENABLE:
+    ## PASSWORD_EXPIRED_DAYS:
     ## ROOT_NS:
+    ## SHOW_DATA_YEARS:
     ## TITLE:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-admin-web
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -163,19 +168,34 @@ core:
     ## MICROSERVICE_ENABLE:
     ## MONGO_URL:
     ## MQTT_PASSWORD:
+    ## MQTT_SYNC_TOPIC_GANTRY_CHANGE:
+    ## MQTT_SYNC_TOPIC_GANTRY_DELETE:
+    ## MQTT_SYNC_TOPIC_GANTRY_DEVICE_CHANGE:
+    ## MQTT_SYNC_TOPIC_GANTRY_DEVICE_DELETE:
+    ## MQTT_SYNC_TOPIC_ILLEGAL:
+    ## MQTT_SYNC_TOPIC_ILLEGAL_TYPE_CHANGE:
+    ## MQTT_SYNC_TOPIC_ILLEGAL_TYPE_DELETE:
+    ## MQTT_SYNC_TOPIC_LAW_ENFORCE_POINT_CHANGE:
+    ## MQTT_SYNC_TOPIC_LAW_ENFORCE_POINT_DELETE:
+    ## MQTT_SYNC_TOPIC_SECTION_CHANGE:
+    ## MQTT_SYNC_TOPIC_SECTION_DELETE:
+    ## MQTT_SYNC_TOPIC_WARNING:
     ## MQTT_TOPIC_GANTRY:
     ## MQTT_TOPIC_GANTRY_DEVICE:
     ## MQTT_TOPIC_ILLEGAL_DRAFT:
+    ## MQTT_TOPIC_ILLEGAL_MATERIAL:
     ## MQTT_TOPIC_ILLEGAL_RECORD:
     ## MQTT_TOPIC_ILLEGAL_TYPE:
+    ## MQTT_TOPIC_LAW_ENFORCE_POINT:
     ## MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD:
     ## MQTT_TOPIC_NOTIFY_WARNING:
+    ## MQTT_TOPIC_SECTION:
     ## MQTT_TOPIC_TRACK_RECORD:
     ## MQTT_URL:
     ## MQTT_USERNAME:
     ## PORT:
+    ## SYNC_ENABLE:
     ## TRACK_RECORD_CLEAN:
-    ## URL_PREFIX:
     ## VEHICLE_IMPORT_CLEAN:
     ## VEHICLE_IMPORT_DELAY:
     ## VEHICLE_IMPORT_LIMIT:
@@ -184,15 +204,15 @@ core:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-core
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -251,19 +271,22 @@ auth:
   env:
     {}
     ## e.g:
-    ## MONGODB_CONNECTION:
+    ## PORT:
+    ## PREFIX:
+    ## MONGODB_URL:
+    ## PASSWORD_EXPIRE:
 
   replicaCount: 1
   image:
-    registry: ''
-    repository: 36node/stargate-auth
+    registry: ""
+    repository: 36node/fcp-auth
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -322,44 +345,46 @@ dahuaMqttRobot:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## DRAFT_EXPIRE_DAYS:
-    ## FCP_ENDPOINT:
-    ## LOG_LEVEL:
-    ## MICROSERVICE_ENABLE:
-    ## MOCK_TRACK_TIME_INTERVAL:
-    ## MQTT_TOPIC_ANALYSIS_DAHUA:
-    ## MQTT_TOPIC_GANTRY:
-    ## MQTT_TOPIC_GANTRY_DEVICE:
-    ## MQTT_TOPIC_ILLEGAL_DRAFT:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
-    ## MQTT_TOPIC_ILLEGAL_TYPE:
-    ## MQTT_TOPIC_TRACK_RECORD:
-    ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-    ## MQTT_PASSWORD:
-    ## MQTT_LISTENER_URL
-    ## MQTT_LISTENER_USERNAME
-    ## MQTT_LISTENER_PASSWORD
-    ## NAME:
-    ## PORT:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SOURCE_NAME:
+  ## CACHE_REDIS_URL:
+  ## DRAFT_EXPIRE_DAYS:
+  ## FCP_ENDPOINT:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MOCK_ILLEGAL_TIME_INTERVAL:
+  ## MOCK_TRACK_TIME_INTERVAL:
+  ## MQTT_LISTENER_PASSWORD:
+  ## MQTT_LISTENER_URL:
+  ## MQTT_LISTENER_USERNAME:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_ANALYSIS_DAHUA:
+  ## MQTT_TOPIC_GANTRY:
+  ## MQTT_TOPIC_GANTRY_DEVICE:
+  ## MQTT_TOPIC_ILLEGAL_DRAFT:
+  ## MQTT_TOPIC_ILLEGAL_RECORD:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
+  ## MQTT_TOPIC_ILLEGAL_TYPE:
+  ## MQTT_TOPIC_TRACK_RECORD:
+  ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-dahua-mqtt-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -414,41 +439,162 @@ dahuaMqttRobotMock:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## DRAFT_EXPIRE_DAYS:
-    ## FCP_ENDPOINT:
-    ## LOG_LEVEL:
-    ## MICROSERVICE_ENABLE:
-    ## MOCK_TRACK_TIME_INTERVAL:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_ANALYSIS_DAHUA:
-    ## MQTT_TOPIC_GANTRY:
-    ## MQTT_TOPIC_GANTRY_DEVICE:
-    ## MQTT_TOPIC_ILLEGAL_DRAFT:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
-    ## MQTT_TOPIC_ILLEGAL_TYPE:
-    ## MQTT_TOPIC_TRACK_RECORD:
-    ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-    ## NAME:
-    ## PORT:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SOURCE_NAME:
+  ## CACHE_REDIS_URL:
+  ## DRAFT_EXPIRE_DAYS:
+  ## FCP_ENDPOINT:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MOCK_ILLEGAL_TIME_INTERVAL:
+  ## MOCK_TRACK_TIME_INTERVAL:
+  ## MQTT_LISTENER_PASSWORD:
+  ## MQTT_LISTENER_URL:
+  ## MQTT_LISTENER_USERNAME:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_ANALYSIS_DAHUA:
+  ## MQTT_TOPIC_GANTRY:
+  ## MQTT_TOPIC_GANTRY_DEVICE:
+  ## MQTT_TOPIC_ILLEGAL_DRAFT:
+  ## MQTT_TOPIC_ILLEGAL_RECORD:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
+  ## MQTT_TOPIC_ILLEGAL_TYPE:
+  ## MQTT_TOPIC_TRACK_RECORD:
+  ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-dahua-mqtt-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section dataSyncRobot
+##
+dataSyncRobot:
+  name: data-sync-robot
+  enabled: false
+
+  ## ingress
+  hostname:
+  path: /data-sync-robot
+
+  ## env
+  env:
+    {}
+    ## e.g:
+  ## CACHE_REDIS_URL:
+  ## FCP_ENDPOINT:
+  ## FTP_HOST:
+  ## FTP_PASSWORD:
+  ## FTP_PORT:
+  ## FTP_SECURE:
+  ## FTP_SYNC_PATH:
+  ## FTP_USER:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MQTT_LISTENER_PASSWORD:
+  ## MQTT_LISTENER_URL:
+  ## MQTT_LISTENER_USERNAME:
+  ## MQTT_PASSWORD:
+  ## MQTT_RECV_TOPIC_GANTRY_CHANGE:
+  ## MQTT_RECV_TOPIC_GANTRY_DELETE:
+  ## MQTT_RECV_TOPIC_GANTRY_DEVICE_CHANGE:
+  ## MQTT_RECV_TOPIC_GANTRY_DEVICE_DELETE:
+  ## MQTT_RECV_TOPIC_ILLEGAL:
+  ## MQTT_RECV_TOPIC_ILLEGAL_TYPE_CHANGE:
+  ## MQTT_RECV_TOPIC_ILLEGAL_TYPE_DELETE:
+  ## MQTT_RECV_TOPIC_LAW_ENFORCE_POINT_CHANGE:
+  ## MQTT_RECV_TOPIC_LAW_ENFORCE_POINT_DELETE:
+  ## MQTT_RECV_TOPIC_SECTION_CHANGE:
+  ## MQTT_RECV_TOPIC_SECTION_DELETE:
+  ## MQTT_RECV_TOPIC_WARNING:
+  ## MQTT_SEND_TOPIC_GANTRY:
+  ## MQTT_SEND_TOPIC_GANTRY_DEVICE:
+  ## MQTT_SEND_TOPIC_ILLEGAL:
+  ## MQTT_SEND_TOPIC_ILLEGAL_TYPE:
+  ## MQTT_SEND_TOPIC_LAW_ENFORCE_POINT:
+  ## MQTT_SEND_TOPIC_SECTION:
+  ## MQTT_SEND_TOPIC_WARNING:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## PORT:
+  ## RECV_CRON_EXPRESSION:
+  ## RECV_NAME:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SEND_COUNT_PER_TIME:
+  ## SEND_CRON_EXPRESSION:
+  ## SEND_ENABLE:
+  ## SEND_NAME:
+  ## SOURCE_NAME:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/fcp-data-sync-robot
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -507,30 +653,32 @@ etcRobot:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## FCP_ENDPOINT:
-    ## KAFKA_BROKERS:
-    ## KAFKA_USERNAME:
-    ## KAFKA_PASSWORD:
-    ## LOG_LEVEL:
-    ## MICROSERVICE_ENABLE:
-    ## NAME:
-    ## PORT:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SOURCE_NAME:
+  ## CACHE_REDIS_URL:
+  ## FCP_ENDPOINT:
+  ## KAFKA_BROKERS:
+  ## KAFKA_CLIENT_ID:
+  ## KAFKA_PASSWORD:
+  ## KAFKA_USERNAME:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-etc-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -589,42 +737,43 @@ faceRobot:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## FCP_ENDPOINT:
-    ## LOG_LEVEL:
-    ## MICROSERVICE_ENABLE:
-    ## MQTT_NOTIFY_PERSON:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_GANTRY:
-    ## MQTT_TOPIC_GANTRY_DEVICE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
-    ## MQTT_TOPIC_WARNING:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-    ## NAME:
-    ## PORT:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SOURCE_NAME:
+  ## CACHE_REDIS_URL:
+  ## FCP_ENDPOINT:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MQTT_NOTIFY_PERSON:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_GANTRY:
+  ## MQTT_TOPIC_GANTRY_DEVICE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
+  ## MQTT_TOPIC_WARNING:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-face-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -679,42 +828,43 @@ faceRobotMock:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## FCP_ENDPOINT:
-    ## LOG_LEVEL:
-    ## MICROSERVICE_ENABLE:
-    ## MQTT_NOTIFY_PERSON:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_GANTRY:
-    ## MQTT_TOPIC_GANTRY_DEVICE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
-    ## MQTT_TOPIC_WARNING:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-    ## NAME:
-    ## PORT:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SOURCE_NAME:
+  ## CACHE_REDIS_URL:
+  ## FCP_ENDPOINT:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MQTT_NOTIFY_PERSON:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_GANTRY:
+  ## MQTT_TOPIC_GANTRY_DEVICE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
+  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
+  ## MQTT_TOPIC_WARNING:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-face-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -773,22 +923,37 @@ hengtongRobot:
   env:
     {}
     ## e.g:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
+  ## CACHE_REDIS_URL:
+  ## DRAFT_EXPIRED:
+  ## FCP_ENDPOINT:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_GANTRY:
+  ## MQTT_TOPIC_GANTRY_DEVICE:
+  ## MQTT_TOPIC_ILLEGAL_DRAFT:
+  ## MQTT_TOPIC_ILLEGAL_RECORD:
+  ## MQTT_TOPIC_ILLEGAL_TYPE:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-hengtong-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -843,22 +1008,37 @@ hengtongRobotMock:
   env:
     {}
     ## e.g:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
+  ## CACHE_REDIS_URL:
+  ## DRAFT_EXPIRED:
+  ## FCP_ENDPOINT:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_GANTRY:
+  ## MQTT_TOPIC_GANTRY_DEVICE:
+  ## MQTT_TOPIC_ILLEGAL_DRAFT:
+  ## MQTT_TOPIC_ILLEGAL_RECORD:
+  ## MQTT_TOPIC_ILLEGAL_TYPE:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-hengtong-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -917,39 +1097,38 @@ messageRobot:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## DRAFT_EXPIRE_DAYS:
-    ## FCP_ENDPOINT:
-    ## MICROSERVICE_ENABLE:
-    ## MOCK_TRACK_TIME_INTERVAL:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_ANALYSIS_DAHUA:
-    ## MQTT_TOPIC_GANTRY:
-    ## MQTT_TOPIC_GANTRY_DEVICE:
-    ## MQTT_TOPIC_ILLEGAL_DRAFT:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
-    ## MQTT_TOPIC_ILLEGAL_TYPE:
-    ## MQTT_TOPIC_TRACK_RECORD:
-    ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-    ## NAME:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SOURCE_NAME:
+  ## CACHE_REDIS_URL:
+  ## FCP_ENDPOINT:
+  ## KEY:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MESSAGE_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MODULE:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## MSG_CONTENT:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SEND_MESSAGE_CRONTAB:
+  ## SOURCE_NAME:
+  ## URL_PREFIX:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-message-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -1014,15 +1193,15 @@ mockRobot:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-mock-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -1081,30 +1260,35 @@ trackAnalysisRobot:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## DRAFT_EXPIRE_DAYS:
-    ## FCP_ENDPOINT:
-    ## MICROSERVICE_ENABLE:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_TRACK_RECORD:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-    ## NAME:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SOURCE_NAME:
+  ## CACHE_REDIS_URL:
+  ## DRAFT_EXPIRE_DAYS:
+  ## FCP_ENDPOINT:
+  ## LOG_LEVEL:
+  ## LOKI_URL:
+  ## MICROSERVICE_ENABLE:
+  ## MONGO_URL:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_TRACK_RECORD:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SOURCE_NAME:
+  ## VEHICLE_PROP_STAT_CRON:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-track-analysis-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -1163,41 +1347,54 @@ xindianRobot:
   env:
     {}
     ## e.g:
-    ## CACHE_REDIS_URL:
-    ## FCP_ENDPOINT:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-    ## NAME:
-    ## RECORD_DEFAULT_JYZT:
-    ## RECORD_DEFAULT_SPOTSN:
-    ## RECORD_DEFAULT_UPUSER:
-    ## REDIS_GLOBAL_PREFIX:
-    ## ROBOT_ENDPOINT:
-    ## SQL_DATABASE:
-    ## SQL_HOST:
-    ## SQL_PASSWORD:
-    ## SQL_POOL_SIZE:
-    ## SQL_PORT:
-    ## SQL_SEQUENCE_QUERY:
-    ## SQL_SERVICENAME:
-    ## SQL_SYNC:
-    ## SQL_TABLE_NAME:
-    ## SQL_TYPE:
-    ## SQL_USERNAME:
+  ## CACHE_REDIS_URL:
+  ## FCP_ENDPOINT:
+  ## FTP_ENABLE:
+  ## FTP_FILE_URL_PREFIX:
+  ## FTP_HOST:
+  ## FTP_PASSWORD:
+  ## FTP_PORT:
+  ## FTP_SECURE:
+  ## FTP_USER:
+  ## ILLEGAL_MATERIAL_CACHE_TTL:
+  ## LOCAL_CLIENT_DIR:
+  ## LOCAL_DEBUG:
+  ## LOG_LEVEL:
+  ## MQTT_PASSWORD:
+  ## MQTT_TOPIC_ILLEGAL_IMAGE_MATERIAL:
+  ## MQTT_TOPIC_ILLEGAL_RECORD:
+  ## MQTT_URL:
+  ## MQTT_USERNAME:
+  ## NAME:
+  ## PORT:
+  ## RECORD_DEFAULT_JYZT:
+  ## RECORD_DEFAULT_SPOTSN:
+  ## RECORD_DEFAULT_UPUSER:
+  ## REDIS_GLOBAL_PREFIX:
+  ## ROBOT_ENDPOINT:
+  ## SQL_DATABASE:
+  ## SQL_HOST:
+  ## SQL_PASSWORD:
+  ## SQL_POOL_SIZE:
+  ## SQL_PORT:
+  ## SQL_SEQUENCE_QUERY:
+  ## SQL_SERVICENAME:
+  ## SQL_SYNC:
+  ## SQL_TABLE_NAME:
+  ## SQL_TYPE:
+  ## SQL_USERNAME:
 
   replicaCount: 1
   image:
-    registry: ''
+    registry: ""
     repository: 36node/fcp-xindian-robot
     tag: main
-    digest: ''
+    digest: ""
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
-    pullPolicy: ''
+    pullPolicy: ""
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
