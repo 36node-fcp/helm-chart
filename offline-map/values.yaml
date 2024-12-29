@@ -39,6 +39,9 @@ ingress:
 ##
 adminPassword: ""
 
+## 跳过 initContainers，有时因网络问题无法下载
+skipInitContainers: false
+
 ## 地图文件
 mbtiles: ningbo.mbtiles
 
