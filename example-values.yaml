@@ -113,3 +113,13 @@ xindianRobot:
     SQL_PASSWORD: ZJVIO_NB@2022
     SQL_PORT: 1521
     SQL_SERVICENAME: EE.oracle.docker
+auth-new:
+  enabled: true
+  hostname: fcp-uat.36node.com
+  image:
+    tag: v2.12.0
+  env:
+    API_KEY: "YYkOmD62yqR7mf9wvuoNvGT3"
+    JWT_SECRET_KEY: "hqfvct6sv476bfax10lx8nvhdvt2t5a3"
+    MONGO_URL: mongodb://localhost/fcp-auth-new?authSource=admin
+    REDIS_URL: redis://localhost

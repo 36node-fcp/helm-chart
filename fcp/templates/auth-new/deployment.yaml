@@ -1,0 +1,60 @@
+{{- if .Values.auth-new.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.auth-new.name }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+    app.kubernetes.io/component: auth-new
+spec:
+  replicas: {{ .Values.auth-new.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "fcp.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: auth-new
+  template:
+    metadata:
+      {{- with .Values.auth-new.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fcp.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: auth-new
+    spec:
+      {{- include "fcp.images.pullSecrets" (dict "images" (list .Values.auth-new.image) "global" .Values.global) | nindent 6 }}
+      containers:
+        - name: auth-new
+          image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.auth-new.image "global" .Values.global ) }}
+          imagePullPolicy: {{ .Values.auth-new.image.pullPolicy | default .Values.global.imagePullPolicy }}
+          env:
+            - name: PREFIX
+              value: {{ .Values.auth-new.path }}
+            {{- range $key, $value := .Values.auth-new.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 9527
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.auth-new.resources | nindent 12 }}
+      {{- with .Values.auth-new.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.auth-new.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.auth-new.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
