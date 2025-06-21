@@ -1441,7 +1441,7 @@ xindianRobot:
 
 ## @section auth-new
 ##
-auth-new:
+authNew:
   name: auth-new
   enabled: true
 

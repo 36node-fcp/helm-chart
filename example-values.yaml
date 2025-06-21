@@ -113,7 +113,7 @@ xindianRobot:
     SQL_PASSWORD: ZJVIO_NB@2022
     SQL_PORT: 1521
     SQL_SERVICENAME: EE.oracle.docker
-auth-new:
+authNew:
   enabled: true
   hostname: fcp-uat.36node.com
   image:
