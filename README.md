@@ -33,6 +33,10 @@ helm dependency update
 # 索引，helm-chart 目录下，将打包的文件都放入 docs 目录下
 # docs 目录下执行
 helm repo index .
+
+# 推送方法
+helm registry login harbor.36node.com --username xxx --password xxx
+helm push fcp-chart-6.0.0.tgz oci://harbor.36node.com/fcp
 ```
 
 参考[链接](https://blog.csdn.net/u013360850/article/details/103440483)
