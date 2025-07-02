@@ -1,0 +1,75 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "fcp.fullname" . -}}
+{{- $service := .Values.service -}}
+{{- $mods := list .Values.platform .Values.auth}}
+{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+  {{- end }}
+{{- end }}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "fcp.labels" . | nindent 4 }}
+  {{- if or .Values.ingress.className .Values.ingress.certIssuer .Values.ingress.annotations }}  
+  annotations:
+    {{- if .Values.ingress.className }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.className | quote }}
+    {{- end }}
+    {{- if .Values.ingress.certIssuer }}
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.certIssuer | quote }}
+    {{- end }}
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  {{- if include "fcp.ingress.hasHostname" $mods }}
+  tls:
+    - secretName: {{ $fullName | quote }}
+      hosts:
+      {{- $unique := dict -}}
+      {{- range $mods -}}
+      {{- $hostname := .hostname -}}
+      {{- if .hostname }}
+      {{- if not (hasKey $unique $hostname) -}}
+        {{- $_ := set $unique $hostname true}}
+        - {{ $hostname }}
+      {{- end -}}
+      {{- end -}}
+      {{- end -}}
+  {{- end }}
+  {{- end }}
+  rules:
+    {{- if .Values.ingress.matchNoHost }}
+    {{- if include "fcp.ingress.hasHostLessPath" $mods }}
+    - http:
+        paths:
+          {{- range $item := $mods }}
+          {{- if and (not .hostname) .path }}
+          - {{ include "fcp.ingress.path" (list . $service) | nindent 10 | trim }}
+          {{- end }}
+          {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- range $item := $mods }}
+    {{- if .hostname }}
+    - http:
+        paths:
+          - {{ include "fcp.ingress.path" (list . $service) | nindent 10 | trim }}
+      host: {{ .hostname }}
+    {{- end }}
+    {{- end }}
+{{- end }}

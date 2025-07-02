@@ -1,0 +1,195 @@
+## @section Global parameters
+## Global Docker image parameters
+## Please, note that this will override the image parameters, including dependencies, configured to use the global value
+## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+##
+
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+## @param global.storageClass Global StorageClass for Persistent Volume(s)
+##
+global:
+  imageRegistry: harbor.36node.com
+  imagePullPolicy: IfNotPresent
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common Parameters
+##
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  tls: false
+  ## 根据 path 规则，匹配没有配置 hostname 的映射
+  matchNoHost: false
+  className: ""
+  certIssuer: ""
+  annotations: {}
+
+## @section platform
+##
+platform:
+  name: platform
+  enabled: true
+
+  ## ingress
+  hostname:
+  path: /
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## STARGATE_ENDPOINT:
+    ## STARGATE_API_KEY:
+    ## STARGATE_JWT_SECRET:
+    ## STARGATE_COOKIE_SECURE: true|false
+    ## PORT
+    ## BASE_URL
+    ## REDIS_HOST
+    ## REDIS_PORT
+    ## REDIS_PASSWORD
+
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: fcp/data-debug-platform
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
+## @section auth
+##
+auth:
+  name: auth
+  enabled: true
+
+  ## ingress
+  hostname:
+  path: /auth/v1
+
+  ## env
+  env:
+    {}
+    ## e.g:
+    ## PORT:
+    ## PREFIX:
+    ## API_KEY:
+    ## JWT_SECRET_KEY:
+    ## MONGO_URL:
+    ## REDIS_URL:
+
+  replicaCount: 1
+  image:
+    registry: ""
+    repository: 36node/auth
+    tag: main
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: ""
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+    ## Enable debug mode
+    ##
+    debug: false
+
+  ## Service parameters
+  ##
+  service: {}
+  ## E.g.
+  ## type: ClusterIP
+  ## port: 80
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Configure resource requests and limits
+  nodeSelector: {}
+
+  ## Configure tolerations
+  tolerations: []
+
+  ## Configure affinity
+  affinity: {}
+
+  ## Configure pod annotations
+  podAnnotations: {}
+
