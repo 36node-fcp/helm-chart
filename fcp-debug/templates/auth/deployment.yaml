@@ -35,6 +35,8 @@ spec:
           env:
             - name: PREFIX
               value: {{ .Values.auth.path }}
+            - name: PORT
+              value: "9527"
             {{- range $key, $value := .Values.auth.env }}
             - name: {{ $key }}
               value: "{{ $value }}"

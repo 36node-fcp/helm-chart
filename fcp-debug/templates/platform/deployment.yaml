@@ -33,15 +33,13 @@ spec:
           image: {{ include "fcp.images.image" ( dict "imageRoot" .Values.platform.image "global" .Values.global ) }}
           imagePullPolicy: {{ .Values.platform.image.pullPolicy | default .Values.global.imagePullPolicy }}
           env:
-            - name: REACT_APP_PREFIX
-              value: "{{ .Values.platform.path }}"
             {{- range $key, $value := .Values.platform.env }}
-            - name: REACT_APP_{{ $key }}
+            - name: {{ $key }}
               value: "{{ $value }}"
             {{- end }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 3000
               protocol: TCP
           resources:
             {{- toYaml .Values.platform.resources | nindent 12 }}

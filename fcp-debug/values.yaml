@@ -9,7 +9,6 @@
 ## @param global.storageClass Global StorageClass for Persistent Volume(s)
 ##
 global:
-  imageRegistry: harbor.36node.com
   imagePullPolicy: IfNotPresent
   ## E.g.
   ## imagePullSecrets:
@@ -61,10 +60,9 @@ platform:
     ## REDIS_PORT
     ## REDIS_PASSWORD
 
-
   replicaCount: 1
   image:
-    registry: ""
+    registry: "harbor.36node.com"
     repository: fcp/data-debug-platform
     tag: main
     digest: ""
@@ -125,7 +123,7 @@ auth:
 
   ## ingress
   hostname:
-  path: /auth/v1
+  path: /
 
   ## env
   env:
@@ -192,4 +190,3 @@ auth:
 
   ## Configure pod annotations
   podAnnotations: {}
-
