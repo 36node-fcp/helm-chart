@@ -74,8 +74,8 @@ adminWeb:
     ## MAP_GANTRY_MIN_ZOOM:
     ## MAP_MAX_ZOOM:
     ## MAP_MIN_ZOOM:
-    ## MQTT_TOPIC_NOTIFY_WARNING:
     ## MQTT_URL:
+    ## MQTT_TOPIC_PREFIX:
     ## OSS_DOMAIN:
     ## OSS_ENDPOINT:
     ## OSS_FORCE_PATH_STYLE:
@@ -168,31 +168,9 @@ core:
     ## MICROSERVICE_ENABLE:
     ## MONGO_URL:
     ## MQTT_PASSWORD:
-    ## MQTT_SYNC_TOPIC_GANTRY_CHANGE:
-    ## MQTT_SYNC_TOPIC_GANTRY_DELETE:
-    ## MQTT_SYNC_TOPIC_GANTRY_DEVICE_CHANGE:
-    ## MQTT_SYNC_TOPIC_GANTRY_DEVICE_DELETE:
-    ## MQTT_SYNC_TOPIC_ILLEGAL:
-    ## MQTT_SYNC_TOPIC_ILLEGAL_TYPE_CHANGE:
-    ## MQTT_SYNC_TOPIC_ILLEGAL_TYPE_DELETE:
-    ## MQTT_SYNC_TOPIC_LAW_ENFORCE_POINT_CHANGE:
-    ## MQTT_SYNC_TOPIC_LAW_ENFORCE_POINT_DELETE:
-    ## MQTT_SYNC_TOPIC_SECTION_CHANGE:
-    ## MQTT_SYNC_TOPIC_SECTION_DELETE:
-    ## MQTT_SYNC_TOPIC_WARNING:
-    ## MQTT_TOPIC_GANTRY:
-    ## MQTT_TOPIC_GANTRY_DEVICE:
-    ## MQTT_TOPIC_ILLEGAL_DRAFT:
-    ## MQTT_TOPIC_ILLEGAL_MATERIAL:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_TOPIC_ILLEGAL_TYPE:
-    ## MQTT_TOPIC_LAW_ENFORCE_POINT:
-    ## MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD:
-    ## MQTT_TOPIC_NOTIFY_WARNING:
-    ## MQTT_TOPIC_SECTION:
-    ## MQTT_TOPIC_TRACK_RECORD:
     ## MQTT_URL:
     ## MQTT_USERNAME:
+    ## MQTT_TOPIC_PREFIX:
     ## PORT:
     ## SYNC_ENABLE:
     ## TRACK_RECORD_CLEAN:
@@ -357,17 +335,9 @@ dahuaMqttRobot:
   ## MQTT_LISTENER_URL:
   ## MQTT_LISTENER_USERNAME:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_ANALYSIS_DAHUA:
-  ## MQTT_TOPIC_GANTRY:
-  ## MQTT_TOPIC_GANTRY_DEVICE:
-  ## MQTT_TOPIC_ILLEGAL_DRAFT:
-  ## MQTT_TOPIC_ILLEGAL_RECORD:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
-  ## MQTT_TOPIC_ILLEGAL_TYPE:
-  ## MQTT_TOPIC_TRACK_RECORD:
-  ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
   ## MQTT_URL:
   ## MQTT_USERNAME:
+  ## MQTT_TOPIC_PREFIX:
   ## NAME:
   ## PORT:
   ## REDIS_GLOBAL_PREFIX:
@@ -451,15 +421,7 @@ dahuaMqttRobotMock:
   ## MQTT_LISTENER_URL:
   ## MQTT_LISTENER_USERNAME:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_ANALYSIS_DAHUA:
-  ## MQTT_TOPIC_GANTRY:
-  ## MQTT_TOPIC_GANTRY_DEVICE:
-  ## MQTT_TOPIC_ILLEGAL_DRAFT:
-  ## MQTT_TOPIC_ILLEGAL_RECORD:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_DAHUA:
-  ## MQTT_TOPIC_ILLEGAL_TYPE:
-  ## MQTT_TOPIC_TRACK_RECORD:
-  ## MQTT_TOPIC_TRACK_RECORD_DAHUA:
+  ## MQTT_TOPIC_PREFIX:
   ## MQTT_URL:
   ## MQTT_USERNAME:
   ## NAME:
@@ -552,25 +514,7 @@ dataSyncRobot:
   ## MQTT_LISTENER_URL:
   ## MQTT_LISTENER_USERNAME:
   ## MQTT_PASSWORD:
-  ## MQTT_RECV_TOPIC_GANTRY_CHANGE:
-  ## MQTT_RECV_TOPIC_GANTRY_DELETE:
-  ## MQTT_RECV_TOPIC_GANTRY_DEVICE_CHANGE:
-  ## MQTT_RECV_TOPIC_GANTRY_DEVICE_DELETE:
-  ## MQTT_RECV_TOPIC_ILLEGAL:
-  ## MQTT_RECV_TOPIC_ILLEGAL_TYPE_CHANGE:
-  ## MQTT_RECV_TOPIC_ILLEGAL_TYPE_DELETE:
-  ## MQTT_RECV_TOPIC_LAW_ENFORCE_POINT_CHANGE:
-  ## MQTT_RECV_TOPIC_LAW_ENFORCE_POINT_DELETE:
-  ## MQTT_RECV_TOPIC_SECTION_CHANGE:
-  ## MQTT_RECV_TOPIC_SECTION_DELETE:
-  ## MQTT_RECV_TOPIC_WARNING:
-  ## MQTT_SEND_TOPIC_GANTRY:
-  ## MQTT_SEND_TOPIC_GANTRY_DEVICE:
-  ## MQTT_SEND_TOPIC_ILLEGAL:
-  ## MQTT_SEND_TOPIC_ILLEGAL_TYPE:
-  ## MQTT_SEND_TOPIC_LAW_ENFORCE_POINT:
-  ## MQTT_SEND_TOPIC_SECTION:
-  ## MQTT_SEND_TOPIC_WARNING:
+  ## MQTT_TOPIC_PREFIX:
   ## MQTT_URL:
   ## MQTT_USERNAME:
   ## PORT:
@@ -744,17 +688,7 @@ faceRobot:
   ## MICROSERVICE_ENABLE:
   ## MQTT_NOTIFY_PERSON:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_GANTRY:
-  ## MQTT_TOPIC_GANTRY_DEVICE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
-  ## MQTT_TOPIC_WARNING:
+  ## MQTT_TOPIC_PREFIX:
   ## MQTT_URL:
   ## MQTT_USERNAME:
   ## NAME:
@@ -835,17 +769,7 @@ faceRobotMock:
   ## MICROSERVICE_ENABLE:
   ## MQTT_NOTIFY_PERSON:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_GANTRY:
-  ## MQTT_TOPIC_GANTRY_DEVICE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CLOSE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_CREATE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_DELETE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_NONMOTOR_UPDATE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CLOSE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_CREATE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_DELETE:
-  ## MQTT_TOPIC_ILLEGAL_RECORD_PERSON_UPDATE:
-  ## MQTT_TOPIC_WARNING:
+  ## MQTT_TOPIC_PREFIX:
   ## MQTT_URL:
   ## MQTT_USERNAME:
   ## NAME:
@@ -930,13 +854,9 @@ hengtongRobot:
   ## LOKI_URL:
   ## MICROSERVICE_ENABLE:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_GANTRY:
-  ## MQTT_TOPIC_GANTRY_DEVICE:
-  ## MQTT_TOPIC_ILLEGAL_DRAFT:
-  ## MQTT_TOPIC_ILLEGAL_RECORD:
-  ## MQTT_TOPIC_ILLEGAL_TYPE:
   ## MQTT_URL:
   ## MQTT_USERNAME:
+  ## MQTT_TOPIC_PREFIX:
   ## NAME:
   ## PORT:
   ## REDIS_GLOBAL_PREFIX:
@@ -1015,13 +935,9 @@ hengtongRobotMock:
   ## LOKI_URL:
   ## MICROSERVICE_ENABLE:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_GANTRY:
-  ## MQTT_TOPIC_GANTRY_DEVICE:
-  ## MQTT_TOPIC_ILLEGAL_DRAFT:
-  ## MQTT_TOPIC_ILLEGAL_RECORD:
-  ## MQTT_TOPIC_ILLEGAL_TYPE:
   ## MQTT_URL:
   ## MQTT_USERNAME:
+  ## MQTT_TOPIC_PREFIX:
   ## NAME:
   ## PORT:
   ## REDIS_GLOBAL_PREFIX:
@@ -1106,9 +1022,9 @@ messageRobot:
   ## MICROSERVICE_ENABLE:
   ## MODULE:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_NOTIFY_ILLEGAL_RECORD:
   ## MQTT_URL:
   ## MQTT_USERNAME:
+  ## MQTT_TOPIC_PREFIX:
   ## MSG_CONTENT:
   ## NAME:
   ## PORT:
@@ -1122,79 +1038,6 @@ messageRobot:
   image:
     registry: ""
     repository: 36node/fcp-message-robot
-    tag: main
-    digest: ""
-    ## Specify a imagePullPolicy
-    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-    ##
-    pullPolicy: ""
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
-    ##
-    pullSecrets: []
-    ## Enable debug mode
-    ##
-    debug: false
-
-  ## Service parameters
-  ##
-  service: {}
-  ## E.g.
-  ## type: ClusterIP
-  ## port: 80
-
-  resources:
-    {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  ## Configure resource requests and limits
-  nodeSelector: {}
-
-  ## Configure tolerations
-  tolerations: []
-
-  ## Configure affinity
-  affinity: {}
-
-  ## Configure pod annotations
-  podAnnotations: {}
-
-## @section mockRobot
-##
-mockRobot:
-  name: mock-robot
-  enabled: false
-
-  ## env
-  env:
-    {}
-    ## e.g:
-    ## API_SERVICE:
-    ## MICROSERVICE_ENABLE:
-    ## MQTT_PASSWORD:
-    ## MQTT_TOPIC_ILLEGAL_RECORD:
-    ## MQTT_TOPIC_TRACK_RECORD:
-    ## MQTT_URL:
-    ## MQTT_USERNAME:
-
-  replicaCount: 1
-  image:
-    registry: ""
-    repository: 36node/fcp-mock-robot
     tag: main
     digest: ""
     ## Specify a imagePullPolicy
@@ -1268,9 +1111,9 @@ trackAnalysisRobot:
   ## MICROSERVICE_ENABLE:
   ## MONGO_URL:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_TRACK_RECORD:
   ## MQTT_URL:
   ## MQTT_USERNAME:
+  ## MQTT_TOPIC_PREFIX:
   ## NAME:
   ## PORT:
   ## REDIS_GLOBAL_PREFIX:
@@ -1361,10 +1204,9 @@ xindianRobot:
   ## LOCAL_DEBUG:
   ## LOG_LEVEL:
   ## MQTT_PASSWORD:
-  ## MQTT_TOPIC_ILLEGAL_IMAGE_MATERIAL:
-  ## MQTT_TOPIC_ILLEGAL_RECORD:
   ## MQTT_URL:
   ## MQTT_USERNAME:
+  ## MQTT_TOPIC_PREFIX:
   ## NAME:
   ## PORT:
   ## RECORD_DEFAULT_JYZT:
@@ -1388,82 +1230,6 @@ xindianRobot:
   image:
     registry: ""
     repository: 36node/fcp-xindian-robot
-    tag: main
-    digest: ""
-    ## Specify a imagePullPolicy
-    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-    ##
-    pullPolicy: ""
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
-    ##
-    pullSecrets: []
-    ## Enable debug mode
-    ##
-    debug: false
-
-  ## Service parameters
-  ##
-  service: {}
-  ## E.g.
-  ## type: ClusterIP
-  ## port: 80
-
-  resources:
-    {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  ## Configure resource requests and limits
-  nodeSelector: {}
-
-  ## Configure tolerations
-  tolerations: []
-
-  ## Configure affinity
-  affinity: {}
-
-  ## Configure pod annotations
-  podAnnotations: {}
-
-## @section auth-new
-##
-authNew:
-  name: auth-new
-  enabled: true
-
-  ## ingress
-  hostname:
-  path: /auth-new/v1
-
-  ## env
-  env:
-    {}
-    ## e.g:
-    ## PORT:
-    ## PREFIX:
-    ## API_KEY:
-    ## JWT_SECRET_KEY:
-    ## MONGO_URL:
-    ## REDIS_URL:
-
-  replicaCount: 1
-  image:
-    registry: ""
-    repository: 36node/auth
     tag: main
     digest: ""
     ## Specify a imagePullPolicy
