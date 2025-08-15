@@ -43,7 +43,7 @@ adminPassword: ""
 runInitContainers: true
 
 ## 地图文件
-mbtiles: ningbo.mbtiles
+mapUrl:
 
 name: offline-map
 enabled: true
